@@ -72,15 +72,10 @@ if ( !class_exists('AsHeardOn') ) {
 // +---------------------------------------------------------------------------+
 
 		function addpages() { 
-			if (get_option('sfs_admng') == '') { 
-				$sfs_admng = 'update_plugins'; 
-			} else {
-				$sfs_admng = get_option('sfs_admng'); 
-			}
-
 			// Create top-level menu and appropriate sub-level menus:
-			add_menu_page('Other Shows', 'Other Shows', $sfs_admng, 'ppg_manage', 'ppg_settings_pages', plugins_url('/as-heard-on/podcast_icon.png'));
+			add_menu_page('Other Shows', 'Other Shows', 'update_plugins', 'ppg_manage', 'ppg_settings_pages', plugins_url('/as-heard-on/podcast_icon.png'));
 		}
+		
 // +---------------------------------------------------------------------------+
 // | Add Settings Link to Plugins Page                                         |
 // +---------------------------------------------------------------------------+
