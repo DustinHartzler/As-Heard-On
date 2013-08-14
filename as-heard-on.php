@@ -2,7 +2,7 @@
 /* 
 Plugin Name: As Heard On
 Plugin URI: http://YourWebsiteEngineer.com
-Description: Lets you display album artwork of podcasts you've been a guest on.  Widget included.  Optional link in sidebar block to "view all" podcast images on a page.  Requires WordPress 2.7 or higher.
+Description: Lets you display album artwork of podcasts you've been a guest on.  Widget included.  Optional link in sidebar block to "view all" podcast images on a page.
 Version: 0.5
 Author: Dustin Hartzler
 Author URI: http://YourWebsiteEngineer.com
@@ -18,7 +18,6 @@ if ( !class_exists('AsHeardOn') ) {
 		/* WP actions */
 			$this->widget = new AHO_Widget();
             $this->widget->aho_widget();
-
             add_action( 'init', array(&$this, 'addscripts'));
             add_action( 'admin_init', array(&$this, 'register_options'));
             add_action( 'admin_menu', array(&$this, 'addpages'));
@@ -40,7 +39,7 @@ if ( !class_exists('AsHeardOn') ) {
 			register_setting( 'option-page', 'deldata' );
 		}
 
-		function unregister_ppg_options() { // unset options
+		public function unregister_options() { // unset options
 			unregister_setting( 'option-widget', 'admng' );
 			unregister_setting( 'option-widget', 'showlink' );
 			unregister_setting( 'option-widget', 'linktext' );
@@ -73,9 +72,10 @@ if ( !class_exists('AsHeardOn') ) {
 
 		function addpages() { 
 			// Create top-level menu and appropriate sub-level menus:
-			add_menu_page('Other Shows', 'Other Shows', 'update_plugins', 'ppg_manage', 'ppg_settings_pages', plugins_url('/as-heard-on/podcast_icon.png'));
+			add_menu_page('Other Shows', 'Other Shows', 'manage_options', 'setting_page', array($this, 'settings_pages'), plugins_url('/as-heard-on/podcast_icon.png'));
 		}
-		
+
+
 // +---------------------------------------------------------------------------+
 // | Add Settings Link to Plugins Page                                         |
 // +---------------------------------------------------------------------------+
@@ -85,9 +85,8 @@ if ( !class_exists('AsHeardOn') ) {
 			if (!$plugin) $plugin = plugin_basename(__FILE__);
 			
 			if ($file == $plugin){
-				$settings_link = '<a href="admin.php?page=ppg_manage">'.__("Configure").'</a>';
-				 // array_unshift($links, $settings_link);
-				 $links[] = $settings_link;
+				$settings_link = '<a href="admin.php?page=setting_page">'.__("Configure").'</a>';
+				$links[] = $settings_link;
 			}
 			return $links;
 		}
@@ -97,8 +96,120 @@ if ( !class_exists('AsHeardOn') ) {
 			add_filter('plugin_action_links', array(&$this, 'add_settings_link'), 10, 2 );
 		}
 
+// +---------------------------------------------------------------------------+
+// | Plugin Settings Pages 										               |
+// +---------------------------------------------------------------------------+
+
+		function settings_pages(){
+			global $saf_networks; ?>
+
+			<div class="wrap">
+				<?php screen_icon('options-general'); ?>
+				<h2>As Heard On Settings</h2>
+				<style>
+					#reset_color { cursor:pointer; }
+				</style>
+
+				<?php
+				$active_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'add_new_podcast';
+				?>
+
+			<h2 class="nav-tab-wrapper">
+				<a href="admin.php?page=setting_page&tab=add_new_podcast" class="nav-tab <?php echo $active_tab == 'add_new_podcast' ? 'nav-tab-active' : ''; ?>">Add New Podcast</a>
+				<a href="admin.php?page=setting_page&tab=widget_options" class="nav-tab <?php echo $active_tab == 'widget_options' ? 'nav-tab-active' : ''; ?>">Widget Options</a>
+				<a href="admin.php?page=setting_page&tab=full_page_options" class="nav-tab <?php echo $active_tab == 'full_page_options' ? 'nav-tab-active' : ''; ?>">Full Page Options</a>
+			</h2>
 
 
+					<?php
+					if ( $active_tab == 'add_new_podcast' ) {  
+						ppg_adminpage();
+					
+					} elseif ( $active_tab == 'widget_options' ) { 
+						ppg_options_page();
+					} elseif ( $active_tab == 'full_page_options' ) {
+						ppg_page_options();
+					}
+
+			?> </div> <?php
+		}
+
+// +---------------------------------------------------------------------------+
+// | Create table on activation                                                |
+// +---------------------------------------------------------------------------+
+
+		function activate () {
+   			global $wpdb;
+
+   			$table_name = $wpdb->prefix . "aho";
+   			if($wpdb->get_var("show tables like '$table_name'") != $table_name) {
+				if ( $wpdb->supports_collation() ) {
+						if ( ! empty($wpdb->charset) )
+							$charset_collate = "DEFAULT CHARACTER SET $wpdb->charset";
+						if ( ! empty($wpdb->collate) )
+							$charset_collate .= " COLLATE $wpdb->collate";
+				}
+      
+			   $sql = "CREATE TABLE IF NOT EXISTS " . $table_name . "(
+				testid int( 15 ) NOT NULL AUTO_INCREMENT ,
+				show_name text,
+				host_name text,
+				show_url text,
+				episode text,
+				imgurl text,
+				excerpt text,
+				storder INT( 5 ) NOT NULL,
+				PRIMARY KEY ( `testid` )
+				) ".$charset_collate.";";
+	  
+				require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+				dbDelta($sql);
+	  
+			   	$insert = "INSERT INTO " . $table_name .
+		           	" (show_name,host_name,show_url,episode,imgurl) " .
+		            "VALUES ('Your Website Engineer','Dustin Hartzler','http://YourWebsiteEngineer.com','001','http://YourWebsiteEngineer.com/AlbumArt.png')";
+		      	$results = $wpdb->query( $insert );
+
+				// insert default settings into wp_options 
+				$toptions = $wpdb->prefix ."options";
+				$defset = "INSERT INTO ".$toptions.
+					"(option_name, option_value) " .
+					"VALUES ('sfs_admng', 'update_plugins'),('sfs_deldata', ''),".
+					"('sfs_linktext', 'Read More'),('sfs_linkurl', ''),('sfs_setlimit', '1'),".
+					"('sfs_showlink', ''),('sfs_imgalign','right'),('sfs_sorder', 'testid DESC')";
+				$dodef = $wpdb->query( $defset );
+
+			} 	
+				// update version in options table
+				  delete_option("ppg_version");
+				  add_option("ppg_version", "0.5");
+		}
+
+// +---------------------------------------------------------------------------+
+// | Uninstall plugin                                                          |
+// +---------------------------------------------------------------------------+
+
+		public function deactivate () {
+			global $wpdb;
+
+			$table_name = $wpdb->prefix . "aho";
+
+			$aho_deldata = get_option('aho_deldata');
+			if ($aho_deldata == 'yes') {
+				$wpdb->query("DROP TABLE {$table_name}");
+				delete_option("aho_showlink");
+				delete_option("aho_linktext");
+				delete_option("aho_linkurl");
+				delete_option("aho_deldata");
+				delete_option("aho_setlimit");
+				delete_option("aho_admng");
+				delete_option("aho_sorder");
+				delete_option("aho_imgalign");
+				delete_option("aho_imgmax");
+		 	}
+		    delete_option("aho_version");
+			//unregister_options();
+		}
 
 
 
