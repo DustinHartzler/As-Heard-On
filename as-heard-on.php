@@ -125,9 +125,9 @@ if ( !class_exists('AsHeardOn') ) {
 					if ( $active_tab == 'add_new_podcast' ) {  
 						$this->adminpage();
 					} elseif ( $active_tab == 'widget_options' ) { 
-						widget_options();
+						$this->widget_options();
 					} elseif ( $active_tab == 'full_page_options' ) {
-						page_options();
+						$this->page_options();
 					}
 
 			?> </div> <?php
@@ -243,14 +243,14 @@ if ( !class_exists('AsHeardOn') ) {
 					?>
 			<div id="message" class="updated fade"><p><strong><?php _e('Podcast Added'); ?>.</strong></p></div><?php
 				}
-				if ($_REQUEST['mode']=='ppgrem') {
-					ppg_removetst($_REQUEST['testid']);
-					?><div id="message" class="updated fade"><p><strong><?php _e('Podcast Deleted'); ?>.</strong></p></div><?php
-				}
-				if ($_REQUEST['mode']=='ppgedit') {
-					ppg_edit($_REQUEST['testid']);
-					exit;
-				}
+				// if ($_REQUEST['mode']=='ppgrem') {
+				// 	ppg_removetst($_REQUEST['testid']);
+				// 	?><div id="message" class="updated fade"><p><strong><?php _e('Podcast Deleted'); ?>.</strong></p></div><?php
+				// }
+				// if ($_REQUEST['mode']=='ppgedit') {
+				// 	ppg_edit($_REQUEST['testid']);
+				// 	exit;
+				// }
 				if (isset($_REQUEST['ppgeditdo'])) {
 					ppg_editdo($_REQUEST['testid']);
 					?><div id="message" class="updated fade"><p><strong><?php _e('Podcast Updated'); ?>.</strong></p></div><?php
@@ -305,7 +305,189 @@ function showlist() {
 	echo '<div class="clear"></div>';
 }
 
+// +---------------------------------------------------------------------------+
+// | Configuration options                                                     |
+// +---------------------------------------------------------------------------+
 
+		function widget_options() {
+		?>
+			<div class="wrap">
+			<?php if ($_REQUEST['updated']=='true') { ?>
+			<div id="message" class="updated fade"><p><strong>Settings Updated</strong></p></div>
+			<?php  } ?>
+
+			<?php echo '<p align="right">Need help? <a href="/' . PLUGINDIR . '/wp-testimonials/docs/documentation.php" target="_blank">documentation</a> &nbsp;|&nbsp; <a href="http://www.sunfrogservices.com/web-programming/wp-testimonials/">support page</a></p>'; ?>
+			<form method="post" action="options.php">
+			<?php wp_nonce_field('update-options'); ?>
+			<?php settings_fields( 'ppg-option-widget' ); ?>
+			
+			<table cellpadding="5" cellspacing="5">
+
+			<tr valign="top">
+			<td>Minimum user level to manage</td>
+			<td>
+			<?php if (get_option('sfs_admng') == 'update_plugins') { ?>
+			<input type="radio" name="ppg_admng" value="update_plugins" checked /> Administrator
+			<?php } else { ?>
+			<input type="radio" name="ppg_admng" value="update_plugins" /> Administrator
+			<?php } ?>	
+			<?php if (get_option('sfs_admng') == 'edit_pages') { ?>
+			<input type="radio" name="ppg_admng" value="edit_pages" checked /> Editor
+			<?php } else { ?>
+			<input type="radio" name="ppg_admng" value="edit_pages" /> Editor
+			<?php } ?>
+			<?php if (get_option('ppg_admng') == 'publish_posts') { ?>
+			<input type="radio" name="ppg_admng" value="publish_posts" checked /> Author
+			<?php } else { ?>
+			<input type="radio" name="ppg_admng" value="publish_posts" /> Author
+			<?php } ?>
+			</td>
+			</tr>
+
+			<tr valign="top">
+			<td>Show link in sidebar to full page of previous interviews</td>
+			<td>
+			<?php $sfs_showlink = get_option('ppg_showlink'); 
+			if ($sfs_showlink == 'yes') { ?>
+			<input type="checkbox" name="ppg_showlink" value="yes" checked />
+			<?php } else { ?>
+			<input type="checkbox" name="ppg_showlink" value="yes" />
+			<?php } ?>
+			</td>
+			</tr>
+			
+			<tr valign="top">
+			<td>Text for sidebar link (Read More, View All, etc)</td>
+			<td><input type="text" name="ppg_linktext" value="<?php echo get_option('ppg_linktext'); ?>" /></td>
+			</tr>
+
+			<tr valign="top">
+			<td>Image Width (for sidebar)</td>
+			<td><input type="text" name="ppg_image_width" size="2" value="<?php echo get_option('ppg_image_width'); ?>" /><label>(pixels)</label></td>
+			</tr>
+
+			<tr valign="top">
+			<td>How fast to transition from B&W to Color</td>
+			<td><input type="text" data-slider="true" data-slider-range="0,5" data-slider-step=".1" data-slider-highlight="true" data-slider-theme="volume" name="ppg_opacity" value="<?php echo get_option('ppg_opacity'); ?>"><span class="output">seconds</span></td>
+			</tr>
+
+			<tr valign="top">
+			<td>Number of podcasts to show in sidebar</td>
+			<td><input type="text" name="ppg_setlimit" size="2" value="<?php echo get_option('ppg_setlimit'); ?>" /></td>
+			</tr>
+
+			<tr valign="top">
+			<td>Previous podcast page for sidebar link<br/> (use shortcode [ppg])</td>
+			<td> <select name="ppg_linkurl">
+			 <option value="">
+		<?php echo attribute_escape(__('Select page')); ?></option> 
+		 <?php 
+		  $pages = get_pages(); 
+		  foreach ($pages as $pagg) {
+		  $pagurl = get_page_link($pagg->ID);
+		  $sfturl = get_option('ppg_linkurl');
+		  	if ($pagurl == $sfturl) {
+				$option = '<option value="'.get_page_link($pagg->ID).'" selected>';
+				$option .= $pagg->post_title;
+				$option .= '</option>';
+				echo $option;
+			} else {
+				$option = '<option value="'.get_page_link($pagg->ID).'">';
+				$option .= $pagg->post_title;
+				$option .= '</option>';
+				echo $option;	
+			}
+		  }
+		 ?>	</select></td>
+			</tr>
+				</table>
+			<input type="hidden" name="action" value="update" />
+			<input type="hidden" name="page_options" value="ppg_admng,ppg_showlink,ppg_linktext,ppg_image_width,ppg_opacity,ppg_setlimit, ppg_linkurl,sfs_sorder,sfs_imgalign,sfs_imgmax,ppg_deldata" />
+			
+			<p class="submit">
+			<input type="submit" class="button-primary" value="<?php _e('Save Widget Options') ?>" />
+			</p>
+		<?php }
+
+		function page_options(){ ?>
+			<div class="wrap">
+				<?php if ($_REQUEST['updated']=='true') { ?>
+				<div id="message" class="updated fade"><p><strong>Settings Updated</strong></p></div>
+				<?php  } ?>
+
+				<?php echo '<p align="right">Need help? <a href="/' . PLUGINDIR . '/wp-testimonials/docs/documentation.php" target="_blank">documentation</a> &nbsp;|&nbsp; <a href="http://www.sunfrogservices.com/web-programming/wp-testimonials/">support page</a></p>'; ?>
+				<form method="post" action="options.php">
+					<?php wp_nonce_field('update-options'); ?>
+					<?php settings_fields( 'ppg-option-page' ); ?>
+					<table cellpadding="5" cellspacing="5">
+						<tr valign="top">
+							<td>Sort podcasts on page by</td>
+							<td>
+								<?php if (get_option('ppg_sorder') == 'testid ASC') { ?>
+								<input type="radio" name="ppg_sorder" value="testid ASC" checked /> Order entered, oldest first
+								<?php } else { ?>
+								<input type="radio" name="ppg_sorder" value="testid ASC" /> Order entered, oldest first
+								<?php } ?><br/>	
+								<?php if (get_option('ppg_sorder') == 'testid DESC') { ?>
+								<input type="radio" name="ppg_sorder" value="testid DESC" checked /> Order entered, newest first
+								<?php } else { ?>
+								<input type="radio" name="ppg_sorder" value="testid DESC" /> Order entered, newest first
+								<?php } ?><br/>
+								<?php if (get_option('ppg_sorder') == 'storder ASC') { ?>
+								<input type="radio" name="ppg_sorder" value="storder ASC" checked /> User defined sort order
+								<?php } else { ?>
+								<input type="radio" name="ppg_sorder" value="storder ASC" /> User defined sort order
+								<?php } ?>
+							</td>
+					</tr>
+
+			<tr valign="top">
+			<td>Use class alignleft or alignright for testimonial image</td>
+			<td>
+			<?php $sfs_imgalign = get_option('ppg_imgalign'); 
+			if ($sfs_imgalign == 'alignleft') { ?>
+			<input type="radio" name="ppg_imgalign" value="alignleft" checked /> Left 
+			<input type="radio" name="ppg_imgalign" value="alignright" /> Right
+			<?php } elseif ($sfs_imgalign == 'alignright') { ?>
+			<input type="radio" name="ppg_imgalign" value="alignleft" /> Left
+			<input type="radio" name="ppg_imgalign" value="alignright" checked/> Right
+			<?php } else { ?>
+			<input type="radio" name="ppg_imgalign" value="alignleft" /> Left
+			<input type="radio" name="ppg_imgalign" value="alignright" /> Right
+			<?php } ?>
+			</td>
+			</tr>
+
+			<tr valign="top">
+			<td>Maximum height (in pixels) for image</td>
+			<td><input type="text" name="ppg_imgmax" value="<?php echo get_option('ppg_imgmax'); ?>" /> (if left blank images will show full size)</td>
+			</tr>
+			
+			<tr valign="top">
+			<td>Remove table when deactivating plugin</td>
+			<td>
+			<?php $ppg_deldata = get_option('ppg_deldata'); 
+			if ($ppg_deldata == 'yes') { ?>
+			<input type="checkbox" name="ppg_deldata" value="yes" checked /> (this will result in all data being deleted!)
+			<?php } else { ?>
+			<input type="checkbox" name="ppg_deldata" value="yes" /> (this will result in all data being deleted!)
+			<?php } ?>
+			</td>
+			</tr>
+			
+			</table>
+			<input type="hidden" name="action" value="update" />
+			<input type="hidden" name="page_options" value="ppg_sorder,ppg_imgalign,ppg_imgmax,ppg_deldata" />
+			
+			<p class="submit">
+			<input type="submit" class="button-primary" value="<?php _e('Save Page Changes') ?>" />
+			</p>
+			
+			</form>
+			
+			</div>
+		<?php 
+		}
 
 
 
@@ -332,7 +514,7 @@ function showlist() {
 				delete_option("aho_imgmax");
 		 	}
 		    delete_option("aho_version");
-			$this->unregister_options();
+			//$this->unregister_options();
 		}
 
 
