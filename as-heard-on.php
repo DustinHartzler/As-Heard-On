@@ -123,17 +123,63 @@ if ( !class_exists('AsHeardOn') ) {
 
 					<?php
 					if ( $active_tab == 'add_new_podcast' ) {  
-						ppg_adminpage();
-					
+						$this->adminpage();
 					} elseif ( $active_tab == 'widget_options' ) { 
-						ppg_options_page();
+						widget_options();
 					} elseif ( $active_tab == 'full_page_options' ) {
-						ppg_page_options();
+						page_options();
 					}
 
 			?> </div> <?php
 		}
+// +---------------------------------------------------------------------------+
+// | Add New Podcast                                                           |
+// +---------------------------------------------------------------------------+
 
+/* add new podcast form */
+		function newform() {
+		?>
+			<div class="wrap">
+				<h2>Add New Podcast</h2>
+				<ul>
+				<li>If you want to include this podcast image in the sidebar, you must have content in the &quot;Show URL&quot; field.</li>
+				<li>The text in the &quot;Podcast Excerpt&quot; field will only appear on the summary page.</li>
+				</ul>
+				<br />
+				<div id="ppg-form">
+					<form name="addnew" method="post" action="<?php echo str_replace( '%7E', '~', $_SERVER['REQUEST_URI']); ?>">
+						<label for="showname">Podcast Name:</label><input name="show_name" type="text" size="45" ><br/>
+						<label for="hostname">Host Name:</label><input name="host_name" type="text" size="45" ><br/>
+						<label for="showurl">Show URL:</label><input name="show_url" type="text" size="45" value="http://" onFocus="this.value=''"><br/>
+						<label for="imgurl">Image URL:</label><input name="imgurl" type="text" size="45" > (copy File URL from <a href="<?php echo admin_url('/upload.php'); ?>" target="_blank">Media</a>) <br/>
+						<label for="episode">Episode Number:</label><input name="episode" type="text" size="10"><br/>
+						<label for="excerpt">Podcast Excerpt:</label><textarea name="excerpt" cols="45" rows="7"></textarea><br/>
+						<label for="storder">Sort order:</label><input name="storder" type="text" size="10" /> (optional) <br/>
+						<input type="submit" name="ppg_addnew" class="button button-primary" value="<?php _e('Add Podcast', 'addnew' ) ?>" /><br/>
+					</form>
+				</div>
+			</div>
+		<?php } 
+
+/* insert podcast into DB */
+		function insertnew() {
+			global $wpdb;
+			$table_name = $wpdb->prefix . "aho";
+			$show_name 	= $_POST['show_name'];	
+			$host_name 	= $_POST['host_name'];
+			$show_url 	= $_POST['show_url'];
+			$imgurl 	= $_POST['imgurl'];
+			$episode 	= $_POST['episode'];
+			$excerpt 	= $_POST['excerpt'];
+			$storder 	= $_POST['storder'];
+			
+			$insert = "INSERT INTO " . $table_name .
+			" (show_name,host_name,show_url,imgurl,episode,excerpt,storder) " .
+			"VALUES ('$show_name','$host_name','$show_url','$imgurl','$episode','$excerpt','$storder')";
+			
+			$results = $wpdb->query( $insert );
+
+		}
 // +---------------------------------------------------------------------------+
 // | Create table on activation                                                |
 // +---------------------------------------------------------------------------+
@@ -185,6 +231,84 @@ if ( !class_exists('AsHeardOn') ) {
 				  add_option("ppg_version", "0.5");
 		}
 
+
+/* admin page display */
+		function adminpage() {
+			global $wpdb;
+		?>
+			<div class="wrap">
+			<?php
+				if (isset($_POST['ppg_addnew'])) {
+					$this->insertnew();
+					?>
+			<div id="message" class="updated fade"><p><strong><?php _e('Podcast Added'); ?>.</strong></p></div><?php
+				}
+				if ($_REQUEST['mode']=='ppgrem') {
+					ppg_removetst($_REQUEST['testid']);
+					?><div id="message" class="updated fade"><p><strong><?php _e('Podcast Deleted'); ?>.</strong></p></div><?php
+				}
+				if ($_REQUEST['mode']=='ppgedit') {
+					ppg_edit($_REQUEST['testid']);
+					exit;
+				}
+				if (isset($_REQUEST['ppgeditdo'])) {
+					ppg_editdo($_REQUEST['testid']);
+					?><div id="message" class="updated fade"><p><strong><?php _e('Podcast Updated'); ?>.</strong></p></div><?php
+				}
+					$this->showlist(); // show podcasts
+				?>
+			</div>
+			<div class="wrap"><?php $this->newform(); // show form to add new podcast ?>
+			</div>
+			<div class="wrap">
+			<?php 
+		$yearnow = date('Y');
+		if($yearnow == "2013") {
+		    $yearcright = "";
+		} else { 
+		    $yearcright = "2013-";
+		}
+		?>
+			  <p>Past Podcast Plugin is &copy; Copyright <?php echo("".$yearcright."".date('Y').""); ?>, <a href="http://www.yourwebsiteengineer.com/" target="_blank">Dustin Hartzler</a> and distributed under the <a href="http://www.fsf.org/licensing/licenses/quick-guide-gplv3.html" target="_blank">GNU General Public License</a>. 
+			  If you find this plugin useful, please consider a <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7279865" target="_blank">donation</a>.</p>
+			<p align="right" style="float:right">Need help? <a href="/' . PLUGINDIR . '/wp-testimonials/docs/documentation.php" target="_blank">documentation</a> &nbsp;|&nbsp; <a href="http://YourWebsiteEngineer.com/">support page</a></p>
+			</div>
+<?php }
+
+
+/* show podcast on settings page */
+function showlist() { 
+	global $wpdb;
+	$table_name = $wpdb->prefix . "aho";
+	$aholists = $wpdb->get_results("SELECT testid,show_name,host_name,show_url,imgurl,episode FROM $table_name");
+
+	foreach ($aholists as $aholist) {
+		echo '<div class="podcast-display">';
+		echo '<img src="'.$aholist->imgurl.'" width="100px" class="alignleft" style="margin:0 10px 10px 0;">';
+		echo '<a href="admin.php?page=aho_manage&amp;mode=ahoedit&amp;testid='.$aholist->testid.'">Edit</a>';
+		echo '&nbsp;|&nbsp;';
+		echo '<a href="admin.php?page=aho_manage&amp;mode=ahorem&amp;testid='.$aholist->testid.'" onClick="return confirm(\'Delete this testimonial?\')">Delete</a>';
+		echo '<br>';
+		echo '<strong>Show Name: </strong>';
+		echo stripslashes($aholist->show_name);
+			if ($aholist->host_name != '') {
+				echo '<br><strong>Host Name: </strong>'.stripslashes($aholist->host_name).'';
+				if ($aholist->show_url != '') {
+					echo '<br><strong>Show URL: </strong> <a href="'.$aholist->show_url.'">'.stripslashes($aholist->show_url).'</a> ';
+					if ($aholist->episode !=''){
+					echo '<br><strong>Episode: </strong>'.stripslashes($aholist->episode).'';	
+					}	
+				}
+			}
+		echo '</div>'; 
+	}
+	echo '<div class="clear"></div>';
+}
+
+
+
+
+
 // +---------------------------------------------------------------------------+
 // | Uninstall plugin                                                          |
 // +---------------------------------------------------------------------------+
@@ -208,13 +332,8 @@ if ( !class_exists('AsHeardOn') ) {
 				delete_option("aho_imgmax");
 		 	}
 		    delete_option("aho_version");
-			//unregister_options();
+			$this->unregister_options();
 		}
-
-
-
-
-
 
 
 
