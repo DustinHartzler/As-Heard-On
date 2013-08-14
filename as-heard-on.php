@@ -147,7 +147,7 @@ if ( !class_exists('AsHeardOn') ) {
 				</ul>
 				<br />
 				<div id="ppg-form">
-					<form name="addnew" method="post" action="<?php echo str_replace( '%7E', '~', $_SERVER['REQUEST_URI']); ?>">
+					<form name="AddNew" method="post" action="<?php echo str_replace( '%7E', '~', $_SERVER['REQUEST_URI']); ?>">
 						<label for="showname">Podcast Name:</label><input name="show_name" type="text" size="45" ><br/>
 						<label for="hostname">Host Name:</label><input name="host_name" type="text" size="45" ><br/>
 						<label for="showurl">Show URL:</label><input name="show_url" type="text" size="45" value="http://" onFocus="this.value=''"><br/>
@@ -155,7 +155,7 @@ if ( !class_exists('AsHeardOn') ) {
 						<label for="episode">Episode Number:</label><input name="episode" type="text" size="10"><br/>
 						<label for="excerpt">Podcast Excerpt:</label><textarea name="excerpt" cols="45" rows="7"></textarea><br/>
 						<label for="storder">Sort order:</label><input name="storder" type="text" size="10" /> (optional) <br/>
-						<input type="submit" name="ppg_addnew" class="button button-primary" value="<?php _e('Add Podcast', 'addnew' ) ?>" /><br/>
+						<input type="submit" name="addnew" class="button button-primary" value="<?php _e('Add Podcast', 'addnew' ) ?>" /><br/>
 					</form>
 				</div>
 			</div>
@@ -279,7 +279,7 @@ function removetst($testid) {
 					?>
 			<div id="message" class="updated fade"><p><strong><?php _e('Podcast Added'); ?>.</strong></p></div><?php
 				}
-					if ($_REQUEST['mode']=='remove') {
+					if ($_REQUEST['mode']=='ahorem') {
 					$this->removetst($_REQUEST['testid']);
 					?><div id="message" class="updated fade"><p><strong><?php _e('Podcast Deleted'); ?>.</strong></p></div><?php
 				}
