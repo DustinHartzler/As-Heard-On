@@ -231,6 +231,42 @@ if ( !class_exists('AsHeardOn') ) {
 				  add_option("ppg_version", "0.5");
 		}
 
+		/* update item in DB */
+		function aho_editdo($testid){
+			global $wpdb;
+			$table_name = $wpdb->prefix . "aho";
+			
+			$testid = $testid;
+			$show_name = $_POST['show_name'];
+			$host_name = $_POST['host_name'];
+			$show_url  = $_POST['show_url'];
+			$imgurl    = $_POST['imgurl'];
+			$episode   = $_POST['episode'];
+			$excerpt   = $_POST['excerpt'];
+			$storder   = $_POST['storder'];
+			
+			$wpdb->query("UPDATE " . $table_name .
+			" SET show_name = '$show_name', ".
+			" host_name = '$host_name', ".
+			" show_url = '$show_url', ".
+			" imgurl = '$imgurl', ".
+			" episode = '$episode', ".
+			" excerpt = '$excerpt', ".
+			" storder = '$storder' ".
+			" WHERE testid = '$testid'");
+		}
+
+/* delete testimonials from DB */
+function removetst($testid) {
+	global $wpdb;
+	$table_name = $wpdb->prefix . "aho";
+	
+	$insert = "DELETE FROM " . $table_name .
+	" WHERE testid = ".$testid ."";
+	
+	$results = $wpdb->query( $insert );
+
+}
 
 /* admin page display */
 		function adminpage() {
@@ -243,16 +279,16 @@ if ( !class_exists('AsHeardOn') ) {
 					?>
 			<div id="message" class="updated fade"><p><strong><?php _e('Podcast Added'); ?>.</strong></p></div><?php
 				}
-				// if ($_REQUEST['mode']=='ppgrem') {
-				// 	ppg_removetst($_REQUEST['testid']);
-				// 	?><div id="message" class="updated fade"><p><strong><?php _e('Podcast Deleted'); ?>.</strong></p></div><?php
-				// }
-				// if ($_REQUEST['mode']=='ppgedit') {
-				// 	ppg_edit($_REQUEST['testid']);
-				// 	exit;
-				// }
+					if ($_REQUEST['mode']=='remove') {
+					$this->removetst($_REQUEST['testid']);
+					?><div id="message" class="updated fade"><p><strong><?php _e('Podcast Deleted'); ?>.</strong></p></div><?php
+				}
+				if ($_REQUEST['mode']=='ahoedit') {
+					$this->aho_edit($_REQUEST['testid']);
+					exit;
+				}
 				if (isset($_REQUEST['editdo'])) {
-					ppg_editdo($_REQUEST['testid']);
+					$this->aho_editdo($_REQUEST['testid']);
 					?><div id="message" class="updated fade"><p><strong><?php _e('Podcast Updated'); ?>.</strong></p></div><?php
 				}
 					$this->showlist(); // show podcasts
@@ -275,35 +311,6 @@ if ( !class_exists('AsHeardOn') ) {
 			</div>
 <?php }
 
-
-/* show podcast on settings page */
-function showlist() { 
-	global $wpdb;
-	$table_name = $wpdb->prefix . "aho";
-	$aholists = $wpdb->get_results("SELECT testid,show_name,host_name,show_url,imgurl,episode FROM $table_name");
-
-	foreach ($aholists as $aholist) {
-		echo '<div class="podcast-display">';
-		echo '<img src="'.$aholist->imgurl.'" width="100px" class="alignleft" style="margin:0 10px 10px 0;">';
-		echo '<a href="admin.php?page=aho_manage&amp;mode=ahoedit&amp;testid='.$aholist->testid.'">Edit</a>';
-		echo '&nbsp;|&nbsp;';
-		echo '<a href="admin.php?page=aho_manage&amp;mode=ahorem&amp;testid='.$aholist->testid.'" onClick="return confirm(\'Delete this testimonial?\')">Delete</a>';
-		echo '<br>';
-		echo '<strong>Show Name: </strong>';
-		echo stripslashes($aholist->show_name);
-			if ($aholist->host_name != '') {
-				echo '<br><strong>Host Name: </strong>'.stripslashes($aholist->host_name).'';
-				if ($aholist->show_url != '') {
-					echo '<br><strong>Show URL: </strong> <a href="'.$aholist->show_url.'">'.stripslashes($aholist->show_url).'</a> ';
-					if ($aholist->episode !=''){
-					echo '<br><strong>Episode: </strong>'.stripslashes($aholist->episode).'';	
-					}	
-				}
-			}
-		echo '</div>'; 
-	}
-	echo '<div class="clear"></div>';
-}
 
 
 
@@ -470,13 +477,100 @@ function showlist() {
 		<?php 
 		}
 
+// +---------------------------------------------------------------------------+
+// | Manage Page - list all and show edit/delete options                       |
+// +---------------------------------------------------------------------------+
+
+/* show podcast on settings page */
+function showlist() { 
+	global $wpdb;
+	$table_name = $wpdb->prefix . "aho";
+	$aholists = $wpdb->get_results("SELECT testid,show_name,host_name,show_url,imgurl,episode FROM $table_name");
+
+	foreach ($aholists as $aholist) {
+		echo '<div class="podcast-display">';
+		echo '<img src="'.$aholist->imgurl.'" width="100px" class="alignleft" style="margin:0 10px 10px 0;">';
+		echo '<a href="admin.php?page=setting_page&amp;mode=ahoedit&amp;testid='.$aholist->testid.'">Edit</a>';
+		echo '&nbsp;|&nbsp;';
+		echo '<a href="admin.php?page=setting_page&amp;mode=ahorem&amp;testid='.$aholist->testid.'" onClick="return confirm(\'Delete this testimonial?\')">Delete</a>';
+		echo '<br>';
+		echo '<strong>Show Name: </strong>';
+		echo stripslashes($aholist->show_name);
+			if ($aholist->host_name != '') {
+				echo '<br><strong>Host Name: </strong>'.stripslashes($aholist->host_name).'';
+				if ($aholist->show_url != '') {
+					echo '<br><strong>Show URL: </strong> <a href="'.$aholist->show_url.'">'.stripslashes($aholist->show_url).'</a> ';
+					if ($aholist->episode !=''){
+					echo '<br><strong>Episode: </strong>'.stripslashes($aholist->episode).'';	
+					}	
+				}
+			}
+		echo '</div>'; 
+	}
+	echo '<div class="clear"></div>';
+}
+
+/* edit podcast form */
+function aho_edit($testid){
+	global $wpdb;
+	$table_name = $wpdb->prefix . "aho";
+	
+	$getaho = $wpdb->get_row("SELECT testid, show_name, host_name, show_url, imgurl, episode, excerpt, storder FROM $table_name WHERE testid = $testid");
+	
+	echo '<h3>Edit Podcast</h3>';
+
+	echo '<div id="ppg-form">';
+	echo '<form name="edittst" method="post" action="admin.php?page=setting_page">';
+	echo '<label for="show_name">Show Name:</label>
+		  <input name="show_name" type="text" size="45" value="'.stripslashes($getaho->show_name).'"><br/>
+			<label for="host_name">Host Name:</label>
+		  	<input name="host_name" type="text" size="45" value="'.stripslashes($getaho->host_name).'"><br/>
+		
+			<label for="show_url">Show URL:</label>
+		 	<input name="show_url" type="text" size="45" value="'.$getaho->show_url.'"><br/>
+		
+			<label for="imgurl">Image URL:</label>
+			<input name="imgurl" type="text" size="45" value="'.$getaho->imgurl.'"> (copy File URL from <a href="'.admin_url('/upload.php').'" target="_blank">Media</a>) <br/>
+			
+			<label for="episode">Episode:</label>
+		 	<input name="episode" type="text" size="2" value="'.$getaho->episode.'"><br/>
+
+		 	<label for="excerpt">Show Recap:</label>
+		  	<textarea name="excerpt" cols="45" rows="7">'.stripslashes($getaho->excerpt).'</textarea><br/>
+
+			<label for="storder">Sort order:</label>
+		 	<input name="storder" type="text" size=2" value="'.$getaho->storder.'">(optional)<br/>
+
+		  	<input type="hidden" name="testid" value="'.$getaho->testid.'">
+		  	<input name="editdo" type="submit" class="button button-primary" value="Update">';
+	echo '<h3>Preview</h3>';
+	echo '<div class="podcast-display" >';
+	echo '<img src="'.$getaho->imgurl.'" width="90px" class="alignleft" style="margin:0 10px 10px 0;">';
+		echo '<strong>Show Name: </strong>';
+		echo stripslashes($getaho->show_name);
+			if ($getaho->host_name != '') {
+				echo '<br><strong>Host Name: </strong>'.stripslashes($getaho->host_name).'';
+				if ($getaho->show_url != '') {
+					echo '<br><strong>Show URL: </strong> <a href="'.$getaho->show_url.'">'.stripslashes($getaho->show_url).'</a> ';
+					if ($getaho->episode !=''){
+					echo '<br><strong>Episode: </strong>'.stripslashes($getaho->episode).'';	
+					}	
+					if ($getaho->excerpt !=''){
+					echo '<br><strong>Show Recap: </strong>'.stripslashes($getaho->excerpt).'';	
+					}
+				}
+			}
+		echo '</div>'; 
+	echo '</form>';
+	echo '</div>';
+}
 
 
 // +---------------------------------------------------------------------------+
 // | Uninstall plugin                                                          |
 // +---------------------------------------------------------------------------+
 
-		public function deactivate () {
+		function deactivate () {
 			global $wpdb;
 
 			$table_name = $wpdb->prefix . "aho";
