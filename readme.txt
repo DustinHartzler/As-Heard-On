@@ -1,12 +1,12 @@
-=== WP-Testimonials ===
-Contributors: sunfrog
+=== As Heard On ===
+Contributors: Dustin Hartzler
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7279865
-Tags: widget, pages, testimonials
-Requires at least: 2.7
-Tested up to: 3.0.1
+Tags: widget, pages, podcasts, as heard on
+Requires at least: 3.5
+Tested up to: 3.6
 Stable tag: 3.4.1
 
-Displays client testimonials in WordPress
+Displays podcast artwork of shows you've been on in WordPress
 
 == Description ==
 
@@ -51,50 +51,7 @@ NOTE: You must have text in the full text field in order for the testimonial to 
 
 == ChangeLog ==
 
-= 3.4.1 =
-* Bug fixes
-
-= 3.4 =
-* Update for compatibility with WordPress 3.0
-* Bug fix for shortcode
-* Formatting updates to public pages for HTML5 compliance
-* Removed option to open client site in new window (for HTML5 compliance)
-
-= 3.3 =
-* Added ability to include image (shows only on page, not in sidebar)
-* Added default settings to wp_options on install or upgrade from version prior to 3.3
-* Modified edit testimonials form to use labels
-* Removed obsolete code from style sheet
-* Added settings link to plugins page
-* Bug fixes when saving settings
-
-= 3.2 =
-* Added charset to table creation
-
-= 3.1 =
-* Minor bug fix to correct blank sort order on edit
-
-= 3.0 =
-* Modified HTML to use blockquote and cite for formatting
-* Added option to set number of random testimonials in sidebar
-* Added ability to give access to non-administrators
-* Added option to sort page by user defined sort order
-
-= 2.2 =
-* Corrected shortcode output
-
-= 2.1 =
-* Added backwards compatibility for WP2.7 and higher
-* Option to have client website open in new window
-
-= 2.0 =
-* Compatibility with WP2.8 and higher
-* Random block now pulls testimonial via "ORDER BY RAND" for true random order
-* Removed obsolete field in table "views"
-* Pages/posts can now be created using shortcode [sfs-testimonials] (eliminates the need for a custom theme page)
-* Added "read more" link to random sidebar block
-* Added configuration options to show/hide "read more" link in sidebar with customizable text
-* Added options to delete table upon deactivation
+1.0 Initial Release
 
 == Support ==
 
@@ -106,4 +63,49 @@ Copyright (C) 2007-2010 Jodi Diehl - http://www.sunfrogservices.com/
 
 == Acknowledgements ==
 
-* Thank you to Wouter from http://www.allwebsites.be for his XHTML contributions
+
+
+=== FooDocs ===
+Contributors: bradvin,webdevmattcrom
+Donate link: http://fooplugins.com/donate
+Tags: documentation, hierarchy, custom post type, syntax highlighting
+Requires at least: 3.5.1
+Tested up to: 3.6
+Stable tag: 1.0.0
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+
+Organized documentation for your digital products
+
+== Description ==
+
+Easily create and manage documentation for your digital products in a central location.
+
+= Plugin Features =
+
+*   Manage all your documentation using a custom post type.
+*   Include documentation on any page using a simple shortcode.
+*   Include a table of contents in your sidebar with a handy widget.
+*   Built-in syntax highlighting.
+
+== Installation ==
+
+1.  Upload your plugin folder to the '/wp-content/plugins' directory.
+2.  Activate the plugin through the 'Plugins' menu in WordPress.
+
+== Frequently Asked Questions ==
+
+There are no FAQ just yet.
+
+== Changelog ==
+
+= 1.0.0 =
+*   First release
+
+== Upgrade Notice ==
+
+There is no need to upgrade just yet.
+
+== Screenshots ==
+
+There are no screenshots yet.
