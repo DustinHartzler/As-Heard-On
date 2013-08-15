@@ -348,32 +348,12 @@ function removetst($testid) {
 			</tr>
 			
 			<tr valign="top">
-			<td>Text for sidebar link (Read More, View All, etc)</td>
+			<td>Text for sidebar button (Read More, View All, etc)</td>
 			<td><input type="text" name="linktext" value="<?php echo get_option('linktext'); ?>" /></td>
 			</tr>
 
 			<tr valign="top">
-			<td>Image Width</td>
-			<td><input type="text" name="image_width" size="2" value="<?php echo get_option('image_width'); ?>" /><label>(pixels)</label></td>
-			</tr>
-
-			<tr valign="top">
-			<td>Image Height</td>
-			<td><input type="text" name="image_height" size="2" value="<?php echo get_option('image_height'); ?>" /><label>(pixels)</label></td>
-			</tr>
-
-			<tr valign="top">
-			<td>How fast to transition from B&W to Color</td>
-			<td><input type="text" data-slider="true" data-slider-range="0,5" data-slider-step=".1" data-slider-highlight="true" data-slider-theme="volume" name="opacity" value="<?php echo get_option('opacity'); ?>"><span class="output">seconds</span></td>
-			</tr>
-
-			<tr valign="top">
-			<td>Number of podcasts to show in sidebar</td>
-			<td><input type="text" name="setlimit" size="2" value="<?php echo get_option('setlimit'); ?>" /></td>
-			</tr>
-
-			<tr valign="top">
-			<td>Previous podcast page for sidebar link<br/> (use shortcode [aho])</td>
+			<td>Page link for sidebar button<br/> (use shortcode [aho])</td>
 			<td> <select name="linkurl">
 			 <option value="">
 		<?php echo esc_attr(__('Select page')); ?></option> 
@@ -396,9 +376,30 @@ function removetst($testid) {
 		  }
 		 ?>	</select></td>
 			</tr>
+
+			<tr valign="top">
+			<td>Image Width</td>
+			<td><input type="text" name="image_width" size="2" value="<?php echo get_option('image_width'); ?>" /><label>(pixels)</label></td>
+			</tr>
+
+			<tr valign="top">
+			<td>Image Height</td>
+			<td><input type="text" name="image_height" size="2" value="<?php echo get_option('image_height'); ?>" /><label>(pixels)</label></td>
+			</tr>
+
+			<tr valign="top">
+			<td>How fast to transition from B&W to Color</td>
+			<td><input type="text" data-slider="true" data-slider-range="0,5" data-slider-step=".1" data-slider-highlight="true" data-slider-theme="volume" name="opacity" value="<?php echo get_option('opacity'); ?>"><span class="output">seconds</span></td>
+			</tr>
+
+			<tr valign="top">
+			<td>Number of podcasts to show in sidebar</td>
+			<td><input type="text" name="setlimit" size="2" value="<?php echo get_option('setlimit'); ?>" /></td>
+			</tr>
+
 				</table>
 			<input type="hidden" name="action" value="update" />
-			<input type="hidden" name="page_options" value="admng,showlink,linktext,image_width,opacity,setlimit, linkurl,sfs_sorder,sfs_imgalign,sfs_imgmax,deldata" />
+			<input type="hidden" name="page_options" value="admng,showlink,linktext,image_width,image_height,opacity,setlimit, linkurl,sfs_sorder,sfs_imgalign,sfs_imgmax,deldata" />
 			
 			<p class="submit">
 			<input type="submit" class="button-primary" value="<?php _e('Save Widget Options') ?>" />
@@ -647,7 +648,7 @@ $wp_plugin_template = new AsHeardOn();
 			return $instance;
 		}
 	 
-		// DIsplay Widget Control Form
+		// Display Widget Control Form
 		function form($instance) {
 			global $wpdb;
 			$instance = wp_parse_args((array) $instance, array('title' => __('Hear Me On Other Shows', 'wp-podcast')));
@@ -685,13 +686,13 @@ function onerandom() {
 			echo '</div>';
 
 		} // end loop
-			$sfs_showlink = get_option('sfs_showlink');
-			$sfs_linktext = get_option('sfs_linktext');
-			$sfs_linkurl = get_option('sfs_linkurl');
+			$showlink = get_option('showlink');
+			$linktext = get_option('linktext');
+			$linkurl = get_option('linkurl');
 			
-				if (($sfs_showlink == 'yes') && ($sfs_linkurl !='')) {
-					if ($sfs_linktext == '') { $sfs_linkdisplay = 'Read More'; } else { $sfs_linkdisplay = $sfs_linktext; }
-					echo '<div class="ppgreadmore" ><a class="button" href="'.$sfs_linkurl.'">'.$sfs_linkdisplay.'</a></div>';
+				if (($showlink == 'yes') && ($linkurl !='')) {
+					if ($linktext == '') { $linkdisplay = 'Read More'; } else { $linkdisplay = $linktext; }
+					echo '<div class="ppgreadmore" ><a class="button" href="'.$linkurl.'">'.$linkdisplay.'</a></div>';
 				}
 		echo '<div class="clear"></div>';
 	echo '</div>';
