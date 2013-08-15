@@ -365,10 +365,10 @@ function removetst($testid) {
 			</tr>
 
 			<tr valign="top">
-			<td>Previous podcast page for sidebar link<br/> (use shortcode [ppg])</td>
+			<td>Previous podcast page for sidebar link<br/> (use shortcode [aho])</td>
 			<td> <select name="linkurl">
 			 <option value="">
-		<?php echo attribute_escape(__('Select page')); ?></option> 
+		<?php echo esc_attr(__('Select page')); ?></option> 
 		 <?php 
 		  $pages = get_pages(); 
 		  foreach ($pages as $pagg) {
