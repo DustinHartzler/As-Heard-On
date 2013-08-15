@@ -662,18 +662,18 @@ $wp_plugin_template = new AsHeardOn();
 function onerandom() {
 	global $wpdb;
 	$table_name = $wpdb->prefix . "aho";
-	if (get_option('aho_setlimit') == '') {
-		$aho_setlimit = 1;
+	if (get_option('setlimit') == '') {
+		$setlimit = 1;
 	} else {
-		$aho_setlimit = get_option('aho_setlimit');
+		$setlimit = get_option('setlimit');
 	}
-	$randone = $wpdb->get_results("SELECT show_url, episode, imgurl FROM $table_name WHERE show_url !='' order by RAND() LIMIT $aho_setlimit");
+	$randone = $wpdb->get_results("SELECT show_url, episode, imgurl FROM $table_name WHERE show_url !='' order by RAND() LIMIT $setlimit");
 
 	echo '<div id="sfstest-sidebar">';
 	
 	foreach ($randone as $randone2) {
 			echo '<div class="item">';
-			echo '<a href="'.nl2br(stripslashes($randone2->show_url)).'" target="_blank"><img src="'.$randone2->imgurl.'" width="'.get_option('ppg_image_width').'" style="margin-right:10px;"></a>';
+			echo '<a href="'.nl2br(stripslashes($randone2->show_url)).'" target="_blank"><img src="'.$randone2->imgurl.'" width="'.get_option('image_width').'" height="50px" style="margin-right:10px;"></a>';
 			echo '</div>';
 
 		} // end loop
