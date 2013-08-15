@@ -11,6 +11,7 @@ Author URI: http://YourWebsiteEngineer.com
 
 if ( !class_exists('AsHeardOn') ) {
     class AsHeardOn {
+    	//public $wpdb;
 // +---------------------------------------------------------------------------+
 // | WP hooks                                                                  |
 // +---------------------------------------------------------------------------+
@@ -30,6 +31,7 @@ if ( !class_exists('AsHeardOn') ) {
 			register_setting( 'option-widget', 'showlink' );
 			register_setting( 'option-widget', 'linktext' );
 			register_setting( 'option-widget', 'image_width');
+			register_setting( 'option-widget', 'image_height');
 			register_setting( 'option-widget', 'opacity');
 			register_setting( 'option-widget', 'setlimit' );
 			register_setting( 'option-widget', 'linkurl' );
@@ -44,6 +46,7 @@ if ( !class_exists('AsHeardOn') ) {
 			unregister_setting( 'option-widget', 'showlink' );
 			unregister_setting( 'option-widget', 'linktext' );
 			unregister_setting( 'option-widget', 'image_width');
+			unregister_setting( 'option-widget', 'image_height');
 			unregister_setting( 'option-widget', 'opacity');
 			unregister_setting( 'option-widget', 'setlimit' );
 			unregister_setting( 'option-widget', 'linkurl' );
@@ -350,8 +353,13 @@ function removetst($testid) {
 			</tr>
 
 			<tr valign="top">
-			<td>Image Width (for sidebar)</td>
+			<td>Image Width</td>
 			<td><input type="text" name="image_width" size="2" value="<?php echo get_option('image_width'); ?>" /><label>(pixels)</label></td>
+			</tr>
+
+			<tr valign="top">
+			<td>Image Height</td>
+			<td><input type="text" name="image_height" size="2" value="<?php echo get_option('image_height'); ?>" /><label>(pixels)</label></td>
 			</tr>
 
 			<tr valign="top">
@@ -673,7 +681,7 @@ function onerandom() {
 	
 	foreach ($randone as $randone2) {
 			echo '<div class="item">';
-			echo '<a href="'.nl2br(stripslashes($randone2->show_url)).'" target="_blank"><img src="'.$randone2->imgurl.'" width="'.get_option('image_width').'" height="50px" style="margin-right:10px;"></a>';
+			echo '<a href="'.nl2br(stripslashes($randone2->show_url)).'" target="_blank"><img src="'.$randone2->imgurl.'" width="'.get_option('image_width').'" height="'.get_option('image_height').'" style="margin-right:10px;"></a>';
 			echo '</div>';
 
 		} // end loop
