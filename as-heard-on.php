@@ -614,7 +614,7 @@ $wp_plugin_template = new AsHeardOn();
 		// Constructor
 		function aho_widget() {
 			$widget_ops = array('description' => __('Displays random podcast in your sidebar', 'wp-podcast'));
-			$this->WP_Widget('podcasts', __('Past Podcast Guest'), $widget_ops);
+			$this->WP_Widget('podcasts', __('As Heard On'), $widget_ops);
 		}
 	 
 		// Display Widget
@@ -624,7 +624,7 @@ $wp_plugin_template = new AsHeardOn();
 	
 			echo $before_widget.$before_title.$title.$after_title;
 	
-				ppg_onerandom();
+				$this->onerandom();
 	
 			echo $after_widget;
 		}
@@ -653,4 +653,45 @@ $wp_plugin_template = new AsHeardOn();
 	<input type="hidden" id="<?php echo $this->get_field_id('submit'); ?>" name="<?php echo $this->get_field_name('submit'); ?>" value="1" />
 	<?php
 		}
+
+// +---------------------------------------------------------------------------+
+// | Sidebar - show random podcast(s) in sidebar                               |
+// +---------------------------------------------------------------------------+
+
+/* show random testimonial(s) in sidebar */
+function onerandom() {
+	global $wpdb;
+	$table_name = $wpdb->prefix . "aho";
+	if (get_option('aho_setlimit') == '') {
+		$aho_setlimit = 1;
+	} else {
+		$aho_setlimit = get_option('aho_setlimit');
+	}
+	$randone = $wpdb->get_results("SELECT show_url, episode, imgurl FROM $table_name WHERE show_url !='' order by RAND() LIMIT $aho_setlimit");
+
+	echo '<div id="sfstest-sidebar">';
+	
+	foreach ($randone as $randone2) {
+			echo '<div class="item">';
+			echo '<a href="'.nl2br(stripslashes($randone2->show_url)).'" target="_blank"><img src="'.$randone2->imgurl.'" width="'.get_option('ppg_image_width').'" style="margin-right:10px;"></a>';
+			echo '</div>';
+
+		} // end loop
+			$sfs_showlink = get_option('sfs_showlink');
+			$sfs_linktext = get_option('sfs_linktext');
+			$sfs_linkurl = get_option('sfs_linkurl');
+			
+				if (($sfs_showlink == 'yes') && ($sfs_linkurl !='')) {
+					if ($sfs_linktext == '') { $sfs_linkdisplay = 'Read More'; } else { $sfs_linkdisplay = $sfs_linktext; }
+					echo '<div class="ppgreadmore" ><a class="button" href="'.$sfs_linkurl.'">'.$sfs_linkdisplay.'</a></div>';
+				}
+		echo '<div class="clear"></div>';
+	echo '</div>';
+}
+
+	}
+				### Function: Init WP-Testimonials  Widget
+	add_action('widgets_init', 'widget_aho_init');
+	function widget_aho_init() {
+		register_widget('aho_widget');
 	}
