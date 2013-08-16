@@ -23,7 +23,7 @@ if ( !class_exists('AsHeardOn') ) {
             add_action( 'admin_init', array(&$this, 'register_options'));
             add_action( 'admin_menu', array(&$this, 'addpages'));
 			add_action( 'plugins_loaded', array(&$this, 'set'));
-			add_shortcode( 'aho', 'showall');
+			add_shortcode( 'aho', array(&$this, 'showall'));
 		}
 
 		function register_options() { // whitelist options
@@ -64,7 +64,7 @@ if ( !class_exists('AsHeardOn') ) {
 		  	wp_enqueue_script( 'jquery' );
 		  	wp_enqueue_script( 'grayscale', plugins_url('/as-heard-on/js/grayscale.js') ,array('jquery') );
 		  	wp_enqueue_script( 'slider', plugins_url('/as-heard-on/js/simple-slider.js') ,array('jquery') ); 
-		  	$params = array('ppg_opacity_js' => get_option('ppg_opacity') ); 
+		  	$params = array('opacity_js' => get_option('opacity') ); 
 		  	wp_localize_script( 'grayscale', 'grayscale_vars', $params );  
 		  	wp_enqueue_script( 'display', plugins_url('/as-heard-on/js/display.js') ,array('jquery') );    
 		} 
@@ -279,10 +279,9 @@ function removetst($testid) {
 			<?php
 				if (isset($_POST['addnew'])) {
 					$this->insertnew();
-					?>
-			<div id="message" class="updated fade"><p><strong><?php _e('Podcast Added'); ?>.</strong></p></div><?php
+					?><div id="message" class="updated fade"><p><strong><?php _e('Podcast Added'); ?>.</strong></p></div><?php
 				}
-					if ($_REQUEST['mode']=='ahorem') {
+				if ($_REQUEST['mode']=='ahorem') {
 					$this->removetst($_REQUEST['testid']);
 					?><div id="message" class="updated fade"><p><strong><?php _e('Podcast Deleted'); ?>.</strong></p></div><?php
 				}
@@ -324,7 +323,7 @@ function removetst($testid) {
 		function widget_options() {
 		?>
 			<div class="wrap">
-			<?php if ($_REQUEST['updated']=='true') { ?>
+			<?php if ($_REQUEST['settings-updated']=='true') { ?>
 			<div id="message" class="updated fade"><p><strong>Settings Updated</strong></p></div>
 			<?php  } ?>
 
@@ -399,7 +398,7 @@ function removetst($testid) {
 
 				</table>
 			<input type="hidden" name="action" value="update" />
-			<input type="hidden" name="page_options" value="admng,showlink,linktext,image_width,image_height,opacity,setlimit, linkurl,sfs_sorder,sfs_imgalign,sfs_imgmax,deldata" />
+			<input type="hidden" name="page_options" value="admng,showlink,linktext,image_width,image_height,opacity,setlimit, linkurl,sfs_sorder,sfs_imgalign,imgmax,deldata" />
 			
 			<p class="submit">
 			<input type="submit" class="button-primary" value="<?php _e('Save Widget Options') ?>" />
@@ -408,8 +407,8 @@ function removetst($testid) {
 
 		function page_options(){ ?>
 			<div class="wrap">
-				<?php if ($_REQUEST['updated']=='true') { ?>
-				<div id="message" class="updated fade"><p><strong>Settings Updated</strong></p></div>
+				<?php if ($_REQUEST['settings-updated']=='true') { ?>
+				<div id="message" class="updated fade"><p><strong>Page Settings Updated</strong></p></div>
 				<?php  } ?>
 
 				<?php echo '<p align="right">Need help? <a href="/' . PLUGINDIR . '/wp-testimonials/docs/documentation.php" target="_blank">documentation</a> &nbsp;|&nbsp; <a href="http://www.sunfrogservices.com/web-programming/wp-testimonials/">support page</a></p>'; ?>
@@ -572,6 +571,68 @@ function aho_edit($testid){
 		echo '</div>'; 
 	echo '</form>';
 	echo '</div>';
+}
+
+// +---------------------------------------------------------------------------+
+// | Show podcasts on page with shortcode [aho]					               |
+// +---------------------------------------------------------------------------+
+
+
+/* show page of all testimonials */
+function showall() {
+global $wpdb;
+
+	$imgalign = get_option('imgalign');
+	if ($imgalign == '') { $imgalign = 'alignright'; } else { $imgalign = get_option('imgalign'); }
+
+	$sorder = (get_option('sorder'));
+	if ($sorder != 'testid ASC' AND $sorder != 'testid DESC' AND $sorder != 'storder ASC')
+	{ $sorder2 = 'testid ASC'; } else { $sorder2 = $sorder; }
+	
+	$table_name = $wpdb->prefix . "aho";
+	$tstpage = $wpdb->get_results("SELECT testid, show_name, host_name, show_url, imgurl, episode, excerpt, storder FROM $table_name WHERE imgurl !='' ORDER BY $sorder2");
+	$retvalo = '';
+	$retvalo .= '';
+	$retvalo .= '<div id="sfstest-page">';
+	foreach ($tstpage as $tstpage2) {
+		if ($tstpage2->imgurl != '') { // don't show podcasts without album art.
+
+			
+			if ($tstpage2->imgurl != '') { // check for image
+				$imgmax = get_option('imgmax');
+				if ($imgmax == '') { $sfiheight = ''; } else { $sfiheight = ' width="'.get_option('imgmax').'"'; }
+				$retvalo .= '<img src="'.$tstpage2->imgurl.'"'.$sfiheight.' class="'.$imgalign.'" alt="'.stripslashes($tstpage2->show_name).'">';
+			}
+			
+				if ($tstpage2->show_name != '') {
+					if ($tstpage2->show_url != '') {
+							$retvalo .= '<strong>Show Name: </strong><a href="'.$tstpage2->show_url.'" class="cite-link">'.stripslashes($tstpage2->show_name).'</a><br>';
+					} else {
+						$retvalo .= stripslashes($tstpage2->show_name).'';
+					}
+					if ($tstpage2->host_name != ''){
+						$retvalo .= '<strong>Host Name: </strong>'.$tstpage2->host_name.'<br>';
+					} else {
+					}
+					if ($tstpage2->episode != ''){
+						$retvalo .= '<strong>Episode: </strong>' .$tstpage2->episode. '<br>';
+					}
+					else {
+					}
+					if ($tstpage2->excerpt != ''){
+						$retvalo .= '<strong>Show Recap: </strong>' .$tstpage2->excerpt. '<br>';
+					}
+					else {
+					}
+				} else {
+					$retvalo .= stripslashes($tstpage2->clientname).'';
+				}
+				$retvalo .= '<div class="clear"><hr></div>';
+
+		}
+	}
+	$retvalo .= '</div>';
+return $retvalo;
 }
 
 

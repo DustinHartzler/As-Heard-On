@@ -1,12 +1,12 @@
 // On window load. This waits until images have loaded which is essential
 	jQuery(document).ready(function($) {
-		var ppg_opacity = parseInt(grayscale_vars.ppg_opacity_js)*1000;
-		var ppg_color   = parseInt(grayscale_vars.ppg_color_js);
-		var ppg_color = 0;
+		var aho_opacity = parseInt(grayscale_vars.opacity_js)*1000;
+		var aho_color   = parseInt(grayscale_vars.color_js);
+		var aho_color = 0;
 	$(window).load(function(){
 		
 		// Fade in images so there isn't a color "pop" document load and then on window load
-		$(".item img").fadeIn(ppg_opacity);
+		$(".item img").fadeIn(aho_opacity);
 		
 		// clone image
 		$('.item img').each(function(){
@@ -23,10 +23,10 @@
 		
 		// Fade image 
 		$('.item img').mouseover(function(){
-			$(this).parent().find('img:first').stop().animate({opacity:1}, ppg_opacity);
+			$(this).parent().find('img:first').stop().animate({opacity:1}, aho_opacity);
 		})
 		$('.img_grayscale').mouseout(function(){
-			$(this).stop().animate({opacity:0}, ppg_opacity);
+			$(this).stop().animate({opacity:0}, aho_opacity);
 		});		
 	});
 	
