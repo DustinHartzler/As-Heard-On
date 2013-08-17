@@ -388,7 +388,7 @@ function removetst($testid) {
 
 			<tr valign="top">
 			<td>How fast to transition from B&W to Color</td>
-			<td><input type="text" data-slider="true" data-slider-range="0,5" data-slider-step=".1" data-slider-highlight="true" data-slider-theme="volume" name="opacity" value="<?php echo get_option('opacity'); ?>"><span class="output">seconds</span></td>
+			<td><input type="text" data-slider="true" data-slider-range="0,5" data-slider-step=".1" data-slider-highlight="true" data-slider-theme="volume" name="opacity" value="<?php echo get_option('opacity'); ?>" ></td>
 			</tr>
 
 			<tr valign="top">
@@ -403,6 +403,8 @@ function removetst($testid) {
 			<p class="submit">
 			<input type="submit" class="button-primary" value="<?php _e('Save Widget Options') ?>" />
 			</p>
+
+			  
 		<?php }
 
 		function page_options(){ ?>

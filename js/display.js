@@ -12,4 +12,6 @@ jQuery(document).ready(function($) {
           .html(data.value.toFixed(1) );
     });
 
+    
+
     });
