@@ -41,7 +41,7 @@ if ( !class_exists('AsHeardOn') ) {
 			register_setting( 'option-page', 'deldata' );
 		}
 
-		public function unregister_options() { // unset options
+		function unregister_options() { // unset options
 			unregister_setting( 'option-widget', 'admng' );
 			unregister_setting( 'option-widget', 'showlink' );
 			unregister_setting( 'option-widget', 'linktext' );
@@ -323,80 +323,78 @@ function removetst($testid) {
 		function widget_options() {
 		?>
 			<div class="wrap">
-			<?php if ($_REQUEST['settings-updated']=='true') { ?>
-			<div id="message" class="updated fade"><p><strong>Settings Updated</strong></p></div>
-			<?php  } ?>
+				<?php if ($_REQUEST['settings-updated']=='true') { ?>
+				<div id="message" class="updated fade"><p><strong>Settings Updated</strong></p></div>
+				<?php  } ?>
 
-			<?php echo '<p align="right">Need help? <a href="/' . PLUGINDIR . '/as-heard-on/docs/documentation.php" target="_blank">documentation</a> &nbsp;|&nbsp; <a href="http://#">support page</a></p>'; ?>
-			<form method="post" action="options.php">
-			<?php wp_nonce_field('update-options'); ?>
-			<?php settings_fields( 'option-widget' ); ?>
+				<?php echo '<p align="right">Need help? <a href="/' . PLUGINDIR . '/as-heard-on/docs/documentation.php" target="_blank">documentation</a> &nbsp;|&nbsp; <a href="http://#">support page</a></p>'; ?>
+				<form method="post" action="options.php">
+				<?php wp_nonce_field('update-options'); ?>
+				<?php settings_fields( 'option-widget' ); ?>
 			
-			<table cellpadding="5" cellspacing="5">
-
-			<tr valign="top">
-			<td>Show link in sidebar to full page of previous interviews</td>
-			<td>
-			<?php $sfs_showlink = get_option('showlink'); 
-			if ($sfs_showlink == 'yes') { ?>
-			<input type="checkbox" name="showlink" value="yes" checked />
-			<?php } else { ?>
-			<input type="checkbox" name="showlink" value="yes" />
-			<?php } ?>
-			</td>
-			</tr>
+				<table cellpadding="5" cellspacing="5">
+					<tr valign="top">
+						<td>Show link in sidebar to full page of previous interviews</td>
+						<td><?php $sfs_showlink = get_option('showlink'); 
+						if ($sfs_showlink == 'yes') { ?>
+							<input type="checkbox" name="showlink" value="yes" checked />
+						<?php } else { ?>
+							<input type="checkbox" name="showlink" value="yes" />
+						<?php } ?>
+						</td>
+					</tr>
 			
-			<tr valign="top">
-			<td>Text for sidebar button (Read More, View All, etc)</td>
-			<td><input type="text" name="linktext" value="<?php echo get_option('linktext'); ?>" /></td>
-			</tr>
+					<tr valign="top">
+						<td>Text for sidebar button (Read More, View All, etc)</td>
+						<td><input type="text" name="linktext" value="<?php echo get_option('linktext'); ?>" /></td>
+					</tr>
 
-			<tr valign="top">
-			<td>Page link for sidebar button<br/> (use shortcode [aho])</td>
-			<td> <select name="linkurl">
-			 <option value="">
-		<?php echo esc_attr(__('Select page')); ?></option> 
-		 <?php 
-		  $pages = get_pages(); 
-		  foreach ($pages as $pagg) {
-		  $pagurl = get_page_link($pagg->ID);
-		  $sfturl = get_option('linkurl');
-		  	if ($pagurl == $sfturl) {
-				$option = '<option value="'.get_page_link($pagg->ID).'" selected>';
-				$option .= $pagg->post_title;
-				$option .= '</option>';
-				echo $option;
-			} else {
-				$option = '<option value="'.get_page_link($pagg->ID).'">';
-				$option .= $pagg->post_title;
-				$option .= '</option>';
-				echo $option;	
-			}
-		  }
-		 ?>	</select></td>
-			</tr>
+					<tr valign="top">
+						<td>Page link for sidebar button<br/> (use shortcode [aho])</td>
+						<td> <select name="linkurl">
+			 			<option value="">
+						<?php echo esc_attr(__('Select page')); ?></option> 
+						<?php 
+						  $pages = get_pages(); 
+						  foreach ($pages as $pagg) {
+						  $pagurl = get_page_link($pagg->ID);
+						  $sfturl = get_option('linkurl');
+						  	if ($pagurl == $sfturl) {
+								$option = '<option value="'.get_page_link($pagg->ID).'" selected>';
+								$option .= $pagg->post_title;
+								$option .= '</option>';
+								echo $option;
+							} else {
+								$option = '<option value="'.get_page_link($pagg->ID).'">';
+								$option .= $pagg->post_title;
+								$option .= '</option>';
+								echo $option;	
+							}
+						  }
+						 ?>	</select></td>
+					</tr>
 
-			<tr valign="top">
-			<td>Image Width</td>
-			<td><input type="text" name="image_width" size="2" value="<?php echo get_option('image_width'); ?>" /><label>(pixels)</label></td>
-			</tr>
+					<tr valign="top">
+						<td>Image Width</td>
+						<td><input type="text" name="image_width" size="2" value="<?php echo get_option('image_width'); ?>" /><label>(pixels)</label></td>
+					</tr>
 
-			<tr valign="top">
-			<td>Image Height</td>
-			<td><input type="text" name="image_height" size="2" value="<?php echo get_option('image_height'); ?>" /><label>(pixels)</label></td>
-			</tr>
+					<tr valign="top">
+						<td>Image Height</td>
+						<td><input type="text" name="image_height" size="2" value="<?php echo get_option('image_height'); ?>" /><label>(pixels)</label></td>
+					</tr>
 
-			<tr valign="top">
-			<td>How fast to transition from B&W to Color</td>
-			<td><input type="text" data-slider="true" data-slider-range="0,5" data-slider-step=".1" data-slider-highlight="true" data-slider-theme="volume" name="opacity" value="<?php echo get_option('opacity'); ?>" ></td>
-			</tr>
+					<tr valign="top">
+						<td>How fast to transition from B&W to Color</td>
+						<td><input type="text" data-slider="true" data-slider-range="0,5" data-slider-step=".1" data-slider-highlight="true" data-slider-theme="volume" name="opacity" value="<?php echo get_option('opacity'); ?>" ></td>
+					</tr>
 
-			<tr valign="top">
-			<td>Number of podcasts to show in sidebar</td>
-			<td><input type="text" name="setlimit" size="2" value="<?php echo get_option('setlimit'); ?>" /></td>
-			</tr>
+					<tr valign="top">
+						<td>Number of podcasts to show in sidebar</td>
+						<td><input type="text" name="setlimit" size="2" value="<?php echo get_option('setlimit'); ?>" /></td>
+					</tr>
 
-				</table>
+			</table>
 			<input type="hidden" name="action" value="update" />
 			<input type="hidden" name="page_options" value="admng,showlink,linktext,image_width,image_height,opacity,setlimit, linkurl,sfs_sorder,sfs_imgalign,imgmax,deldata" />
 			
