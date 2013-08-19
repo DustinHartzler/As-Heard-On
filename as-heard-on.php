@@ -577,8 +577,7 @@ function aho_edit($testid){
 // | Show podcasts on page with shortcode [aho]					               |
 // +---------------------------------------------------------------------------+
 
-
-/* show page of all testimonials */
+/* show page of all podcast artwork */
 function showall() {
 global $wpdb;
 
