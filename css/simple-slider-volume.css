@@ -48,7 +48,7 @@
 }
 
 [class^=slider] { display: inline-block; padding-bottom: 10px; }
-.output, label { color: #888; font-size: 14px; padding-top: 1px; margin-left: 5px; vertical-align: top;}
+.output { color: #888; font-size: 14px; padding-top: 1px; margin-left: 5px; vertical-align: top;}
 
 label {
   vertical-align: middle;

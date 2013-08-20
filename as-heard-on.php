@@ -58,7 +58,7 @@ if ( !class_exists('AsHeardOn') ) {
 
 
 		function addscripts() { // include style sheet
-		  	wp_enqueue_style('grayscale_css', plugins_url('/as-heard-on/css/past-podcast-guest-style.css') );
+		  	wp_enqueue_style('grayscale_css', plugins_url('/as-heard-on/css/as-heard-on-style.css') );
 		  	wp_enqueue_style('slider_css', plugins_url('/as-heard-on/css/simple-slider.css') );
 		  	wp_enqueue_style('volume_css', plugins_url('/as-heard-on/css/simple-slider-volume.css') );
 		  	wp_enqueue_script( 'jquery' );
@@ -386,7 +386,7 @@ function removetst($testid) {
 
 					<tr valign="top">
 						<td>How fast to transition from B&W to Color</td>
-						<td><input type="text" data-slider="true" data-slider-range="0,5" data-slider-step=".1" data-slider-highlight="true" data-slider-theme="volume" name="opacity" value="<?php echo get_option('opacity'); ?>" ></td>
+						<td><input type="text" data-slider="true" data-slider-range="0,5" data-slider-step=".1" data-slider-values="0,1,2,3,4,5" data-slider-highlight="true" data-slider-theme="volume" name="opacity" value="<?php echo get_option('opacity'); ?>" ></td>
 					</tr>
 
 					<tr valign="top">

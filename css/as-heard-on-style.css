@@ -5,6 +5,10 @@ width: 125px;
 font-weight: bold;
 }
 
+div.clear {
+    clear:both;
+}
+
 /*#sfstest-form input {
 width: 250px;
 margin-bottom: 5px;
@@ -27,7 +31,7 @@ border: 1px solid #ccc;
 }
 
 #icon-ppg-image{
-	background: url ('http://localhost:8888/YWE/html/wp-content_327434/plugins/past-podcast-guest/podcast_icon.png') no-repeat;
+	background: url ('../podcast_icon.png') no-repeat;
 }
 
 .button {
@@ -44,9 +48,7 @@ border: 1px solid #ccc;
 	border:4px solid #dcdcdc;
 	display:inline-block;
 	color:#777777;
-	/*font-family:arial;*/
 	font-size:15px;
-	/*font-weight:bold;*/
 	padding:6px 24px;
 	text-decoration:none;
 	text-shadow:1px 1px 0px #ffffff;
