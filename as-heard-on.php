@@ -620,7 +620,7 @@ global $wpdb;
 				if ($tstpage2->imgurl != '') { // check for image
 					$imgmax = get_option('imgmax');
 					if ($imgmax == '') { $sfiheight = ''; } else { $sfiheight = ' width="'.get_option('imgmax').'"'; }
-					$retvalo .= '<img src="'.$tstpage2->imgurl.'"'.$sfiheight.' class="'.$imgalign.'" alt="'.stripslashes($tstpage2->show_name).'">';
+					$retvalo .= '<a href="'.$tstpage2->show_url.'" target="_blank"><img src="'.$tstpage2->imgurl.'"'.$sfiheight.' class="'.$imgalign.'" alt="'.stripslashes($tstpage2->show_name).'"></a>';
 				}
 				
 					if ($tstpage2->show_name != '') {
