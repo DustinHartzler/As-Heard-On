@@ -36,6 +36,7 @@ if ( !class_exists('AsHeardOn') ) {
 			register_setting( 'option-widget', 'setlimit' );
 			register_setting( 'option-widget', 'linkurl' );
 			register_setting( 'option-page', 'imgalign' );
+			register_setting( 'option-page', 'imgdisplay' );
 			register_setting( 'option-page', 'imgmax' );
 			register_setting( 'option-page', 'sorder' );
 			register_setting( 'option-page', 'deldata' );
@@ -455,6 +456,23 @@ function removetst($testid) {
 			</tr>
 
 			<tr valign="top">
+			<td>Display Images or Images and Summary</td>
+			<td>
+			<?php $aho_display = get_option('imgdisplay'); 
+			if ($aho_display == 'displayimg') { ?>
+			<input type="radio" name="imgdisplay" value="displayimg" checked /> Images
+			<input type="radio" name="imgdisplay" value="displaysummary" /> Images & Summary
+			<?php } elseif ($aho_display == 'displaysummary') { ?>
+			<input type="radio" name="imgdisplay" value="displayimg" /> Images
+			<input type="radio" name="imgdisplay" value="displaysummary" checked/> Images & Summary
+			<?php } else { ?>
+			<input type="radio" name="imgdisplay" value="displayimg" /> Images
+			<input type="radio" name="imgdisplay" value="displaysummary" /> Images & Summary
+			<?php } ?>
+			</td>
+			</tr>
+
+			<tr valign="top">
 			<td>Maximum height (in pixels) for image</td>
 			<td><input type="text" name="imgmax" value="<?php echo get_option('imgmax'); ?>" /> (if left blank images will show full size)</td>
 			</tr>
@@ -592,41 +610,57 @@ global $wpdb;
 	$tstpage = $wpdb->get_results("SELECT testid, show_name, host_name, show_url, imgurl, episode, excerpt, storder FROM $table_name WHERE imgurl !='' ORDER BY $sorder2");
 	$retvalo = '';
 	$retvalo .= '';
-	$retvalo .= '<div id="sfstest-page">';
+	$retvalo .= '<div id="aho-page">';
 	foreach ($tstpage as $tstpage2) {
-		if ($tstpage2->imgurl != '') { // don't show podcasts without album art.
+		$imgdisplay = get_option('imgdisplay');
+		if ($imgdisplay == 'displaysummary'){
+			if ($tstpage2->imgurl != '') { // don't show podcasts without album art.
 
-			
-			if ($tstpage2->imgurl != '') { // check for image
-				$imgmax = get_option('imgmax');
-				if ($imgmax == '') { $sfiheight = ''; } else { $sfiheight = ' width="'.get_option('imgmax').'"'; }
-				$retvalo .= '<img src="'.$tstpage2->imgurl.'"'.$sfiheight.' class="'.$imgalign.'" alt="'.stripslashes($tstpage2->show_name).'">';
-			}
-			
-				if ($tstpage2->show_name != '') {
-					if ($tstpage2->show_url != '') {
-							$retvalo .= '<strong>Show Name: </strong><a href="'.$tstpage2->show_url.'" class="cite-link">'.stripslashes($tstpage2->show_name).'</a><br>';
-					} else {
-						$retvalo .= stripslashes($tstpage2->show_name).'';
-					}
-					if ($tstpage2->host_name != ''){
-						$retvalo .= '<strong>Host Name: </strong>'.$tstpage2->host_name.'<br>';
-					} else {
-					}
-					if ($tstpage2->episode != ''){
-						$retvalo .= '<strong>Episode: </strong>' .$tstpage2->episode. '<br>';
-					}
-					else {
-					}
-					if ($tstpage2->excerpt != ''){
-						$retvalo .= '<strong>Show Recap: </strong>' .$tstpage2->excerpt. '<br>';
-					}
-					else {
-					}
-				} else {
-					$retvalo .= stripslashes($tstpage2->clientname).'';
+				
+				if ($tstpage2->imgurl != '') { // check for image
+					$imgmax = get_option('imgmax');
+					if ($imgmax == '') { $sfiheight = ''; } else { $sfiheight = ' width="'.get_option('imgmax').'"'; }
+					$retvalo .= '<img src="'.$tstpage2->imgurl.'"'.$sfiheight.' class="'.$imgalign.'" alt="'.stripslashes($tstpage2->show_name).'">';
 				}
-				$retvalo .= '<div class="clear"><hr></div>';
+				
+					if ($tstpage2->show_name != '') {
+						if ($tstpage2->show_url != '') {
+								$retvalo .= '<strong>Show Name: </strong><a href="'.$tstpage2->show_url.'" class="cite-link">'.stripslashes($tstpage2->show_name).'</a><br>';
+						} else {
+							$retvalo .= stripslashes($tstpage2->show_name).'';
+						}
+						if ($tstpage2->host_name != ''){
+							$retvalo .= '<strong>Host Name: </strong>'.$tstpage2->host_name.'<br>';
+						} else {
+						}
+						if ($tstpage2->episode != ''){
+							$retvalo .= '<strong>Episode: </strong>' .$tstpage2->episode. '<br>';
+						}
+						else {
+						}
+						if ($tstpage2->excerpt != ''){
+							$retvalo .= '<strong>Show Recap: </strong>' .$tstpage2->excerpt. '<br>';
+						}
+						else {
+						}
+					} else {
+						$retvalo .= stripslashes($tstpage2->clientname).'';
+					}
+					$retvalo .= '<div class="clear"></div>';
+			}
+		}
+		else {
+			if ($tstpage2->imgurl != '') { // don't show podcasts without album art.
+
+				
+				if ($tstpage2->imgurl != '') { // check for image
+					$imgmax = get_option('imgmax');
+					if ($imgmax == '') { $sfiheight = ''; } else { $sfiheight = ' width="'.get_option('imgmax').'"'; }
+					$retvalo .= '<a href="'.$tstpage2->show_url.'" target="_blank"><img src="'.$tstpage2->imgurl.'"'.$sfiheight.' class="'.$imgalign.'" alt="'.stripslashes($tstpage2->show_name).'"></a>';
+				}
+				
+					//$retvalo .= '<div class="clear"></div>';
+			}
 
 		}
 	}
