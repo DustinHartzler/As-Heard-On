@@ -611,6 +611,7 @@ global $wpdb;
 	$retvalo = '';
 	$retvalo .= '';
 	$retvalo .= '<div id="aho-page">';
+	$retvalo .= '<div class="item">';
 	foreach ($tstpage as $tstpage2) {
 		$imgdisplay = get_option('imgdisplay');
 		if ($imgdisplay == 'displaysummary'){
@@ -656,7 +657,9 @@ global $wpdb;
 				if ($tstpage2->imgurl != '') { // check for image
 					$imgmax = get_option('imgmax');
 					if ($imgmax == '') { $sfiheight = ''; } else { $sfiheight = ' width="'.get_option('imgmax').'"'; }
-					$retvalo .= '<a href="'.$tstpage2->show_url.'" target="_blank"><img src="'.$tstpage2->imgurl.'"'.$sfiheight.' class="'.$imgalign.'" alt="'.stripslashes($tstpage2->show_name).'"></a>';
+					
+					$retvalo .= '<a href="'.$tstpage2->show_url.'" target="_blank"><img src="'.$tstpage2->imgurl.'"'.$sfiheight.' class="grid" alt="'.stripslashes($tstpage2->show_name).'"></a>';
+					// $retvalo .= '</div>';
 				}
 				
 					//$retvalo .= '<div class="clear"></div>';
@@ -664,7 +667,7 @@ global $wpdb;
 
 		}
 	}
-	$retvalo .= '</div>';
+	$retvalo .= '</div></div>';
 return $retvalo;
 }
 
