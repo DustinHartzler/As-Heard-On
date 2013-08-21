@@ -1,49 +1,50 @@
 === As Heard On ===
 Contributors: Dustin Hartzler
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7279865
-Tags: widget, pages, podcasts, as heard on
+Tags: WordPress, widget, pages, podcasts, as heard on
 Requires at least: 3.5
 Tested up to: 3.6
-Stable tag: 3.4.1
+Stable tag: 3.5
 
-Displays podcast artwork of shows you've been on in WordPress
+This plugin is built to showcase other podcasts that you've been interviewed on. Displays podcast artwork in a widget or on a full page.
 
 == Description ==
 
-The plugin includes the option to display a random testimonial in your sidebar using PHP code or the built-in widget. 
+The plugin includes the option to display a random (one or more) album artwork image in your sidebar using the built-in widget. 
 
-Testimonials can also be displayed all on one page.  Simply put [sfs-testimonials] in the body of the page.
+Album Art images can also be displayed all on one page.  Simply put [aho] in the body of the page.
 
 Be sure to read the included documentation for style and configuration help.
 
 == Installation ==
 
-* Upload the entire wp-testimonials folder to your plugins directory
-* Activate testimonials from the plugin page
+* Upload the entire as-heard-on folder to your plugins directory
+* Activate As Heard On from the plugin page
 
 == Frequently Asked Questions ==
 
 = How do I display the testimonials in the sidebar? =
 
-Use the built-in widget to display a random testimonial.  Or
+Use the built-in widget to display an image randomly pulled from the database.  Or
 use the following if you prefer to hand code the PHP:
 
-`<?php sfstst_onerandom(); ?>`
+`<?php onerandom(); ?>`
 
 Be sure to remove this code from your template if you disable the plugin 
 so your site doesn't throw ugly errors at you.
 
-NOTE: You must have text in the short text field in order for the testimonial to appear on the page.
+= How do I show all my Album Art Images on a page? =
 
-= How do I show all my testimonials on a page? =
-
-To show all testimonials on a single page:
+To show all images on a single page:
 
 1. Create a new page
-2. Put [sfs-testimonials] in the body text
+2. Put [aho] in the body text
 3. Publish
 
-NOTE: You must have text in the full text field in order for the testimonial to appear on the page.
+= How do I configure widget settings? =
+Within the As Heard On Plugin configuration, navigate to Widget Settings.
+
+Here you can select how many images are display and how fast to transition from b&w to color.
+
 
 == Screenshots ==
 

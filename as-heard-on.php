@@ -17,8 +17,8 @@ if ( !class_exists('AsHeardOn') ) {
 // +---------------------------------------------------------------------------+
 		function __construct() {
 		/* WP actions */
-			$this->widget = new AHO_Widget();
-            $this->widget->aho_widget();
+			// $this->widget = new AHO_Widget();
+   //          $this->widget->aho_widget();
             add_action( 'init', array(&$this, 'addscripts'));
             add_action( 'admin_init', array(&$this, 'register_options'));
             add_action( 'admin_menu', array(&$this, 'addpages'));
@@ -796,6 +796,7 @@ function onerandom() {
 }
 
 	}
+	
 				### Function: Init WP-Testimonials  Widget
 	add_action('widgets_init', 'widget_aho_init');
 	function widget_aho_init() {
