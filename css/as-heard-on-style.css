@@ -67,3 +67,16 @@ border: 1px solid #ccc;
 /*.img_wrapper {
 	padding: 10px !important;
 }*/
+
+.item img{
+    display: inline-block;
+    padding:0 15px 15px 0;
+}
+ 
+.img_wrapper img{
+    /*position: absolute;
+    top: 0;*/
+    /*width: 100%;*/
+    /*opacity: 0;*/
+    padding-bottom: 25px;
+}

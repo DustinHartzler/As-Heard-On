@@ -59,15 +59,15 @@ if ( !class_exists('AsHeardOn') ) {
 
 
 		function addscripts() { // include style sheet
-		  	wp_enqueue_style('grayscale_css', plugins_url('/as-heard-on/css/as-heard-on-style.css') );
-		  	wp_enqueue_style('slider_css', plugins_url('/as-heard-on/css/simple-slider.css') );
-		  	wp_enqueue_style('volume_css', plugins_url('/as-heard-on/css/simple-slider-volume.css') );
-		  	wp_enqueue_script( 'jquery' );
-		  	wp_enqueue_script( 'grayscale', plugins_url('/as-heard-on/js/grayscale.js') ,array('jquery') );
-		  	wp_enqueue_script( 'slider', plugins_url('/as-heard-on/js/simple-slider.js') ,array('jquery') ); 
-		  	$params = array('opacity_js' => get_option('opacity') ); 
-		  	wp_localize_script( 'grayscale', 'grayscale_vars', $params );  
-		  	wp_enqueue_script( 'display', plugins_url('/as-heard-on/js/display.js') ,array('jquery') );    
+		  	 wp_enqueue_style('grayscale_css', plugins_url('/as-heard-on/css/as-heard-on-style.css') );
+		  	 wp_enqueue_style('slider_css', plugins_url('/as-heard-on/css/simple-slider.css') );
+		  	 wp_enqueue_style('volume_css', plugins_url('/as-heard-on/css/simple-slider-volume.css') );
+		  	 wp_enqueue_script( 'jquery' );
+		  	 wp_enqueue_script( 'grayscale', plugins_url('/as-heard-on/js/grayscale.js') ,array('jquery') );
+		  	 wp_enqueue_script( 'slider', plugins_url('/as-heard-on/js/simple-slider.js') ,array('jquery') ); 
+		  	 $params = array('opacity_js' => get_option('opacity') ); 
+		  	 wp_localize_script( 'grayscale', 'grayscale_vars', $params );  
+		  	 wp_enqueue_script( 'display', plugins_url('/as-heard-on/js/display.js') ,array('jquery') );    
 		} 
 	
 // +---------------------------------------------------------------------------+
@@ -778,7 +778,7 @@ function onerandom() {
 	echo '<div id="sfstest-sidebar">';
 	
 	foreach ($randone as $randone2) {
-			echo '<div class="item">';
+			echo '<div class="item-gray">';
 			echo '<a href="'.nl2br(stripslashes($randone2->show_url)).'" target="_blank"><img src="'.$randone2->imgurl.'" width="'.get_option('image_width').'" height="'.get_option('image_height').'" style="margin-right:10px;"></a>';
 			echo '</div>';
 
