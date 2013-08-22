@@ -35,7 +35,7 @@ if ( !class_exists('AsHeardOn') ) {
 			register_setting( 'option-widget', 'opacity');
 			register_setting( 'option-widget', 'setlimit' );
 			register_setting( 'option-widget', 'linkurl' );
-			register_setting( 'option-page', 'imgalign' );
+			register_setting( 'option-page', 'aho_imgalign' );
 			register_setting( 'option-page', 'imgdisplay' );
 			register_setting( 'option-page', 'imgmax' );
 			register_setting( 'option-page', 'sorder' );
@@ -51,7 +51,7 @@ if ( !class_exists('AsHeardOn') ) {
 			unregister_setting( 'option-widget', 'opacity');
 			unregister_setting( 'option-widget', 'setlimit' );
 			unregister_setting( 'option-widget', 'linkurl' );
-			unregister_setting( 'option-page', 'imgalign' );
+			unregister_setting( 'option-page', 'aho_imgalign' );
 			unregister_setting( 'option-page', 'imgmax' );
 			unregister_setting( 'option-page', 'sorder' );
 			unregister_setting( 'option-page', 'deldata' );
@@ -387,7 +387,7 @@ function removetst($testid) {
 
 					<tr valign="top">
 						<td>How fast to transition from B&W to Color</td>
-						<td><input type="text" data-slider="true" data-slider-range="0,5" data-slider-step=".1" data-slider-values="0,1,2,3,4,5" data-slider-highlight="true" data-slider-theme="volume" name="opacity" value="<?php echo get_option('opacity'); ?>" ></td>
+						<td><input type="text" data-slider="true" data-slider-range="0,5" data-slider-step=".1" data-slider-highlight="true" data-slider-theme="volume" name="opacity" value="<?php echo get_option('opacity'); ?>" ><?php echo get_option('opacity'); ?> seconds</td>
 					</tr>
 
 					<tr valign="top">
@@ -439,18 +439,18 @@ function removetst($testid) {
 					</tr>
 
 			<tr valign="top">
-			<td>Use class alignleft or alignright for testimonial image</td>
+			<td>Align Artwork on Left or Right of Description</td>
 			<td>
-			<?php $sfs_imgalign = get_option('imgalign'); 
+			<?php $sfs_imgalign = get_option('aho_imgalign'); 
 			if ($sfs_imgalign == 'alignleft') { ?>
-			<input type="radio" name="imgalign" value="alignleft" checked /> Left 
-			<input type="radio" name="imgalign" value="alignright" /> Right
+			<input type="radio" name="aho_imgalign" value="alignleft" checked /> Left 
+			<input type="radio" name="aho_imgalign" value="alignright" /> Right
 			<?php } elseif ($sfs_imgalign == 'alignright') { ?>
-			<input type="radio" name="imgalign" value="alignleft" /> Left
-			<input type="radio" name="imgalign" value="alignright" checked/> Right
+			<input type="radio" name="aho_imgalign" value="alignleft" /> Left
+			<input type="radio" name="aho_imgalign" value="alignright" checked/> Right
 			<?php } else { ?>
-			<input type="radio" name="imgalign" value="alignleft" /> Left
-			<input type="radio" name="imgalign" value="alignright" /> Right
+			<input type="radio" name="aho_imgalign" value="alignleft" /> Left
+			<input type="radio" name="aho_imgalign" value="alignright" /> Right
 			<?php } ?>
 			</td>
 			</tr>
@@ -491,7 +491,7 @@ function removetst($testid) {
 			
 			</table>
 			<input type="hidden" name="action" value="update" />
-			<input type="hidden" name="page_options" value="sorder,imgalign,imgmax,deldata" />
+			<input type="hidden" name="page_options" value="sorder,aho_imgalign,imgmax,deldata" />
 			
 			<p class="submit">
 			<input type="submit" class="button-primary" value="<?php _e('Save Page Changes') ?>" />
@@ -599,8 +599,8 @@ function aho_edit($testid){
 function showall() {
 global $wpdb;
 
-	$imgalign = get_option('imgalign');
-	if ($imgalign == '') { $imgalign = 'alignright'; } else { $imgalign = get_option('imgalign'); }
+	$imgalign = get_option('aho_imgalign');
+	if ($imgalign == '') { $imgalign = 'alignright'; } else { $imgalign = get_option('aho_imgalign'); }
 
 	$sorder = (get_option('sorder'));
 	if ($sorder != 'testid ASC' AND $sorder != 'testid DESC' AND $sorder != 'storder ASC')
@@ -647,7 +647,7 @@ global $wpdb;
 					} else {
 						$retvalo .= stripslashes($tstpage2->clientname).'';
 					}
-					$retvalo .= '<div class="clear"></div>';
+					$retvalo .= '<div class="clear"><hr></div>';
 			}
 		}
 		else {
@@ -796,7 +796,7 @@ function onerandom() {
 }
 
 	}
-	
+
 				### Function: Init WP-Testimonials  Widget
 	add_action('widgets_init', 'widget_aho_init');
 	function widget_aho_init() {
