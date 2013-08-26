@@ -17,8 +17,6 @@ if ( !class_exists('AsHeardOn') ) {
 // +---------------------------------------------------------------------------+
 		function __construct() {
 		/* WP actions */
-			// $this->widget = new AHO_Widget();
-   //          $this->widget->aho_widget();
             add_action( 'init', array(&$this, 'addscripts'));
             add_action( 'admin_init', array(&$this, 'register_options'));
             add_action( 'admin_menu', array(&$this, 'addpages'));
@@ -168,18 +166,37 @@ if ( !class_exists('AsHeardOn') ) {
 /* insert podcast into DB */
 		function insertnew() {
 			global $wpdb;
+
+			$allowed_html = array(
+			    'a' => array(
+			        'href' => array(),
+			        'title' => array()
+			    ),
+			    'br' => array(),
+			    'em' => array(),
+			    'strong' => array()
+			);
+
 			$table_name = $wpdb->prefix . "aho";
-			$show_name 	= $_POST['show_name'];	
-			$host_name 	= $_POST['host_name'];
-			$show_url 	= $_POST['show_url'];
-			$imgurl 	= $_POST['imgurl'];
-			$episode 	= $_POST['episode'];
-			$excerpt 	= $_POST['excerpt'];
-			$storder 	= $_POST['storder'];
+			$show_name 	= sanitize_text_field( $_POST['show_name'] );	
+			$host_name 	= sanitize_text_field( $_POST['host_name'] );
+			$show_url 	= sanitize_text_field( $_POST['show_url'] );
+			$imgurl 	= sanitize_text_field( $_POST['imgurl'] );
+			$episode 	= sanitize_text_field( $_POST['episode'] );
+			$excerpt 	= wp_kses( $_POST['excerpt'], $allowed_html );
+			$storder 	= sanitize_text_field( $_POST['storder'] );
 			
-			$insert = "INSERT INTO " . $table_name .
-			" (show_name,host_name,show_url,imgurl,episode,excerpt,storder) " .
-			"VALUES ('$show_name','$host_name','$show_url','$imgurl','$episode','$excerpt','$storder')";
+			$insert = $wpdb->prepare( "INSERT INTO " . $table_name .
+				" (show_name,host_name,show_url,imgurl,episode,excerpt,storder) " .
+				"VALUES ('%s','%s','%s','%s','%d','%s','%s')",
+				$show_name,
+				$host_name,
+				$show_url,
+				$imgurl,
+				$episode,
+				$excerpt,
+				$storder
+			);
 			
 			$results = $wpdb->query( $insert );
 
@@ -238,16 +255,26 @@ if ( !class_exists('AsHeardOn') ) {
 		/* update item in DB */
 		function aho_editdo($testid){
 			global $wpdb;
+			$allowed_html = array(
+			    'a' => array(
+			        'href' => array(),
+			        'title' => array()
+			    ),
+			    'br' => array(),
+			    'em' => array(),
+			    'strong' => array()
+			);
+			
 			$table_name = $wpdb->prefix . "aho";
 			
 			$testid = $testid;
-			$show_name = $_POST['show_name'];
-			$host_name = $_POST['host_name'];
-			$show_url  = $_POST['show_url'];
-			$imgurl    = $_POST['imgurl'];
-			$episode   = $_POST['episode'];
-			$excerpt   = $_POST['excerpt'];
-			$storder   = $_POST['storder'];
+			$show_name 	= sanitize_text_field( $_POST['show_name'] );	
+			$host_name 	= sanitize_text_field( $_POST['host_name'] );
+			$show_url 	= sanitize_text_field( $_POST['show_url'] );
+			$imgurl 	= sanitize_text_field( $_POST['imgurl'] );
+			$episode 	= sanitize_text_field( $_POST['episode'] );
+			$excerpt 	= wp_kses( $_POST['excerpt'], $allowed_html );
+			$storder 	= sanitize_text_field( $_POST['storder'] );
 			
 			$wpdb->query("UPDATE " . $table_name .
 			" SET show_name = '$show_name', ".
@@ -265,8 +292,8 @@ function removetst($testid) {
 	global $wpdb;
 	$table_name = $wpdb->prefix . "aho";
 	
-	$insert = "DELETE FROM " . $table_name .
-	" WHERE testid = ".$testid ."";
+	$insert = $wpdb->prepare( "DELETE FROM " . $table_name .
+	" WHERE testid = '%d'", absint( $testid ) );
 	
 	$results = $wpdb->query( $insert );
 
