@@ -1,9 +1,12 @@
 === As Heard On ===
-Contributors: Dustin Hartzler
+Contributors: DustinHartzler
+Donate Link: http://YourWebsiteEngineer.com/donate
 Tags: WordPress, widget, pages, podcasts, as heard on
 Requires at least: 3.5
 Tested up to: 3.6
-Stable tag: 3.5
+Stable tag: 1.0
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 This plugin is built to showcase other podcasts that you've been interviewed on. Displays podcast artwork in a widget or on a full page.
 
@@ -22,9 +25,9 @@ Be sure to read the included documentation for style and configuration help.
 
 == Frequently Asked Questions ==
 
-= How do I display the testimonials in the sidebar? =
+= How do I display the album art in the sidebar? =
 
-Use the built-in widget to display an image randomly pulled from the database.  Or
+Use the built-in widget to display an image(s) randomly pulled from the database.  Or
 use the following if you prefer to hand code the PHP:
 
 `<?php onerandom(); ?>`
@@ -48,57 +51,9 @@ Here you can select how many images are display and how fast to transition from 
 
 == Screenshots ==
 
-1. Configuration page for testimonials
+1. Configuration page for album art
 
 == ChangeLog ==
-
-1.0 Initial Release
-
-== Support ==
-
-If you need help, visit the WP-Testimonials support page at:
-http://www.sunfrogservices.com/web-programmer/wp-testimonials/
-
-Version 3.4.1, Released 2010-08-19
-Copyright (C) 2007-2010 Jodi Diehl - http://www.sunfrogservices.com/
-
-== Acknowledgements ==
-
-
-
-=== FooDocs ===
-Contributors: bradvin,webdevmattcrom
-Donate link: http://fooplugins.com/donate
-Tags: documentation, hierarchy, custom post type, syntax highlighting
-Requires at least: 3.5.1
-Tested up to: 3.6
-Stable tag: 1.0.0
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
-
-Organized documentation for your digital products
-
-== Description ==
-
-Easily create and manage documentation for your digital products in a central location.
-
-= Plugin Features =
-
-*   Manage all your documentation using a custom post type.
-*   Include documentation on any page using a simple shortcode.
-*   Include a table of contents in your sidebar with a handy widget.
-*   Built-in syntax highlighting.
-
-== Installation ==
-
-1.  Upload your plugin folder to the '/wp-content/plugins' directory.
-2.  Activate the plugin through the 'Plugins' menu in WordPress.
-
-== Frequently Asked Questions ==
-
-There are no FAQ just yet.
-
-== Changelog ==
 
 = 1.0.0 =
 *   First release
@@ -106,7 +61,3 @@ There are no FAQ just yet.
 == Upgrade Notice ==
 
 There is no need to upgrade just yet.
-
-== Screenshots ==
-
-There are no screenshots yet.
