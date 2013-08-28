@@ -35,13 +35,7 @@ Be sure to read the included documentation for style and configuration help.
 
 ### How do I display the album art in the sidebar? ###
 
-Use the built-in widget to display an image(s) randomly pulled from the database.  Or
-use the following if you prefer to hand code the PHP:
-
-`<?php onerandom(); ?>`
-
-Be sure to remove this code from your template if you disable the plugin 
-so your site doesn't throw ugly errors at you.
+Use the built-in widget to display an image(s) randomly pulled from the database.
 
 ### How do I show all my Album Art Images on a page? ###
 

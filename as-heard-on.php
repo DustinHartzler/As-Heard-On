@@ -3,7 +3,7 @@
 Plugin Name: As Heard On
 Plugin URI: http://YourWebsiteEngineer.com
 Description: Lets you display album artwork of podcasts you've been a guest on.  Widget included.  Optional link in sidebar block to "view all" podcast images on a page.
-Version: 0.5
+Version: 1.0
 Author: Dustin Hartzler
 Author URI: http://YourWebsiteEngineer.com
 */
@@ -264,7 +264,7 @@ if ( !class_exists('AsHeardOn') ) {
 			    'em' => array(),
 			    'strong' => array()
 			);
-			
+
 			$table_name = $wpdb->prefix . "aho";
 			
 			$testid = $testid;
@@ -335,9 +335,8 @@ function removetst($testid) {
 		    $yearcright = "2013-";
 		}
 		?>
-			  <p>Past Podcast Plugin is &copy; Copyright <?php echo("".$yearcright."".date('Y').""); ?>, <a href="http://www.yourwebsiteengineer.com/" target="_blank">Dustin Hartzler</a> and distributed under the <a href="http://www.fsf.org/licensing/licenses/quick-guide-gplv3.html" target="_blank">GNU General Public License</a>. 
-			  If you find this plugin useful, please consider a <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7279865" target="_blank">donation</a>.</p>
-			<p align="right" style="float:right">Need help? <a href="/' . PLUGINDIR . '/wp-testimonials/docs/documentation.php" target="_blank">documentation</a> &nbsp;|&nbsp; <a href="http://YourWebsiteEngineer.com/">support page</a></p>
+			  <p>As Heard On Plugin is &copy; Copyright <?php echo("".$yearcright."".date('Y').""); ?>, <a href="http://www.yourwebsiteengineer.com/" target="_blank">Dustin Hartzler</a> and distributed under the <a href="http://www.fsf.org/licensing/licenses/quick-guide-gplv3.html" target="_blank">GNU General Public License</a>. 
+			  If you find this plugin useful, please consider a <a href="http://#" target="_blank">donation</a>.</p>
 			</div>
 <?php }
 
@@ -778,12 +777,9 @@ $wp_plugin_template = new AsHeardOn();
 			$instance = wp_parse_args((array) $instance, array('title' => __('Hear Me On Other Shows', 'wp-podcast')));
 			$title = esc_attr($instance['title']);
 	?>
-	 
-	 
-				<label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:', 'wp-podcast'); ?>
-	<input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" /></label>
-	 
-	<input type="hidden" id="<?php echo $this->get_field_id('submit'); ?>" name="<?php echo $this->get_field_name('submit'); ?>" value="1" />
+			<label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:', 'wp-podcast'); ?>
+			<input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" /></label>
+	 		<input type="hidden" id="<?php echo $this->get_field_id('submit'); ?>" name="<?php echo $this->get_field_name('submit'); ?>" value="1" />
 	<?php
 		}
 
