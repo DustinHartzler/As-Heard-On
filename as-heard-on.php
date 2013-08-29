@@ -3,7 +3,7 @@
 Plugin Name: As Heard On
 Plugin URI: http://YourWebsiteEngineer.com
 Description: Lets you display album artwork of podcasts you've been a guest on.  Widget included.  Optional link in sidebar block to "view all" podcast images on a page.
-Version: 1.01
+Version: 1.02
 Author: Dustin Hartzler
 Author URI: http://YourWebsiteEngineer.com
 */
@@ -116,23 +116,22 @@ if ( !class_exists('AsHeardOn') ) {
 				$active_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'add_new_podcast';
 				?>
 
-			<h2 class="nav-tab-wrapper">
-				<a href="admin.php?page=setting_page&tab=add_new_podcast" class="nav-tab <?php echo $active_tab == 'add_new_podcast' ? 'nav-tab-active' : ''; ?>">Add New Podcast</a>
-				<a href="admin.php?page=setting_page&tab=widget_options" class="nav-tab <?php echo $active_tab == 'widget_options' ? 'nav-tab-active' : ''; ?>">Widget Options</a>
-				<a href="admin.php?page=setting_page&tab=full_page_options" class="nav-tab <?php echo $active_tab == 'full_page_options' ? 'nav-tab-active' : ''; ?>">Full Page Options</a>
-			</h2>
+				<h2 class="nav-tab-wrapper">
+					<a href="admin.php?page=setting_page&tab=add_new_podcast" class="nav-tab <?php echo $active_tab == 'add_new_podcast' ? 'nav-tab-active' : ''; ?>">Add New Podcast</a>
+					<a href="admin.php?page=setting_page&tab=widget_options" class="nav-tab <?php echo $active_tab == 'widget_options' ? 'nav-tab-active' : ''; ?>">Widget Options</a>
+					<a href="admin.php?page=setting_page&tab=full_page_options" class="nav-tab <?php echo $active_tab == 'full_page_options' ? 'nav-tab-active' : ''; ?>">Full Page Options</a>
+				</h2>
 
+				<?php
+				if ( $active_tab == 'add_new_podcast' ) {  
+					$this->adminpage();
+				} elseif ( $active_tab == 'widget_options' ) { 
+					$this->widget_options();
+				} elseif ( $active_tab == 'full_page_options' ) {
+					$this->page_options();
+				}
 
-					<?php
-					if ( $active_tab == 'add_new_podcast' ) {  
-						$this->adminpage();
-					} elseif ( $active_tab == 'widget_options' ) { 
-						$this->widget_options();
-					} elseif ( $active_tab == 'full_page_options' ) {
-						$this->page_options();
-					}
-
-			?> </div> <?php
+				?> </div> <?php
 		}
 // +---------------------------------------------------------------------------+
 // | Add New Podcast                                                           |
@@ -157,7 +156,7 @@ if ( !class_exists('AsHeardOn') ) {
 						<label for="episode">Episode Number:</label><input name="episode" type="text" size="10"><br/>
 						<label for="excerpt">Podcast Excerpt:</label><textarea name="excerpt" cols="45" rows="7"></textarea><br/>
 						<label for="storder">Sort order:</label><input name="storder" type="text" size="10" /> (optional) <br/>
-						<input type="submit" name="addnew" class="button button-primary" value="<?php _e('Add Podcast', 'addnew' ) ?>" /><br/>
+						<input type="submit" name="addnew" class="aho-aho-button aho-button-primary" value="<?php _e('Add Podcast', 'addnew' ) ?>" /><br/>
 					</form>
 				</div>
 			</div>
@@ -287,22 +286,21 @@ if ( !class_exists('AsHeardOn') ) {
 			" WHERE testid = '$testid'");
 		}
 
-/* delete testimonials from DB */
-function removetst($testid) {
-	global $wpdb;
-	$table_name = $wpdb->prefix . "aho";
-	
-	$insert = $wpdb->prepare( "DELETE FROM " . $table_name .
-	" WHERE testid = '%d'", absint( $testid ) );
-	
-	$results = $wpdb->query( $insert );
-
-}
-
-/* admin page display */
-		function adminpage() {
+		/* delete testimonials from DB */
+		function removetst($testid) {
 			global $wpdb;
-		?>
+			$table_name = $wpdb->prefix . "aho";
+			
+			$insert = $wpdb->prepare( "DELETE FROM " . $table_name .
+			" WHERE testid = '%d'", absint( $testid ) );
+			
+			$results = $wpdb->query( $insert );
+
+		}
+
+		/* admin page display */
+		function adminpage() {
+			global $wpdb; ?>
 			<div class="wrap">
 			<?php
 				if (isset($_POST['addnew'])) {
@@ -324,19 +322,19 @@ function removetst($testid) {
 					$this->showlist(); // show podcasts
 				?>
 			</div>
-			<div class="wrap"><?php $this->newform(); // show form to add new podcast ?>
+			<div class="wrap">
+				<?php $this->newform(); // show form to add new podcast ?>
 			</div>
 			<div class="wrap">
-			<?php 
-		$yearnow = date('Y');
-		if($yearnow == "2013") {
-		    $yearcright = "";
-		} else { 
-		    $yearcright = "2013-";
-		}
-		?>
-			  <p>As Heard On Plugin is &copy; Copyright <?php echo("".$yearcright."".date('Y').""); ?>, <a href="http://www.yourwebsiteengineer.com/" target="_blank">Dustin Hartzler</a> and distributed under the <a href="http://www.fsf.org/licensing/licenses/quick-guide-gplv3.html" target="_blank">GNU General Public License</a>. 
-			  If you find this plugin useful, please consider a <a href="http://#" target="_blank">donation</a>.</p>
+			<?php $yearnow = date('Y');
+			if($yearnow == "2013") {
+			    $yearcright = "";
+			} else { 
+			    $yearcright = "2013-";
+			}
+			?>
+			<p>As Heard On Plugin is &copy; Copyright <?php echo("".$yearcright."".date('Y').""); ?>, <a href="http://www.yourwebsiteengineer.com/" target="_blank">Dustin Hartzler</a> and distributed under the <a href="http://www.fsf.org/licensing/licenses/quick-guide-gplv3.html" target="_blank">GNU General Public License</a>. 
+			If you find this plugin useful, please consider a <a href="http://#" target="_blank">donation</a>.</p>
 			</div>
 <?php }
 
@@ -346,7 +344,6 @@ function removetst($testid) {
 // +---------------------------------------------------------------------------+
 // | Configuration options                                                     |
 // +---------------------------------------------------------------------------+
-
 		function widget_options() {
 		?>
 			<div class="wrap">
@@ -372,12 +369,12 @@ function removetst($testid) {
 					</tr>
 			
 					<tr valign="top">
-						<td>Text for sidebar button (Read More, View All, etc)</td>
+						<td>Text for sidebar aho-button (Read More, View All, etc)</td>
 						<td><input type="text" name="linktext" value="<?php echo get_option('linktext'); ?>" /></td>
 					</tr>
 
 					<tr valign="top">
-						<td>Page link for sidebar button<br/> (use shortcode [aho])</td>
+						<td>Page link for sidebar aho-button<br/> (use shortcode [aho])</td>
 						<td> <select name="linkurl">
 			 			<option value="">
 						<?php echo esc_attr(__('Select page')); ?></option> 
@@ -426,7 +423,7 @@ function removetst($testid) {
 			<input type="hidden" name="page_options" value="admng,showlink,linktext,image_width,image_height,opacity,setlimit, linkurl,sfs_sorder,sfs_imgalign,imgmax,deldata" />
 			
 			<p class="submit">
-			<input type="submit" class="button-primary" value="<?php _e('Save Widget Options') ?>" />
+			<input type="submit" class="aho-button-primary" value="<?php _e('Save Widget Options') ?>" />
 			</p>
 
 			  
@@ -520,7 +517,7 @@ function removetst($testid) {
 			<input type="hidden" name="page_options" value="sorder,aho_imgalign,imgmax,deldata" />
 			
 			<p class="submit">
-			<input type="submit" class="button-primary" value="<?php _e('Save Page Changes') ?>" />
+			<input type="submit" class="aho-button-primary" value="<?php _e('Save Page Changes') ?>" />
 			</p>
 			
 			</form>
@@ -532,170 +529,168 @@ function removetst($testid) {
 // +---------------------------------------------------------------------------+
 // | Manage Page - list all and show edit/delete options                       |
 // +---------------------------------------------------------------------------+
-
 /* show podcast on settings page */
-function showlist() { 
-	global $wpdb;
-	$table_name = $wpdb->prefix . "aho";
-	$aholists = $wpdb->get_results("SELECT testid,show_name,host_name,show_url,imgurl,episode FROM $table_name");
+		function showlist() { 
+			global $wpdb;
+			$table_name = $wpdb->prefix . "aho";
+			$aholists = $wpdb->get_results("SELECT testid,show_name,host_name,show_url,imgurl,episode FROM $table_name");
 
-	foreach ($aholists as $aholist) {
-		echo '<div class="podcast-display">';
-		echo '<img src="'.$aholist->imgurl.'" width="100px" class="alignleft" style="margin:0 10px 10px 0;">';
-		echo '<a href="admin.php?page=setting_page&amp;mode=ahoedit&amp;testid='.$aholist->testid.'">Edit</a>';
-		echo '&nbsp;|&nbsp;';
-		echo '<a href="admin.php?page=setting_page&amp;mode=ahorem&amp;testid='.$aholist->testid.'" onClick="return confirm(\'Delete this testimonial?\')">Delete</a>';
-		echo '<br>';
-		echo '<strong>Show Name: </strong>';
-		echo stripslashes($aholist->show_name);
-			if ($aholist->host_name != '') {
-				echo '<br><strong>Host Name: </strong>'.stripslashes($aholist->host_name).'';
-				if ($aholist->show_url != '') {
-					echo '<br><strong>Show URL: </strong> <a href="'.$aholist->show_url.'">'.stripslashes($aholist->show_url).'</a> ';
-					if ($aholist->episode !=''){
-					echo '<br><strong>Episode: </strong>'.stripslashes($aholist->episode).'';	
-					}	
-				}
-			}
-		echo '</div>'; 
-	}
-	echo '<div class="clear"></div>';
-}
-
-/* edit podcast form */
-function aho_edit($testid){
-	global $wpdb;
-	$table_name = $wpdb->prefix . "aho";
-	
-	$getaho = $wpdb->get_row("SELECT testid, show_name, host_name, show_url, imgurl, episode, excerpt, storder FROM $table_name WHERE testid = $testid");
-	
-	echo '<h3>Edit Podcast</h3>';
-
-	echo '<div id="ppg-form">';
-	echo '<form name="edittst" method="post" action="admin.php?page=setting_page">';
-	echo '<label for="show_name">Show Name:</label>
-		  <input name="show_name" type="text" size="45" value="'.stripslashes($getaho->show_name).'"><br/>
-			<label for="host_name">Host Name:</label>
-		  	<input name="host_name" type="text" size="45" value="'.stripslashes($getaho->host_name).'"><br/>
-		
-			<label for="show_url">Show URL:</label>
-		 	<input name="show_url" type="text" size="45" value="'.$getaho->show_url.'"><br/>
-		
-			<label for="imgurl">Image URL:</label>
-			<input name="imgurl" type="text" size="45" value="'.$getaho->imgurl.'"> (copy File URL from <a href="'.admin_url('/upload.php').'" target="_blank">Media</a>) <br/>
-			
-			<label for="episode">Episode:</label>
-		 	<input name="episode" type="text" size="2" value="'.$getaho->episode.'"><br/>
-
-		 	<label for="excerpt">Show Recap:</label>
-		  	<textarea name="excerpt" cols="45" rows="7">'.stripslashes($getaho->excerpt).'</textarea><br/>
-
-			<label for="storder">Sort order:</label>
-		 	<input name="storder" type="text" size=2" value="'.$getaho->storder.'">(optional)<br/>
-
-		  	<input type="hidden" name="testid" value="'.$getaho->testid.'">
-		  	<input name="editdo" type="submit" class="button button-primary" value="Update">';
-	echo '<h3>Preview</h3>';
-	echo '<div class="podcast-display" >';
-	echo '<img src="'.$getaho->imgurl.'" width="90px" class="alignleft" style="margin:0 10px 10px 0;">';
-		echo '<strong>Show Name: </strong>';
-		echo stripslashes($getaho->show_name);
-			if ($getaho->host_name != '') {
-				echo '<br><strong>Host Name: </strong>'.stripslashes($getaho->host_name).'';
-				if ($getaho->show_url != '') {
-					echo '<br><strong>Show URL: </strong> <a href="'.$getaho->show_url.'">'.stripslashes($getaho->show_url).'</a> ';
-					if ($getaho->episode !=''){
-					echo '<br><strong>Episode: </strong>'.stripslashes($getaho->episode).'';	
-					}	
-					if ($getaho->excerpt !=''){
-					echo '<br><strong>Show Recap: </strong>'.stripslashes($getaho->excerpt).'';	
+			foreach ($aholists as $aholist) {
+				echo '<div class="podcast-display">';
+				echo '<img src="'.$aholist->imgurl.'" width="100px" class="alignleft" style="margin:0 10px 10px 0;">';
+				echo '<a href="admin.php?page=setting_page&amp;mode=ahoedit&amp;testid='.$aholist->testid.'">Edit</a>';
+				echo '&nbsp;|&nbsp;';
+				echo '<a href="admin.php?page=setting_page&amp;mode=ahorem&amp;testid='.$aholist->testid.'" onClick="return confirm(\'Delete this testimonial?\')">Delete</a>';
+				echo '<br>';
+				echo '<strong>Show Name: </strong>';
+				echo stripslashes($aholist->show_name);
+					if ($aholist->host_name != '') {
+						echo '<br><strong>Host Name: </strong>'.stripslashes($aholist->host_name).'';
+						if ($aholist->show_url != '') {
+							echo '<br><strong>Show URL: </strong> <a href="'.$aholist->show_url.'">'.stripslashes($aholist->show_url).'</a> ';
+							if ($aholist->episode !=''){
+							echo '<br><strong>Episode: </strong>'.stripslashes($aholist->episode).'';	
+							}	
+						}
 					}
-				}
+				echo '</div>'; 
 			}
-		echo '</div>'; 
-	echo '</form>';
-	echo '</div>';
-}
+			echo '<div class="clear"></div>';
+		}
+
+		/* edit podcast form */
+		function aho_edit($testid){
+			global $wpdb;
+			$table_name = $wpdb->prefix . "aho";
+			
+			$getaho = $wpdb->get_row("SELECT testid, show_name, host_name, show_url, imgurl, episode, excerpt, storder FROM $table_name WHERE testid = $testid");
+			
+			echo '<h3>Edit Podcast</h3>';
+
+			echo '<div id="ppg-form">';
+			echo '<form name="edittst" method="post" action="admin.php?page=setting_page">';
+			echo '<label for="show_name">Show Name:</label>
+				  <input name="show_name" type="text" size="45" value="'.stripslashes($getaho->show_name).'"><br/>
+					<label for="host_name">Host Name:</label>
+				  	<input name="host_name" type="text" size="45" value="'.stripslashes($getaho->host_name).'"><br/>
+				
+					<label for="show_url">Show URL:</label>
+				 	<input name="show_url" type="text" size="45" value="'.$getaho->show_url.'"><br/>
+				
+					<label for="imgurl">Image URL:</label>
+					<input name="imgurl" type="text" size="45" value="'.$getaho->imgurl.'"> (copy File URL from <a href="'.admin_url('/upload.php').'" target="_blank">Media</a>) <br/>
+					
+					<label for="episode">Episode:</label>
+				 	<input name="episode" type="text" size="2" value="'.$getaho->episode.'"><br/>
+
+				 	<label for="excerpt">Show Recap:</label>
+				  	<textarea name="excerpt" cols="45" rows="7">'.stripslashes($getaho->excerpt).'</textarea><br/>
+
+					<label for="storder">Sort order:</label>
+				 	<input name="storder" type="text" size=2" value="'.$getaho->storder.'">(optional)<br/>
+
+				  	<input type="hidden" name="testid" value="'.$getaho->testid.'">
+				  	<input name="editdo" type="submit" class="aho-button aho-button-primary" value="Update">';
+			echo '<h3>Preview</h3>';
+			echo '<div class="podcast-display" >';
+			echo '<img src="'.$getaho->imgurl.'" width="90px" class="alignleft" style="margin:0 10px 10px 0;">';
+				echo '<strong>Show Name: </strong>';
+				echo stripslashes($getaho->show_name);
+					if ($getaho->host_name != '') {
+						echo '<br><strong>Host Name: </strong>'.stripslashes($getaho->host_name).'';
+						if ($getaho->show_url != '') {
+							echo '<br><strong>Show URL: </strong> <a href="'.$getaho->show_url.'">'.stripslashes($getaho->show_url).'</a> ';
+							if ($getaho->episode !=''){
+							echo '<br><strong>Episode: </strong>'.stripslashes($getaho->episode).'';	
+							}	
+							if ($getaho->excerpt !=''){
+							echo '<br><strong>Show Recap: </strong>'.stripslashes($getaho->excerpt).'';	
+							}
+						}
+					}
+				echo '</div>'; 
+			echo '</form>';
+			echo '</div>';
+		}
 
 // +---------------------------------------------------------------------------+
 // | Show podcasts on page with shortcode [aho]					               |
 // +---------------------------------------------------------------------------+
+		/* show page of all podcast artwork */
+		function showall() {
+		global $wpdb;
 
-/* show page of all podcast artwork */
-function showall() {
-global $wpdb;
+			$imgalign = get_option('aho_imgalign');
+			if ($imgalign == '') { $imgalign = 'alignright'; } else { $imgalign = get_option('aho_imgalign'); }
 
-	$imgalign = get_option('aho_imgalign');
-	if ($imgalign == '') { $imgalign = 'alignright'; } else { $imgalign = get_option('aho_imgalign'); }
+			$sorder = (get_option('sorder'));
+			if ($sorder != 'testid ASC' AND $sorder != 'testid DESC' AND $sorder != 'storder ASC')
+			{ $sorder2 = 'testid ASC'; } else { $sorder2 = $sorder; }
+			
+			$table_name = $wpdb->prefix . "aho";
+			$tstpage = $wpdb->get_results("SELECT testid, show_name, host_name, show_url, imgurl, episode, excerpt, storder FROM $table_name WHERE imgurl !='' ORDER BY $sorder2");
+			$retvalo = '';
+			$retvalo .= '';
+			$retvalo .= '<div id="aho-page">';
+			$retvalo .= '<div class="item">';
+			foreach ($tstpage as $tstpage2) {
+				$imgdisplay = get_option('imgdisplay');
+				if ($imgdisplay == 'displaysummary'){
+					if ($tstpage2->imgurl != '') { // don't show podcasts without album art.
 
-	$sorder = (get_option('sorder'));
-	if ($sorder != 'testid ASC' AND $sorder != 'testid DESC' AND $sorder != 'storder ASC')
-	{ $sorder2 = 'testid ASC'; } else { $sorder2 = $sorder; }
-	
-	$table_name = $wpdb->prefix . "aho";
-	$tstpage = $wpdb->get_results("SELECT testid, show_name, host_name, show_url, imgurl, episode, excerpt, storder FROM $table_name WHERE imgurl !='' ORDER BY $sorder2");
-	$retvalo = '';
-	$retvalo .= '';
-	$retvalo .= '<div id="aho-page">';
-	$retvalo .= '<div class="item">';
-	foreach ($tstpage as $tstpage2) {
-		$imgdisplay = get_option('imgdisplay');
-		if ($imgdisplay == 'displaysummary'){
-			if ($tstpage2->imgurl != '') { // don't show podcasts without album art.
-
-				
-				if ($tstpage2->imgurl != '') { // check for image
-					$imgmax = get_option('imgmax');
-					if ($imgmax == '') { $sfiheight = ''; } else { $sfiheight = ' width="'.get_option('imgmax').'"'; }
-					$retvalo .= '<a href="'.$tstpage2->show_url.'" target="_blank"><img src="'.$tstpage2->imgurl.'"'.$sfiheight.' class="'.$imgalign.'" alt="'.stripslashes($tstpage2->show_name).'"></a>';
-				}
-				
-					if ($tstpage2->show_name != '') {
-						if ($tstpage2->show_url != '') {
-								$retvalo .= '<strong>Show Name: </strong><a href="'.$tstpage2->show_url.'" class="cite-link">'.stripslashes($tstpage2->show_name).'</a><br>';
-						} else {
-							$retvalo .= stripslashes($tstpage2->show_name).'';
+						
+						if ($tstpage2->imgurl != '') { // check for image
+							$imgmax = get_option('imgmax');
+							if ($imgmax == '') { $sfiheight = ''; } else { $sfiheight = ' width="'.get_option('imgmax').'"'; }
+							$retvalo .= '<a href="'.$tstpage2->show_url.'" target="_blank"><img src="'.$tstpage2->imgurl.'"'.$sfiheight.' class="'.$imgalign.'" alt="'.stripslashes($tstpage2->show_name).'"></a>';
 						}
-						if ($tstpage2->host_name != ''){
-							$retvalo .= '<strong>Host Name: </strong>'.$tstpage2->host_name.'<br>';
-						} else {
-						}
-						if ($tstpage2->episode != ''){
-							$retvalo .= '<strong>Episode: </strong>' .$tstpage2->episode. '<br>';
-						}
-						else {
-						}
-						if ($tstpage2->excerpt != ''){
-							$retvalo .= '<strong>Show Recap: </strong>' .$tstpage2->excerpt. '<br>';
-						}
-						else {
-						}
-					} else {
-						$retvalo .= stripslashes($tstpage2->clientname).'';
+						
+							if ($tstpage2->show_name != '') {
+								if ($tstpage2->show_url != '') {
+										$retvalo .= '<strong>Show Name: </strong><a href="'.$tstpage2->show_url.'" class="cite-link">'.stripslashes($tstpage2->show_name).'</a><br>';
+								} else {
+									$retvalo .= stripslashes($tstpage2->show_name).'';
+								}
+								if ($tstpage2->host_name != ''){
+									$retvalo .= '<strong>Host Name: </strong>'.$tstpage2->host_name.'<br>';
+								} else {
+								}
+								if ($tstpage2->episode != ''){
+									$retvalo .= '<strong>Episode: </strong>' .$tstpage2->episode. '<br>';
+								}
+								else {
+								}
+								if ($tstpage2->excerpt != ''){
+									$retvalo .= '<strong>Show Recap: </strong>' .$tstpage2->excerpt. '<br>';
+								}
+								else {
+								}
+							} else {
+								$retvalo .= stripslashes($tstpage2->clientname).'';
+							}
+							$retvalo .= '<div class="clear"><hr></div>';
 					}
-					$retvalo .= '<div class="clear"><hr></div>';
-			}
-		}
-		else {
-			if ($tstpage2->imgurl != '') { // don't show podcasts without album art.
-
-				
-				if ($tstpage2->imgurl != '') { // check for image
-					$imgmax = get_option('imgmax');
-					if ($imgmax == '') { $sfiheight = ''; } else { $sfiheight = ' width="'.get_option('imgmax').'"'; }
-					
-					$retvalo .= '<a href="'.$tstpage2->show_url.'" target="_blank"><img src="'.$tstpage2->imgurl.'"'.$sfiheight.' class="grid" alt="'.stripslashes($tstpage2->show_name).'"></a>';
-					// $retvalo .= '</div>';
 				}
-				
-					//$retvalo .= '<div class="clear"></div>';
-			}
+				else {
+					if ($tstpage2->imgurl != '') { // don't show podcasts without album art.
 
+						
+						if ($tstpage2->imgurl != '') { // check for image
+							$imgmax = get_option('imgmax');
+							if ($imgmax == '') { $sfiheight = ''; } else { $sfiheight = ' width="'.get_option('imgmax').'"'; }
+							
+							$retvalo .= '<a href="'.$tstpage2->show_url.'" target="_blank"><img src="'.$tstpage2->imgurl.'"'.$sfiheight.' class="grid" alt="'.stripslashes($tstpage2->show_name).'"></a>';
+							// $retvalo .= '</div>';
+						}
+						
+							//$retvalo .= '<div class="clear"></div>';
+					}
+
+				}
+			}
+			$retvalo .= '</div></div>';
+		return $retvalo;
 		}
-	}
-	$retvalo .= '</div></div>';
-return $retvalo;
-}
 
 
 // +---------------------------------------------------------------------------+
@@ -721,28 +716,24 @@ return $retvalo;
 				delete_option("aho_imgmax");
 		 	}
 		    delete_option("aho_version");
-			//$this->unregister_options();
 		}
-
-
-
 	}
 }
 
 if(class_exists('AsHeardOn')) { 
-// Installation and uninstallation hooks 
-register_activation_hook(__FILE__, array('AsHeardOn', 'activate')); 
-register_deactivation_hook(__FILE__, array('AsHeardOn', 'deactivate')); 
+	// Installation and uninstallation hooks 
+	register_activation_hook(__FILE__, array('AsHeardOn', 'activate')); 
+	register_deactivation_hook(__FILE__, array('AsHeardOn', 'deactivate')); 
 
-// instantiate the plugin class 
-$wp_plugin_template = new AsHeardOn(); 
+	// instantiate the plugin class 
+	$wp_plugin_template = new AsHeardOn(); 
 }
 
 // +---------------------------------------------------------------------------+
 // | Widget for podcast(s) in sidebar                                          |
 // +---------------------------------------------------------------------------+
 	### Class: WP-Testimonials Widget
-	 class AHO_Widget extends WP_Widget {
+	class AHO_Widget extends WP_Widget {
 		// Constructor
 		function aho_widget() {
 			$widget_ops = array('description' => __('Displays random podcast in your sidebar', 'wp-podcast'));
@@ -776,7 +767,7 @@ $wp_plugin_template = new AsHeardOn();
 			global $wpdb;
 			$instance = wp_parse_args((array) $instance, array('title' => __('Hear Me On Other Shows', 'wp-podcast')));
 			$title = esc_attr($instance['title']);
-	?>
+		?>
 			<label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:', 'wp-podcast'); ?>
 			<input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" /></label>
 	 		<input type="hidden" id="<?php echo $this->get_field_id('submit'); ?>" name="<?php echo $this->get_field_name('submit'); ?>" value="1" />
@@ -788,39 +779,39 @@ $wp_plugin_template = new AsHeardOn();
 // +---------------------------------------------------------------------------+
 
 /* show random testimonial(s) in sidebar */
-function onerandom() {
-	global $wpdb;
-	$table_name = $wpdb->prefix . "aho";
-	if (get_option('setlimit') == '') {
-		$setlimit = 1;
-	} else {
-		$setlimit = get_option('setlimit');
-	}
-	$randone = $wpdb->get_results("SELECT show_url, episode, imgurl FROM $table_name WHERE show_url !='' order by RAND() LIMIT $setlimit");
+		function onerandom() {
+			global $wpdb;
+			$table_name = $wpdb->prefix . "aho";
+			if (get_option('setlimit') == '') {
+				$setlimit = 1;
+			} else {
+				$setlimit = get_option('setlimit');
+			}
+			$randone = $wpdb->get_results("SELECT show_url, episode, imgurl FROM $table_name WHERE show_url !='' order by RAND() LIMIT $setlimit");
 
-	echo '<div id="sfstest-sidebar">';
-	
-	foreach ($randone as $randone2) {
-			echo '<div class="item-gray">';
-			echo '<a href="'.nl2br(stripslashes($randone2->show_url)).'" target="_blank"><img src="'.$randone2->imgurl.'" width="'.get_option('image_width').'" height="'.get_option('image_height').'" style="margin-right:10px;"></a>';
-			echo '</div>';
-
-		} // end loop
+			echo '<div id="sfstest-sidebar">';
+			
+			foreach ($randone as $randone2) {
+				echo '<div class="item-gray">';
+				echo '<a href="'.nl2br(stripslashes($randone2->show_url)).'" target="_blank"><img src="'.$randone2->imgurl.'" width="'.get_option('image_width').'" height="'.get_option('image_height').'" style="margin-right:10px;"></a>';
+				echo '</div>';
+			} // end loop
 			$showlink = get_option('showlink');
 			$linktext = get_option('linktext');
 			$linkurl = get_option('linkurl');
 			
-				if (($showlink == 'yes') && ($linkurl !='')) {
-					if ($linktext == '') { $linkdisplay = 'Read More'; } else { $linkdisplay = $linktext; }
-					echo '<div class="ppgreadmore" ><a class="button" href="'.$linkurl.'">'.$linkdisplay.'</a></div>';
-				}
-		echo '<div class="clear"></div>';
-	echo '</div>';
+			if (($showlink == 'yes') && ($linkurl !='')) {
+				if ($linktext == '') { $linkdisplay = 'Read More'; } else { $linkdisplay = $linktext; }
+				echo '<div class="ppgreadmore" ><a class="aho-button" href="'.$linkurl.'">'.$linkdisplay.'</a></div>';
+			}
+			echo '<div class="clear"></div>';
+			echo '</div>';
+		}
 }
 
-	}
-
-				### Function: Init WP-Testimonials  Widget
+// +---------------------------------------------------------------------------+
+// | Function: Init WP-Testimonials  Widget                                    |
+// +---------------------------------------------------------------------------+
 	add_action('widgets_init', 'widget_aho_init');
 	function widget_aho_init() {
 		register_widget('aho_widget');
