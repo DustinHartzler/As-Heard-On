@@ -74,7 +74,7 @@ if ( !class_exists('AsHeardOn') ) {
 
 		function addpages() { 
 			// Create top-level menu and appropriate sub-level menus:
-			add_menu_page('Other Shows', 'Other Shows', 'manage_options', 'setting_page', array($this, 'settings_pages'), plugins_url('/as-heard-on/podcast_icon.png'));
+			add_menu_page('Other Shows', 'Other Shows', 'manage_options', 'setting_page', array($this, 'settings_pages'), 'dashicons-format-audio');
 		}
 
 
