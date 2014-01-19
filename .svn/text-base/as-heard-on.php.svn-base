@@ -3,7 +3,7 @@
 Plugin Name: As Heard On
 Plugin URI: http://YourWebsiteEngineer.com
 Description: Lets you display album artwork of podcasts you've been a guest on.  Widget included.  Optional link in sidebar block to "view all" podcast images on a page.
-Version: 1.03
+Version: 1.04
 Author: Dustin Hartzler
 Author URI: http://YourWebsiteEngineer.com
 */
@@ -555,7 +555,7 @@ if ( !class_exists('AsHeardOn') ) {
 					}
 				echo '</div>'; 
 			}
-			echo '<div class="clear"></div>';
+			echo '<div class="aho-clear"></div>';
 		}
 
 		/* edit podcast form */
@@ -590,7 +590,7 @@ if ( !class_exists('AsHeardOn') ) {
 				 	<input name="storder" type="text" size=2" value="'.$getaho->storder.'">(optional)<br/>
 
 				  	<input type="hidden" name="testid" value="'.$getaho->testid.'">
-				  	<input name="editdo" type="submit" class="aho-button aho-button-primary" value="Update">';
+				  	<input name="editdo" type="submit" class="button button-primary" value="Update">';
 			echo '<h3>Preview</h3>';
 			echo '<div class="podcast-display" >';
 			echo '<img src="'.$getaho->imgurl.'" width="90px" class="alignleft" style="margin:0 10px 10px 0;">';
@@ -668,7 +668,7 @@ if ( !class_exists('AsHeardOn') ) {
 							} else {
 								$retvalo .= stripslashes($tstpage2->clientname).'';
 							}
-							$retvalo .= '<div class="clear"><hr></div>';
+							$retvalo .= '<div class="aho-clear"><hr></div>';
 					}
 				}
 				else {
@@ -804,7 +804,7 @@ if(class_exists('AsHeardOn')) {
 				if ($linktext == '') { $linkdisplay = 'Read More'; } else { $linkdisplay = $linktext; }
 				echo '<div class="ppgreadmore" ><a class="aho-button" href="'.$linkurl.'">'.$linkdisplay.'</a></div>';
 			}
-			echo '<div class="clear"></div>';
+			echo '<div class="aho-clear"></div>';
 			echo '</div>';
 		}
 }

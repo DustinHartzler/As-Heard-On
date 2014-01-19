@@ -51,6 +51,10 @@ Here you can select how many images are display and how fast to transition from 
 
 == ChangeLog ==
 
+= 1.0.4 = 
+*	Fixed update button to display in WordPress Blue
+*	Fixed issue with extra padding displaying in widget area (Thanks to Music Radio Creative for pointing it out!)
+
 = 1.0.3 =
 *	Fixed save buttons to display in WordPress Blue
 *	Added screenshots to WordPress Repository Page
