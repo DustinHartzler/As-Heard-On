@@ -149,14 +149,46 @@ if ( !class_exists('AsHeardOn') ) {
 				<br />
 				<div id="ppg-form">
 					<form name="AddNew" method="post" action="<?php echo str_replace( '%7E', '~', $_SERVER['REQUEST_URI']); ?>">
-						<label for="showname">Podcast Name:</label><input name="show_name" type="text" size="45" ><br/>
-						<label for="hostname">Host Name:</label><input name="host_name" type="text" size="45" ><br/>
-						<label for="showurl">Show URL:</label><input name="show_url" type="text" size="45" value="http://" onFocus="this.value=''"><br/>
-						<label for="imgurl">Image URL:</label><input name="imgurl" type="text" size="45" > (copy File URL from <a href="<?php echo admin_url('/upload.php'); ?>" target="_blank">Media</a>) <br/>
-						<label for="episode">Episode Number:</label><input name="episode" type="text" size="10"><br/>
-						<label for="excerpt">Podcast Excerpt:</label><textarea name="excerpt" cols="45" rows="7"></textarea><br/>
-						<label for="storder">Sort order:</label><input name="storder" type="text" size="10" /> (optional) <br/>
-						<input type="submit" name="addnew" class="button button-primary" value="<?php _e('Add Podcast', 'addnew' ) ?>" /><br/>
+						<table cellpadding="0" cellspacing="2">
+							<tr valign="top">
+								<td><label for="showname">Podcast Name:</label></td>
+								<td><input name="show_name" type="text" size="45" ></td>
+							</tr>
+							<tr valign="top">
+								<td><label for="hostname">Host Name:</label></td>
+								<td><input name="host_name" type="text" size="45" ></td>
+							</tr>
+
+							<tr valign="top">
+								<td><label for="showurl">Show URL:</label></td>
+								<td><input name="show_url" type="text" size="45" value="http://" onFocus="this.value=''"></td>
+							</tr>
+
+							<tr valign="top">
+								<td><label for="imgurl">Image URL:</label></td>
+								<td><input name="imgurl" type="text" size="45" > (copy File URL from <a href="<?php echo admin_url('/upload.php'); ?>" target="_blank">Media</a>) </td>
+							</tr>
+
+							<tr valign="top">
+								<td><label for="episode">Episode Number:</label></td>
+								<td><input name="episode" type="text" size="5"></td>
+							</tr>
+
+							<tr valign="top">
+								<td><label for="excerpt">Podcast Excerpt:</label></td>
+								<td><textarea name="excerpt" cols="45" rows="7"></textarea></td>
+							</tr>
+
+							<tr valign="top">
+								<td><label for="storder">Sort order:</label></td>
+								<td><input name="storder" type="text" size="10" /> (optional) </td>
+							</tr>
+							<tr valign="top">
+								<td></td>
+								<td><input type="submit" name="addnew" class="button button-primary" value="<?php _e('Add Podcast', 'addnew' ) ?>" /></td>
+							</tr>
+						
+					</table>
 					</form>
 				</div>
 			</div>
