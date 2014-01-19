@@ -57,15 +57,19 @@ if ( !class_exists('AsHeardOn') ) {
 
 
 		function addscripts() { // include style sheet
-		  	 wp_enqueue_style('grayscale_css', plugins_url('/as-heard-on/css/as-heard-on-style.css') );
-		  	 wp_enqueue_style('slider_css', plugins_url('/as-heard-on/css/simple-slider.css') );
-		  	 wp_enqueue_style('volume_css', plugins_url('/as-heard-on/css/simple-slider-volume.css') );
-		  	 wp_enqueue_script( 'jquery' );
-		  	 wp_enqueue_script( 'grayscale', plugins_url('/as-heard-on/js/grayscale.js') ,array('jquery') );
-		  	 wp_enqueue_script( 'slider', plugins_url('/as-heard-on/js/simple-slider.js') ,array('jquery') ); 
-		  	 $params = array('opacity_js' => get_option('opacity') ); 
-		  	 wp_localize_script( 'grayscale', 'grayscale_vars', $params );  
-		  	 wp_enqueue_script( 'display', plugins_url('/as-heard-on/js/display.js') ,array('jquery') );    
+		  	wp_enqueue_style('grayscale_css', plugins_url('/as-heard-on/css/as-heard-on-style.css') );
+		  	wp_enqueue_style('slider_css', plugins_url('/as-heard-on/css/simple-slider.css') );
+		  	wp_enqueue_style('volume_css', plugins_url('/as-heard-on/css/simple-slider-volume.css') );
+		  	wp_enqueue_script( 'jquery' );
+		  	wp_enqueue_script( 'grayscale', plugins_url('/as-heard-on/js/grayscale.js') ,array('jquery') );
+		  	wp_enqueue_script( 'slider', plugins_url('/as-heard-on/js/simple-slider.js') ,array('jquery') ); 
+		  	$params = array('opacity_js' => get_option('opacity') ); 
+		  	wp_localize_script( 'grayscale', 'grayscale_vars', $params );  
+		  	wp_enqueue_script( 'display', plugins_url('/as-heard-on/js/display.js') ,array('jquery') ); 
+		  	wp_enqueue_script('media-upload');
+ 			wp_enqueue_script('thickbox');  
+ 			wp_enqueue_style ('thickbox'); 
+ 			wp_enqueue_script('media-upload-box', plugins_url('/as-heard-on/js/media.js'), array('jquery','media-upload','thickbox'));
 		} 
 	
 // +---------------------------------------------------------------------------+
@@ -166,7 +170,7 @@ if ( !class_exists('AsHeardOn') ) {
 
 							<tr valign="top">
 								<td><label for="imgurl">Image URL:</label></td>
-								<td><input name="imgurl" type="text" size="45" > (copy File URL from <a href="<?php echo admin_url('/upload.php'); ?>" target="_blank">Media</a>) </td>
+								<td><input name="imgurl" type="text" size="45" ><input class="media-upload-button button" type="button" value="Upload Image" /></td>
 							</tr>
 
 							<tr valign="top">
@@ -617,7 +621,7 @@ if ( !class_exists('AsHeardOn') ) {
 				
 						<tr valign="top">
 							<td><label for="imgurl">Image URL:</label></td>
-							<td><input name="imgurl" type="text" size="45" value="<?php echo $getaho->imgurl ?>"> (copy File URL from <a href="<?php admin_url('/upload.php') ?>" target="_blank">Media</a>) </td>
+							<td><input name="imgurl" type="text" size="45" value="<?php echo $getaho->imgurl ?>"><input class="media-upload-button button" type="button" value="Upload Image" /></td>
 						</tr>
 						
 						<tr valign="top">
