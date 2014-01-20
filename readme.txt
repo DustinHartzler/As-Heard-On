@@ -51,6 +51,13 @@ Here you can select how many images are display and how fast to transition from 
 
 == ChangeLog ==
 
+= 1.0.5 =
+*	Added Title Tags to Album Art in Widgets
+*	Aligned the forms to look nice with WordPress 3.8
+*	Added ability to upload album art via Media Library
+*	Fixed some code under the hood
+*	Updated Settings icon to look good in WordPress 3.8 
+
 = 1.0.4 = 
 *	Fixed update button to display in WordPress Blue
 *	Fixed issue with extra padding displaying in widget area (Thanks to Music Radio Creative for pointing it out!)
