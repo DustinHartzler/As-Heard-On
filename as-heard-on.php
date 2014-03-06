@@ -3,7 +3,7 @@
 Plugin Name: As Heard On
 Plugin URI: http://YourWebsiteEngineer.com
 Description: Lets you display album artwork of podcasts you've been a guest on.  Widget included.  Optional link in sidebar block to "view all" podcast images on a page.
-Version: 1.05
+Version: 1.06
 Author: Dustin Hartzler
 Author URI: http://YourWebsiteEngineer.com
 */
@@ -583,7 +583,7 @@ if ( !class_exists('AsHeardOn') ) {
 					if ($aholist->host_name != '') {
 						echo '<br><strong>Host Name: </strong>'.stripslashes($aholist->host_name).'';
 						if ($aholist->show_url != '') {
-							echo '<br><strong>Show URL: </strong> <a href="'.$aholist->show_url.'">'.stripslashes($aholist->show_url).'</a> ';
+							echo '<br><strong>Show URL: </strong> <a href="'.$aholist->show_url.'" rel="wordbreak">'.stripslashes($aholist->show_url).'</a> ';
 							if ($aholist->episode !=''){
 							echo '<br><strong>Episode: </strong>'.stripslashes($aholist->episode).'';	
 							}	
@@ -603,12 +603,12 @@ if ( !class_exists('AsHeardOn') ) {
 			
 			<h3>Edit Podcast</h3
 			<div id="ppg-form">
-				<form name="edittst" method="post" action="admin.php?page=setting_page">
+				<?php echo '<form name="edittst" method="post" action="admin.php?page=setting_page">';?>
 					<table cellpadding="2" cellspacing="2">
 						<tr valign="top">	
 							<td><label for="show_name">Show Name:</label></td>
-				  			<td><input name="show_name" type="text" size="45" value="<?php echo stripslashes($getaho->show_name)?>"></td>
-				  		</tr>
+				  			<?php echo '<td><input name="show_name" type="text" size="45" value="'. stripslashes($getaho->show_name).'"></td>';
+				  		?></tr>
 				  		<tr valign="top">
 							<td><label for="host_name">Host Name:</label></td>
 				  			<td><input name="host_name" type="text" size="45" value="<?php echo stripslashes($getaho->host_name)?>"></td>
@@ -640,7 +640,7 @@ if ( !class_exists('AsHeardOn') ) {
 				 		</tr>
 
 				 		<tr valign="top">
-				  			<td><input type="hidden" name="testid" value="<?php $getaho->testid ?>"></td>
+				  			<?php echo'<td><input type="hidden" name="testid" value="'.$getaho->testid.'"></td>'; ?>
 				  			<td><input name="editdo" type="submit" class="button button-primary" value="Update"></td>
 				  		</tr>
 				  	</table>

@@ -52,3 +52,7 @@ div.aho-clear {
 }
 
 .img_wrapper img{ /*border: 1px solid #000;*/}
+
+a[rel="wordbreak"]{
+	word-break:break-all;
+}
