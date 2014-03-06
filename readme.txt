@@ -51,6 +51,10 @@ Here you can select how many images are display and how fast to transition from 
 
 == ChangeLog ==
 
+= 1.0.6 =
+*   Fixed bug that caused the "Edit Podcast" to not save updated values
+*   Added a word break so extremely long URL's look nice in the Dashboard
+
 = 1.0.5 =
 *	Added Title Tags to Album Art in Widgets
 *	Aligned the forms to look nice with WordPress 3.8
