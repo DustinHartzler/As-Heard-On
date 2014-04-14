@@ -4,7 +4,7 @@ Donate Link: http://YourWebsiteEngineer.com/donate
 Tags: WordPress, widget, pages, podcasts, as heard on
 Requires at least: 3.6
 Tested up to: 3.9
-Stable tag: 1.0
+Stable tag: 1.0.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -50,6 +50,10 @@ Here you can select how many images are display and how fast to transition from 
 3. Display random album artwork in the sidebar
 
 == ChangeLog ==
+
+= 1.0.8 =
+*	Fixed CSS Styling issue that I broke in Version 1.0.7
+*	Updated broken sample podcast artwork included in plugin
 
 = 1.0.7 =
 *	Verified plugins works with WordPress 3.9

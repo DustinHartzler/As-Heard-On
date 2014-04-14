@@ -3,7 +3,7 @@
 Plugin Name: As Heard On
 Plugin URI: http://YourWebsiteEngineer.com
 Description: Lets you display album artwork of podcasts you've been a guest on.  Widget included.  Optional link in sidebar block to "view all" podcast images on a page.
-Version: 1.07
+Version: 1.08
 Author: Dustin Hartzler
 Author URI: http://YourWebsiteEngineer.com
 */
@@ -57,9 +57,9 @@ if ( !class_exists('AsHeardOn') ) {
 
 
 		function addscripts() { // include style sheet
+			wp_enqueue_style('grayscale_css', plugins_url('/as-heard-on/css/as-heard-on-style.css') );
 			if ( ! is_admin() ) {
-				wp_enqueue_script( 'display', plugins_url('/as-heard-on/js/display.js') ,array('jquery') ); 
-				wp_enqueue_style('grayscale_css', plugins_url('/as-heard-on/css/as-heard-on-style.css') );
+				wp_enqueue_script( 'display', plugins_url('/as-heard-on/js/display.js') ,array('jquery') );
 				wp_enqueue_script( 'jquery' );
 			  	wp_enqueue_script( 'grayscale', plugins_url('/as-heard-on/js/grayscale.js') ,array('jquery') );
 			  	$params = array('opacity_js' => get_option('opacity') ); 
@@ -272,7 +272,7 @@ if ( !class_exists('AsHeardOn') ) {
 	  
 			   	$insert = "INSERT INTO " . $table_name .
 		           	" (show_name,host_name,show_url,episode,imgurl) " .
-		            "VALUES ('Your Website Engineer','Dustin Hartzler','http://YourWebsiteEngineer.com','001','http://YourWebsiteEngineer.com/AlbumArt.png')";
+		            "VALUES ('Your Website Engineer','Dustin Hartzler','http://YourWebsiteEngineer.com','001','http://YourWebsiteEngineer.com/wp-content/podcasts/YWE.png')";
 		      	$results = $wpdb->query( $insert );
 
 				// insert default settings into wp_options 
