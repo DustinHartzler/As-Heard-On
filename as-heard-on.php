@@ -64,6 +64,10 @@ if ( !class_exists('AsHeardOn') ) {
 			  	wp_enqueue_script( 'grayscale', plugins_url('/as-heard-on/js/grayscale.js') ,array('jquery') );
 			  	$params = array('opacity_js' => get_option('opacity') ); 
 			  	wp_localize_script( 'grayscale', 'grayscale_vars', $params ); 
+			  	// Upload Button to Work
+			  	wp_enqueue_script('media-upload');
+        		wp_enqueue_script('thickbox');
+        		wp_enqueue_script('upload_media_widget', plugin_dir_url(__FILE__) . 'js/upload-media.js');
 			} else {
 			  	wp_enqueue_style('slider_css', plugins_url('/as-heard-on/css/simple-slider.css') );
 			  	wp_enqueue_style('volume_css', plugins_url('/as-heard-on/css/simple-slider-volume.css') );
@@ -81,7 +85,7 @@ if ( !class_exists('AsHeardOn') ) {
 
 		function addpages() { 
 			// Create top-level menu and appropriate sub-level menus:
-			add_menu_page('Other Shows', 'Other Shows', 'manage_options', 'setting_page', array($this, 'settings_pages'), 'dashicons-format-audio');
+			add_menu_page('Other Shows', 'As Heard On', 'manage_options', 'setting_page', array($this, 'settings_pages'), 'dashicons-format-audio');
 		}
 
 
@@ -174,6 +178,10 @@ if ( !class_exists('AsHeardOn') ) {
 							<tr valign="top">
 								<td><label for="imgurl">Image URL:</label></td>
 								<td><input name="imgurl" type="text" size="45" ><input class="media-upload-button button" type="button" value="Upload Image" /></td>
+							</tr>
+							<tr valign="top">
+								<td><label for="imgurl">&nbsp;</label></td>
+								<td><strong>For grayscale transition to work, album art must be on same server as website</strong></td>
 							</tr>
 
 							<tr valign="top">
@@ -626,6 +634,10 @@ if ( !class_exists('AsHeardOn') ) {
 							<td><label for="imgurl">Image URL:</label></td>
 							<td><input name="imgurl" type="text" size="45" value="<?php echo $getaho->imgurl ?>"><input class="media-upload-button button" type="button" value="Upload Image" /></td>
 						</tr>
+						<tr valign="top">
+								<td><label for="imgurl">&nbsp;</label></td>
+								<td><strong>For grayscale transition to work, album art must be on same server as website</strong></td>
+							</tr>
 						
 						<tr valign="top">
 							<td><label for="episode">Episode:</label></td>
