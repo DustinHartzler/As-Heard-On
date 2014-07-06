@@ -4,7 +4,7 @@ Donate Link: http://YourWebsiteEngineer.com/donate
 Tags: WordPress, widget, pages, podcasts, as heard on
 Requires at least: 3.6
 Tested up to: 3.9
-Stable tag: 1.0.9
+Stable tag: 1.0.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -50,10 +50,6 @@ Here you can select how many images are display and how fast to transition from 
 3. Display random album artwork in the sidebar
 
 == ChangeLog ==
-= 1.0.9 =
-*	Changed menu heading to read: As Heard On instead of Other Shows, since the text fits nicely on one line with new UI of WordPress
-*	Fixed media library button so it actually works
-*	Added notification text under upload so people understand that the transitions only work when the files are on the same server as website
 
 = 1.0.8 =
 *	Fixed CSS Styling issue that I broke in Version 1.0.7
