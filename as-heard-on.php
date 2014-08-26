@@ -85,7 +85,7 @@ if ( !class_exists('AsHeardOn') ) {
 
 		function addpages() { 
 			// Create top-level menu and appropriate sub-level menus:
-			add_menu_page('Other Shows', 'As Heard On', 'manage_options', 'setting_page', array($this, 'settings_pages'), 'dashicons-format-audio');
+			add_menu_page('Other Shows', 'As Heard On', 'manage_options', 'setting_page', array($this, 'settings_pages'), 'dashicons-microphone');
 		}
 
 

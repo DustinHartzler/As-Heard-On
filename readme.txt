@@ -50,6 +50,7 @@ Here you can select how many images are display and how fast to transition from 
 3. Display random album artwork in the sidebar
 
 == ChangeLog ==
+
 = 1.0.9 =
 *	Changed menu heading to read: As Heard On instead of Other Shows, since the text fits nicely on one line with new UI of WordPress
 *	Fixed media library button so it actually works
