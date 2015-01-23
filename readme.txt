@@ -3,8 +3,8 @@ Contributors: DustinHartzler
 Donate Link: http://YourWebsiteEngineer.com/donate
 Tags: WordPress, widget, pages, podcasts, as heard on
 Requires at least: 3.6
-Tested up to: 3.9
-Stable tag: 1.0.9
+Tested up to: 4.1
+Stable tag: 1.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -50,6 +50,12 @@ Here you can select how many images are display and how fast to transition from 
 3. Display random album artwork in the sidebar
 
 == ChangeLog ==
+
+= 1.10 =
+* 	New menu icon
+*	Added plugin icon for repository
+*	Compatible with WordPress 4.0
+*	Properly fixed the 'Add Image from Media Library' button. Thanks to Daniel J. Lewis for pointing out that it still didn't work.
 
 = 1.0.9 =
 *	Changed menu heading to read: As Heard On instead of Other Shows, since the text fits nicely on one line with new UI of WordPress
