@@ -690,6 +690,7 @@ if ( !class_exists('AsHeardOn') ) {
 		/* show page of all podcast artwork */
 		function showall() {
 		global $wpdb;
+
 			$imgalign = get_option('aho_imgalign');
 			if ($imgalign == '') { $imgalign = 'alignright'; } else { $imgalign = get_option('aho_imgalign'); }
 
@@ -885,4 +886,4 @@ if(class_exists('AsHeardOn')) {
 	add_action('widgets_init', 'widget_aho_init');
 	function widget_aho_init() {
 		register_widget('aho_widget');
-	}
+}
