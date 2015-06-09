@@ -6,12 +6,12 @@ jQuery(document).ready(function($) {
         .addClass("output")
         .insertAfter($(this));
     })
-    // .bind("slider:ready slider:changed", function (event, data) {
-    //   $(this)
-    //     .nextAll(".output:first")
-    //       .html(data.value.toFixed(1) );
-    // });
-
+    .bind("slider:ready slider:changed", function (event, data) {
+      $(this)
+        .nextAll(".output:first")
+          .html(data.value.toFixed(3));
+    });
     
 
     });
+

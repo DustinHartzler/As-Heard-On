@@ -60,11 +60,12 @@ if ( !class_exists('AsHeardOn') ) {
 			wp_enqueue_style('grayscale_css', plugins_url('/as-heard-on/css/as-heard-on-style.css') );
 			wp_enqueue_script( 'jquery' );			
 			if ( ! is_admin() ) {
-				wp_enqueue_script( 'display', plugins_url('/as-heard-on/js/display.js') ,array('jquery') );
+				
 			  	wp_enqueue_script( 'grayscale', plugins_url('/as-heard-on/js/grayscale.js') ,array('jquery') );
 			  	$params = array('opacity_js' => get_option('opacity') ); 
 			  	wp_localize_script( 'grayscale', 'grayscale_vars', $params ); 
 			} else {
+				wp_enqueue_script( 'display', plugins_url('/as-heard-on/js/display.js') ,array('jquery') );
 			  	wp_enqueue_style('slider_css', plugins_url('/as-heard-on/css/simple-slider.css') );
 			  	wp_enqueue_style('volume_css', plugins_url('/as-heard-on/css/simple-slider-volume.css') );
 			  	wp_enqueue_script( 'slider', plugins_url('/as-heard-on/js/simple-slider.js') ,array('jquery') ); 
@@ -453,12 +454,8 @@ if ( !class_exists('AsHeardOn') ) {
 
 					<tr valign="top">
 						<td>How fast to transition from B&W to Color</td>
-						<td><input type="text" data-slider="true" data-slider-range="0,5" data-slider-step=".1" data-slider-highlight="true" data-slider-theme="volume" name="opacity" value="<?php echo get_option('opacity'); ?>" ><?php echo get_option('opacity'); ?> seconds</td>
+						<td><input type="text" data-slider="true" data-slider-range="0,5" data-slider-step=".25" data-slider-highlight="true" data-slider-theme="volume" name="opacity" value="<?php echo get_option('opacity'); ?>" > seconds</td>
 					</tr>
-					<tr valign="top">
-						<td>How fast to transition from B&W to Color</td>
-						<td><input type="text" data-slider="true" data-slider-theme="volume"></td>
-
 					<tr valign="top">
 						<td>Number of podcasts to show in sidebar</td>
 						<td><input type="text" name="setlimit" size="2" value="<?php echo get_option('setlimit'); ?>" /></td>
