@@ -582,7 +582,7 @@ if ( !class_exists('AsHeardOn') ) {
 				echo '<img src="'.$aholist->imgurl.'" width="100px" class="alignleft" style="margin:0 10px 10px 0;">';
 				echo '<a href="admin.php?page=setting_page&amp;mode=ahoedit&amp;testid='.$aholist->testid.'">Edit</a>';
 				echo '&nbsp;|&nbsp;';
-				echo '<a href="admin.php?page=setting_page&amp;mode=ahorem&amp;testid='.$aholist->testid.'" onClick="return confirm(\'Delete this testimonial?\')">Delete</a>';
+				echo '<a href="admin.php?page=setting_page&amp;mode=ahorem&amp;testid='.$aholist->testid.'" onClick="return confirm(\'Delete this podcast?\')">Delete</a>';
 				echo '<br>';
 				echo '<strong>Show Name: </strong>';
 				echo stripslashes($aholist->show_name);
