@@ -9,7 +9,7 @@ jQuery(document).ready(function($) {
     .bind("slider:ready slider:changed", function (event, data) {
       $(this)
         .nextAll(".output:first")
-          .html(data.value.toFixed(3));
+          .html(data.value.toFixed(2));
     });
     
 
