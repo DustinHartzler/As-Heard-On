@@ -57,7 +57,7 @@ if ( !class_exists('AsHeardOn') ) {
 
 
 		function addscripts() { // include style sheet
-			wp_enqueue_style('grayscale_css', plugins_url('/as-heard-on/css/as-heard-on-style.css') );
+			wp_enqueue_style('grayscale_css', plugins_url('/as-heard-on/css/style.css') );
 			wp_enqueue_script( 'jquery' );			
 			if ( ! is_admin() ) {
 				
