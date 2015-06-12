@@ -57,15 +57,12 @@ if ( !class_exists('AsHeardOn') ) {
 
 
 		function addscripts() { // include style sheet
-			wp_enqueue_style('grayscale_css', plugins_url('/as-heard-on/css/style.css') );
+			wp_enqueue_style('style_css', plugins_url('/as-heard-on/css/style.css') );
 			wp_enqueue_script( 'jquery' );			
-			if ( ! is_admin() ) {
-				
-			  	wp_enqueue_script( 'grayscale', plugins_url('/as-heard-on/js/grayscale.js') ,array('jquery') );
-			  	$params = array('opacity_js' => get_option('opacity') ); 
-			  	wp_localize_script( 'grayscale', 'grayscale_vars', $params ); 
-			} else {
-				//wp_enqueue_style('volume_css', plugins_url('/as-heard-on/css/simple-slider-volume.css') );
+		  	wp_enqueue_script( 'grayscale', plugins_url('/as-heard-on/js/grayscale.js') ,array('jquery') );
+		  	$params = array('opacity_js' => get_option('opacity') ); 
+		  	wp_localize_script( 'grayscale', 'grayscale_vars', $params ); 
+			if ( is_admin() )  {
 				wp_enqueue_script( 'display', plugins_url('/as-heard-on/js/display.js') ,array('jquery') );
 			  	wp_enqueue_script( 'slider', plugins_url('/as-heard-on/js/simple-slider.js') ,array('jquery') ); 
 			  	// Upload Button to Work
