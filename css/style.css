@@ -2,8 +2,6 @@ div.aho-clear { clear: both; min-height: 15px; }
 
 a[rel="wordbreak"] { word-break: break-all; }
 
-#ppg-form label { float: left; width: 125px; font-weight: bold; }
-
 div.clear { clear: both; min-height: 15px; }
 
 .podcast-display { float: left; width: 450px; padding: 10px 0 0; margin-bottom: 5px; }
@@ -24,7 +22,7 @@ div.clear { clear: both; min-height: 15px; }
 }*/
 .item img { display: inline-block; padding: 0 15px 15px 0; }
 
-.img_wrapper img { padding-bottom: 25px; border: 1px solid #000; }
+.img_wrapper img { border: 1px solid #000; }
 
 /* Slider Volume */
 .slider-volume { width: 300px; }
