@@ -17,7 +17,7 @@ div.clear { clear: both; min-height: 15px; }
 
 .item img { display: inline-block; padding: 0 15px 15px 0; }
 
-.img_wrapper img { border: 1px solid #000; }
+.img_wrapper img { border: 1px solid #ababab; }
 
 /* Slider Volume */
 .slider-volume { width: 300px; }
