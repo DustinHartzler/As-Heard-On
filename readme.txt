@@ -3,8 +3,8 @@ Contributors: DustinHartzler
 Donate Link: http://YourWebsiteEngineer.com/donate
 Tags: podcast, testimonial, widget
 Requires at least: 3.6
-Tested up to: 4.2.2
-Stable tag: 2.0
+Tested up to: 4.3
+Stable tag: 1.11
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -50,6 +50,14 @@ Here you can select how many images are display and how fast to transition from 
 3. Display random album artwork in the sidebar
 
 == ChangeLog ==
+
+= 1.11 =
+*	Fixed enqueued Javascript for faster page loading
+*   Fixed slider to control how fast an image transitions from B&W to Color
+*	Removed duplicate CSS documents; there wasn't a need for them
+*	Changed CSS to Sass so it would take less effort to write CSS code
+*	Cleaned up a few UI things
+*	Lots of big changes coming for version 2.0
 
 = 1.10 =
 * 	New menu icon

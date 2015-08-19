@@ -5,11 +5,11 @@
   
 **Tags:** WordPress, widget, pages, podcasts, as heard on
   
-**Requires at least:** 3.5
+**Requires at least:** 3.6
   
-**Tested up to:** 4.1
+**Tested up to:** 4.3
   
-**Stable tag:** 1.0
+**Stable tag:** 1.11
   
 **License:** GPLv2 or later
   
