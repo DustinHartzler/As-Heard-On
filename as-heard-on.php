@@ -3,7 +3,7 @@
 Plugin Name: As Heard On
 Plugin URI: http://YourWebsiteEngineer.com
 Description: Lets you display album artwork of podcasts you've been a guest on.  Widget included.  Optional link in sidebar block to "view all" podcast images on a page.
-Version: 1.11
+Version: 1.12
 Author: Dustin Hartzler
 Author URI: http://YourWebsiteEngineer.com
 */
@@ -67,9 +67,11 @@ if ( !class_exists('AsHeardOn') ) {
 			  	wp_enqueue_script( 'slider', plugins_url('/as-heard-on/js/simple-slider.js') ,array('jquery') ); 
 			  	// Upload Button to Work
 			  	wp_enqueue_script('media-upload');
+			  	wp_enqueue_media ();
 	 			wp_enqueue_script('thickbox');  
 	 			wp_enqueue_style ('thickbox'); 
-	 			wp_enqueue_script('media-upload-box', plugins_url('/as-heard-on/js/media.js'), array('jquery','media-upload','thickbox'));
+	 			//wp_enqueue_script('media-upload-box', plugins_url('/as-heard-on/js/media.js'), array('jquery','media-upload','thickbox'));
+	 			wp_enqueue_script('script', plugins_url('/js/upload-media.js', __FILE__), array('jquery'), '', true);
 	 		}
 		} 
 	
@@ -170,7 +172,7 @@ if ( !class_exists('AsHeardOn') ) {
 
 							<tr valign="top">
 								<td><label for="imgurl">Image URL:</label></td>
-								<td><input name="imgurl" type="text" size="45" ><input class="media-upload-button button" type="button" value="Upload Image" /></td>
+								<td><input name="imgurl" type="text" size="45" ><input class="upload_image_button button" type="button" value="Upload Image" /></td>
 							</tr>
 							<tr valign="top">
 								<td><label for="imgurl">&nbsp;</label></td>
