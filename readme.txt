@@ -4,7 +4,7 @@ Donate Link: http://YourWebsiteEngineer.com/donate
 Tags: podcast, testimonial, widget
 Requires at least: 3.6
 Tested up to: 4.3
-Stable tag: 1.12
+Stable tag: 1.13
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -50,6 +50,9 @@ Here you can select how many images are display and how fast to transition from 
 3. Display random album artwork in the sidebar
 
 == ChangeLog ==
+
+= 1.13 =
+*	Fixed an issue that broke Featured Images (which was probably around for a long time)
 
 = 1.12 =
 *	Fixed an issue that broke the ability to add images to Posts and Pages with certain themes

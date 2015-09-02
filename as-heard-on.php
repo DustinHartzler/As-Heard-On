@@ -3,7 +3,7 @@
 Plugin Name: As Heard On
 Plugin URI: http://YourWebsiteEngineer.com
 Description: Lets you display album artwork of podcasts you've been a guest on.  Widget included.  Optional link in sidebar block to "view all" podcast images on a page.
-Version: 1.12
+Version: 1.13
 Author: Dustin Hartzler
 Author URI: http://YourWebsiteEngineer.com
 */
@@ -65,12 +65,10 @@ if ( !class_exists('AsHeardOn') ) {
 			if ( is_admin() )  {
 				wp_enqueue_script( 'display', plugins_url('/as-heard-on/js/display.js') ,array('jquery') );
 			  	wp_enqueue_script( 'slider', plugins_url('/as-heard-on/js/simple-slider.js') ,array('jquery') ); 
+			  	
 			  	// Upload Button to Work
-			  	wp_enqueue_script('media-upload');
-			  	wp_enqueue_media ();
 	 			wp_enqueue_script('thickbox');  
 	 			wp_enqueue_style ('thickbox'); 
-	 			//wp_enqueue_script('media-upload-box', plugins_url('/as-heard-on/js/media.js'), array('jquery','media-upload','thickbox'));
 	 			wp_enqueue_script('script', plugins_url('/js/upload-media.js', __FILE__), array('jquery'), '', true);
 	 		}
 		} 
