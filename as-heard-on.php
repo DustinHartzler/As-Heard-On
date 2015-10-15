@@ -12,6 +12,15 @@ Author URI: http://YourWebsiteEngineer.com
 if ( !class_exists('AsHeardOn') ) {
     class AsHeardOn {
     	//public $wpdb;
+    	public $allowed_html = array(
+			    'a' => array(
+			        'href' => array(),
+			        'title' => array()
+			    ),
+			    'br' => array(),
+			    'em' => array(),
+			    'strong' => array()
+			);
 // +---------------------------------------------------------------------------+
 // | WP hooks                                                                  |
 // +---------------------------------------------------------------------------+
@@ -206,23 +215,13 @@ if ( !class_exists('AsHeardOn') ) {
 		function insertnew() {
 			global $wpdb;
 
-			$allowed_html = array(
-			    'a' => array(
-			        'href' => array(),
-			        'title' => array()
-			    ),
-			    'br' => array(),
-			    'em' => array(),
-			    'strong' => array()
-			);
-
 			$table_name = $wpdb->prefix . "aho";
 			$show_name 	= sanitize_text_field( $_POST['show_name'] );	
 			$host_name 	= sanitize_text_field( $_POST['host_name'] );
 			$show_url 	= sanitize_text_field( $_POST['show_url'] );
 			$imgurl 	= sanitize_text_field( $_POST['imgurl'] );
 			$episode 	= sanitize_text_field( $_POST['episode'] );
-			$excerpt 	= wp_kses( $_POST['excerpt'], $allowed_html );
+			$excerpt 	= wp_kses( $_POST['excerpt'], $this->allowed_html );
 			$storder 	= sanitize_text_field( $_POST['storder'] );
 			
 			$insert = $wpdb->prepare( "INSERT INTO " . $table_name .
@@ -294,15 +293,6 @@ if ( !class_exists('AsHeardOn') ) {
 		/* update item in DB */
 		function aho_editdo($testid){
 			global $wpdb;
-			$allowed_html = array(
-			    'a' => array(
-			        'href' => array(),
-			        'title' => array()
-			    ),
-			    'br' => array(),
-			    'em' => array(),
-			    'strong' => array()
-			);
 
 			$table_name = $wpdb->prefix . "aho";
 			
@@ -312,7 +302,7 @@ if ( !class_exists('AsHeardOn') ) {
 			$show_url 	= sanitize_text_field( $_POST['show_url'] );
 			$imgurl 	= sanitize_text_field( $_POST['imgurl'] );
 			$episode 	= sanitize_text_field( $_POST['episode'] );
-			$excerpt 	= wp_kses( $_POST['excerpt'], $allowed_html );
+			$excerpt 	= wp_kses( $_POST['excerpt'], $this->allowed_html );
 			$storder 	= sanitize_text_field( $_POST['storder'] );
 			
 			$wpdb->query("UPDATE " . $table_name .
