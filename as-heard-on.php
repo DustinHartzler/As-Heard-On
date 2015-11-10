@@ -160,7 +160,15 @@ if ( !class_exists('AsHeardOn') ) {
 				<li>The text in the &quot;Podcast Excerpt&quot; field will only appear on the summary page.</li>
 				</ul>
 				<br />
-				<div id="ppg-form">
+				<?php $this->displayForm();?>
+			</div>
+		<?php } 
+
+/* Display Form */
+
+		function displayForm(){
+			?>
+			<div id="ppg-form">
 					<form name="AddNew" method="post" action="<?php echo str_replace( '%7E', '~', $_SERVER['REQUEST_URI']); ?>">
 						<table cellpadding="0" cellspacing="2">
 							<tr valign="top">
@@ -208,8 +216,8 @@ if ( !class_exists('AsHeardOn') ) {
 					</table>
 					</form>
 				</div>
-			</div>
-		<?php } 
+			<?php
+		}		
 
 /* insert podcast into DB */
 		function insertnew() {
@@ -682,7 +690,7 @@ if ( !class_exists('AsHeardOn') ) {
 			$retvalo = '';
 			$retvalo .= '';
 			$retvalo .= '<div id="aho-page">';
-			$retvalo .= '<div class="item">';
+			$retvalo .= '<div class="podcast-item">';
 			foreach ($tstpage as $tstpage2) {
 				$imgdisplay = get_option('imgdisplay');
 				if ($imgdisplay == 'displaysummary'){
