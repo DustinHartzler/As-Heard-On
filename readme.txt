@@ -3,8 +3,8 @@ Contributors: DustinHartzler
 Donate Link: http://YourWebsiteEngineer.com/donate
 Tags: podcast, testimonial, widget
 Requires at least: 3.6
-Tested up to: 4.3
-Stable tag: 1.13
+Tested up to: 4.5.1
+Stable tag: 1.14
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -50,6 +50,10 @@ Here you can select how many images are display and how fast to transition from 
 3. Display random album artwork in the sidebar
 
 == ChangeLog ==
+= 1.14 =
+*	Updated compatibilty to work with WordPress 4.5 (it always worked, but now it offically does)
+*	A few tweaks to description text and some CSS to line all of the elements up right
+*	Fixed an issue that wouldn't allow you to upload an image from the Edit screen, which is probably something you need to do on that screen
 
 = 1.13 =
 *	Fixed an issue that broke Featured Images (which was probably around for a long time)

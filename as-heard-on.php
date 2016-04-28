@@ -3,7 +3,7 @@
 Plugin Name: As Heard On
 Plugin URI: http://YourWebsiteEngineer.com
 Description: Lets you display album artwork of podcasts you've been a guest on.  Widget included.  Optional link in sidebar block to "view all" podcast images on a page.
-Version: 1.13
+Version: 1.14
 Author: Dustin Hartzler
 Author URI: http://YourWebsiteEngineer.com
 */
@@ -191,7 +191,7 @@ if ( !class_exists('AsHeardOn') ) {
 							</tr>
 							<tr valign="top">
 								<td><label for="imgurl">&nbsp;</label></td>
-								<td><strong>For grayscale transition to work, album art must be on same server as website</strong></td>
+								<td><strong>For grayscale transition to work, album art must be uploaded to media library</strong></td>
 							</tr>
 
 							<tr valign="top">
@@ -344,25 +344,31 @@ if ( !class_exists('AsHeardOn') ) {
 				if (isset($_POST['addnew'])) {
 					$this->insertnew();
 					?><div id="message" class="updated fade"><p><strong><?php _e('Podcast Added'); ?>.</strong></p></div><?php
+					$this->newform();
 				}
-				if ($_REQUEST['mode']=='ahorem') {
+				elseif ($_REQUEST['mode']=='ahorem') {
 					$this->removetst($_REQUEST['testid']);
 					?><div id="message" class="updated fade"><p><strong><?php _e('Podcast Deleted'); ?>.</strong></p></div><?php
 				}
-				if ($_REQUEST['mode']=='ahoedit') {
+				elseif ($_REQUEST['mode']=='ahoedit') {
 					$this->aho_edit($_REQUEST['testid']);
-					exit;
+					//exit;
 				}
-				if (isset($_REQUEST['editdo'])) {
+				elseif (isset($_REQUEST['editdo'])) {
 					$this->aho_editdo($_REQUEST['testid']);
 					?><div id="message" class="updated fade"><p><strong><?php _e('Podcast Updated'); ?>.</strong></p></div><?php
-				}
 					$this->showlist(); // show podcasts
+					$this->newform(); // show form to add new podcast 
+				}
+				else { ?>
+					<div class="wrap">
+				<?php $this->showlist(); // show podcasts
+				 $this->newform(); // show form to add new podcast ?>
+			</div> <?php
+				}
 				?>
 			</div>
-			<div class="wrap">
-				<?php $this->newform(); // show form to add new podcast ?>
-			</div>
+			
 			<div class="wrap">
 			<?php $yearnow = date('Y');
 			if($yearnow == "2013") {
@@ -386,7 +392,7 @@ if ( !class_exists('AsHeardOn') ) {
 		?>
 			<div class="wrap">
 				<?php if ($_REQUEST['settings-updated']=='true') { ?>
-				<div id="message" class="updated fade"><p><strong>Settings Updated</strong></p></div>
+				<div id="message" class="updated fade"><p><strong>Widget Settings Updated</strong></p></div>
 				<?php  } ?>
 
 				<?php echo '<p align="right">Need help? <a href="http://wordpress.org/plugins/as-heard-on/" target="_blank">documentation</a> &nbsp;|&nbsp; <a href="http://wordpress.org/support/plugin/as-heard-on" target="_blank">support page</a></p>'; ?>
@@ -448,7 +454,7 @@ if ( !class_exists('AsHeardOn') ) {
 
 					<tr valign="top">
 						<td>How fast to transition from B&W to Color</td>
-						<td><input type="text" data-slider="true" data-slider-range="0,5" data-slider-step=".25" data-slider-highlight="true" data-slider-theme="volume" name="opacity" value="<?php echo get_option('opacity'); ?>" > seconds</td>
+						<td><input type="text" data-slider="true" data-slider-range="0,5" data-slider-step=".25" data-slider-highlight="true" data-slider-theme="volume" name="opacity" value="<?php echo get_option('opacity'); ?>" ></td>
 					</tr>
 					<tr valign="top">
 						<td>Number of podcasts to show in sidebar</td>
@@ -622,11 +628,11 @@ if ( !class_exists('AsHeardOn') ) {
 				
 						<tr valign="top">
 							<td><label for="imgurl">Image URL:</label></td>
-							<td><input name="imgurl" type="text" size="45" value="<?php echo $getaho->imgurl ?>"><input class="media-upload-button button" type="button" value="Upload Image" /></td>
+							<td><input name="imgurl" type="text" size="45" value="<?php echo $getaho->imgurl ?>"><input class="upload_image_button button" type="button" value="Upload Image" /></td>
 						</tr>
 						<tr valign="top">
 								<td><label for="imgurl">&nbsp;</label></td>
-								<td><strong>For grayscale transition to work, album art must be on same server as website</strong></td>
+								<td><strong>For grayscale transition to work, album art must be uploaded to media library</strong></td>
 							</tr>
 						
 						<tr valign="top">

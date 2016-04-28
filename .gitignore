@@ -8,3 +8,4 @@ config.codekit
 *.svn-base
 
 .svn/wc.db
+deploy.sh
