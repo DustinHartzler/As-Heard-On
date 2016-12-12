@@ -1,26 +1,26 @@
 # As Heard On #
 **Contributors:** DustinHartzler
-  
+
 **Donate Link:** http://YourWebsiteEngineer.com/donate
-  
+
 **Tags:** WordPress, widget, pages, podcasts, as heard on
-  
+
 **Requires at least:** 3.6
-  
-**Tested up to:** 4.5.1
-  
+
+**Tested up to:** 4.7
+
 **Stable tag:** 1.14
-  
+
 **License:** GPLv2 or later
-  
+
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html
-  
+
 
 This plugin is built to showcase other podcasts that you've been interviewed on. Displays podcast artwork in a widget or on a full page.
 
 ## Description ##
 
-The plugin includes the option to display a random (one or more) album artwork image in your sidebar using the built-in widget. 
+The plugin includes the option to display a random (one or more) album artwork image in your sidebar using the built-in widget.
 
 Album Art images can also be displayed all on one page.  Simply put [aho] in the body of the page.
 
