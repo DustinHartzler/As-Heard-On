@@ -3,7 +3,7 @@ Contributors: DustinHartzler
 Donate Link: http://YourWebsiteEngineer.com/donate
 Tags: podcast, testimonial, widget
 Requires at least: 3.6
-Tested up to: 4.5.1
+Tested up to: 4.7
 Stable tag: 1.14
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -12,7 +12,7 @@ This plugin is built to showcase other podcasts that you've been interviewed on.
 
 == Description ==
 
-The plugin includes the option to display a random (one or more) album artwork image in your sidebar using the built-in widget. 
+The plugin includes the option to display a random (one or more) album artwork image in your sidebar using the built-in widget.
 
 Album Art images can also be displayed all on one page.  Simply put [aho] in the body of the page.
 
@@ -27,7 +27,7 @@ Be sure to read the included documentation for style and configuration help.
 
 = How do I display the album art in the sidebar? =
 
-Use the built-in widget to display an image(s) randomly pulled from the database.  
+Use the built-in widget to display an image(s) randomly pulled from the database.
 
 = How do I show all my Album Art Images on a page? =
 
@@ -97,9 +97,9 @@ Here you can select how many images are display and how fast to transition from 
 *	Aligned the forms to look nice with WordPress 3.8
 *	Added ability to upload album art via Media Library
 *	Fixed some code under the hood
-*	Updated Settings icon to look good in WordPress 3.8 
+*	Updated Settings icon to look good in WordPress 3.8
 
-= 1.0.4 = 
+= 1.0.4 =
 *	Fixed update button to display in WordPress Blue
 *	Fixed issue with extra padding displaying in widget area (Thanks to Music Radio Creative for pointing it out!)
 
@@ -108,7 +108,7 @@ Here you can select how many images are display and how fast to transition from 
 *	Added screenshots to WordPress Repository Page
 * 	Fixed broken links to documentation and support pages.
 
-= 1.0.2 = 
+= 1.0.2 =
 * 	Updated CSS for Widget Button to not conflict with other buttons
 
 = 1.0.1 =
