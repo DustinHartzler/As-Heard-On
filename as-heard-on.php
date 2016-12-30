@@ -1,5 +1,5 @@
 <?php
-/* 
+/*
 Plugin Name: As Heard On
 Plugin URI: http://YourWebsiteEngineer.com
 Description: Lets you display album artwork of podcasts you've been a guest on.  Widget included.  Optional link in sidebar block to "view all" podcast images on a page.
@@ -26,9 +26,9 @@ if ( !class_exists('AsHeardOn') ) {
 // +---------------------------------------------------------------------------+
 		function __construct() {
 		/* WP actions */
-            add_action( 'init', array(&$this, 'addscripts'));
-            add_action( 'admin_init', array(&$this, 'register_options'));
-            add_action( 'admin_menu', array(&$this, 'addpages'));
+      add_action( 'init', array(&$this, 'addscripts'));
+      add_action( 'admin_init', array(&$this, 'register_options'));
+      add_action( 'admin_menu', array(&$this, 'addpages'));
 			add_action( 'plugins_loaded', array(&$this, 'set'));
 			add_shortcode( 'aho', array(&$this, 'showall'));
 		}
@@ -66,27 +66,27 @@ if ( !class_exists('AsHeardOn') ) {
 
 
 		function addscripts() { // include style sheet
-			wp_enqueue_style('style_css', plugins_url('/as-heard-on/css/style.css') );
-			wp_enqueue_script( 'jquery' );			
-		  	wp_enqueue_script( 'grayscale', plugins_url('/as-heard-on/js/grayscale.js') ,array('jquery') );
-		  	$params = array('opacity_js' => get_option('opacity') ); 
-		  	wp_localize_script( 'grayscale', 'grayscale_vars', $params ); 
+      wp_enqueue_style('style_css', plugins_url('/as-heard-on/css/style.css') );
+			wp_enqueue_script( 'jquery' );
+		  wp_enqueue_script( 'grayscale', plugins_url('/as-heard-on/js/grayscale.js') ,array('jquery') );
+		  $params = array('opacity_js' => get_option('opacity') );
+		  wp_localize_script( 'grayscale', 'grayscale_vars', $params );
 			if ( is_admin() )  {
-				wp_enqueue_script( 'display', plugins_url('/as-heard-on/js/display.js') ,array('jquery') );
-			  	wp_enqueue_script( 'slider', plugins_url('/as-heard-on/js/simple-slider.js') ,array('jquery') ); 
-			  	
-			  	// Upload Button to Work
-	 			wp_enqueue_script('thickbox');  
-	 			wp_enqueue_style ('thickbox'); 
+        wp_enqueue_script( 'display', plugins_url('/as-heard-on/js/display.js') ,array('jquery') );
+			  wp_enqueue_script( 'slider', plugins_url('/as-heard-on/js/simple-slider.js') ,array('jquery') );
+
+			  // Upload Button to Work
+	 			wp_enqueue_script('thickbox');
+	 			wp_enqueue_style ('thickbox');
 	 			wp_enqueue_script('script', plugins_url('/js/upload-media.js', __FILE__), array('jquery'), '', true);
 	 		}
-		} 
-	
+		}
+
 // +---------------------------------------------------------------------------+
 // | Create admin links                                                        |
 // +---------------------------------------------------------------------------+
 
-		function addpages() { 
+		function addpages() {
 			// Create top-level menu and appropriate sub-level menus:
 			add_menu_page('As Heard On', 'As Heard On', 'manage_options', 'setting_page', array($this, 'settings_pages'), 'dashicons-microphone');
 		}
@@ -98,7 +98,7 @@ if ( !class_exists('AsHeardOn') ) {
 		function add_settings_link($links, $file) {
 			static $plugin;
 			if (!$plugin) $plugin = plugin_basename(__FILE__);
-			
+
 			if ($file == $plugin){
 				$settings_link = '<a href="admin.php?page=setting_page">'.__("Configure").'</a>';
 				$links[] = $settings_link;
@@ -107,7 +107,7 @@ if ( !class_exists('AsHeardOn') ) {
 		}
 
 		function set() {
-			if (current_user_can('update_plugins')) 
+			if (current_user_can('update_plugins'))
 			add_filter('plugin_action_links', array(&$this, 'add_settings_link'), 10, 2 );
 		}
 
@@ -136,9 +136,9 @@ if ( !class_exists('AsHeardOn') ) {
 				</h2>
 
 				<?php
-				if ( $active_tab == 'add_new_podcast' ) {  
+				if ( $active_tab == 'add_new_podcast' ) {
 					$this->adminpage();
-				} elseif ( $active_tab == 'widget_options' ) { 
+				} elseif ( $active_tab == 'widget_options' ) {
 					$this->widget_options();
 				} elseif ( $active_tab == 'full_page_options' ) {
 					$this->page_options();
@@ -162,7 +162,7 @@ if ( !class_exists('AsHeardOn') ) {
 				<br />
 				<?php $this->displayForm();?>
 			</div>
-		<?php } 
+		<?php }
 
 /* Display Form */
 
@@ -212,26 +212,26 @@ if ( !class_exists('AsHeardOn') ) {
 								<td></td>
 								<td><input type="submit" name="addnew" class="button button-primary" value="<?php _e('Add Podcast', 'addnew' ) ?>" /></td>
 							</tr>
-						
+
 					</table>
 					</form>
 				</div>
 			<?php
-		}		
+		}
 
 /* insert podcast into DB */
 		function insertnew() {
 			global $wpdb;
 
 			$table_name = $wpdb->prefix . "aho";
-			$show_name 	= sanitize_text_field( $_POST['show_name'] );	
+			$show_name 	= sanitize_text_field( $_POST['show_name'] );
 			$host_name 	= sanitize_text_field( $_POST['host_name'] );
 			$show_url 	= sanitize_text_field( $_POST['show_url'] );
 			$imgurl 	= sanitize_text_field( $_POST['imgurl'] );
 			$episode 	= sanitize_text_field( $_POST['episode'] );
 			$excerpt 	= wp_kses( $_POST['excerpt'], $this->allowed_html );
 			$storder 	= sanitize_text_field( $_POST['storder'] );
-			
+
 			$insert = $wpdb->prepare( "INSERT INTO " . $table_name .
 				" (show_name,host_name,show_url,imgurl,episode,excerpt,storder) " .
 				"VALUES ('%s','%s','%s','%s','%d','%s','%s')",
@@ -243,7 +243,7 @@ if ( !class_exists('AsHeardOn') ) {
 				$excerpt,
 				$storder
 			);
-			
+
 			$results = $wpdb->query( $insert );
 
 		}
@@ -262,7 +262,7 @@ if ( !class_exists('AsHeardOn') ) {
 						if ( ! empty($wpdb->collate) )
 							$charset_collate .= " COLLATE $wpdb->collate";
 				}
-      
+
 			   $sql = "CREATE TABLE IF NOT EXISTS " . $table_name . "(
 				testid int( 15 ) NOT NULL AUTO_INCREMENT ,
 				show_name text,
@@ -274,16 +274,16 @@ if ( !class_exists('AsHeardOn') ) {
 				storder INT( 5 ) NOT NULL,
 				PRIMARY KEY ( `testid` )
 				) ".$charset_collate.";";
-	  
+
 				require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 				dbDelta($sql);
-	  
+
 			   	$insert = "INSERT INTO " . $table_name .
 		           	" (show_name,host_name,show_url,episode,imgurl) " .
 		            "VALUES ('Your Website Engineer','Dustin Hartzler','http://YourWebsiteEngineer.com','001','http://YourWebsiteEngineer.com/wp-content/podcasts/YWE.png')";
 		      	$results = $wpdb->query( $insert );
 
-				// insert default settings into wp_options 
+				// insert default settings into wp_options
 				$toptions = $wpdb->prefix ."options";
 				$defset = "INSERT INTO ".$toptions.
 					"(option_name, option_value) " .
@@ -292,7 +292,7 @@ if ( !class_exists('AsHeardOn') ) {
 					"('sfs_showlink', ''),('sfs_imgalign','right'),('sfs_sorder', 'testid DESC')";
 				$dodef = $wpdb->query( $defset );
 
-			} 	
+			}
 				// update version in options table
 				  delete_option("ppg_version");
 				  add_option("ppg_version", "0.5");
@@ -303,16 +303,16 @@ if ( !class_exists('AsHeardOn') ) {
 			global $wpdb;
 
 			$table_name = $wpdb->prefix . "aho";
-			
+
 			$testid = $testid;
-			$show_name 	= sanitize_text_field( $_POST['show_name'] );	
+			$show_name 	= sanitize_text_field( $_POST['show_name'] );
 			$host_name 	= sanitize_text_field( $_POST['host_name'] );
 			$show_url 	= sanitize_text_field( $_POST['show_url'] );
 			$imgurl 	= sanitize_text_field( $_POST['imgurl'] );
 			$episode 	= sanitize_text_field( $_POST['episode'] );
 			$excerpt 	= wp_kses( $_POST['excerpt'], $this->allowed_html );
 			$storder 	= sanitize_text_field( $_POST['storder'] );
-			
+
 			$wpdb->query("UPDATE " . $table_name .
 			" SET show_name = '$show_name', ".
 			" host_name = '$host_name', ".
@@ -328,10 +328,10 @@ if ( !class_exists('AsHeardOn') ) {
 		function removetst($testid) {
 			global $wpdb;
 			$table_name = $wpdb->prefix . "aho";
-			
+
 			$insert = $wpdb->prepare( "DELETE FROM " . $table_name .
 			" WHERE testid = '%d'", absint( $testid ) );
-			
+
 			$results = $wpdb->query( $insert );
 
 		}
@@ -358,7 +358,7 @@ if ( !class_exists('AsHeardOn') ) {
 					$this->aho_editdo($_REQUEST['testid']);
 					?><div id="message" class="updated fade"><p><strong><?php _e('Podcast Updated'); ?>.</strong></p></div><?php
 					$this->showlist(); // show podcasts
-					$this->newform(); // show form to add new podcast 
+					$this->newform(); // show form to add new podcast
 				}
 				else { ?>
 					<div class="wrap">
@@ -368,16 +368,16 @@ if ( !class_exists('AsHeardOn') ) {
 				}
 				?>
 			</div>
-			
+
 			<div class="wrap">
 			<?php $yearnow = date('Y');
 			if($yearnow == "2013") {
 			    $yearcright = "";
-			} else { 
+			} else {
 			    $yearcright = "2013-";
 			}
 			?>
-			<p>As Heard On Plugin is &copy; Copyright <?php echo("".$yearcright."".date('Y').""); ?>, <a href="http://www.yourwebsiteengineer.com/" target="_blank">Dustin Hartzler</a> and distributed under the <a href="http://www.fsf.org/licensing/licenses/quick-guide-gplv3.html" target="_blank">GNU General Public License</a>. 
+			<p>As Heard On Plugin is &copy; Copyright <?php echo("".$yearcright."".date('Y').""); ?>, <a href="http://www.yourwebsiteengineer.com/" target="_blank">Dustin Hartzler</a> and distributed under the <a href="http://www.fsf.org/licensing/licenses/quick-guide-gplv3.html" target="_blank">GNU General Public License</a>.
 			If you find this plugin useful, please consider a <a href="http://#" target="_blank">donation</a>.</p>
 			</div>
 <?php }
@@ -399,11 +399,11 @@ if ( !class_exists('AsHeardOn') ) {
 				<form method="post" action="options.php">
 				<?php wp_nonce_field('update-options'); ?>
 				<?php settings_fields( 'option-widget' ); ?>
-			
+
 				<table cellpadding="5" cellspacing="5">
 					<tr valign="top">
 						<td>Show link in sidebar to full page of previous interviews</td>
-						<td><?php $sfs_showlink = get_option('showlink'); 
+						<td><?php $sfs_showlink = get_option('showlink');
 						if ($sfs_showlink == 'yes') { ?>
 							<input type="checkbox" name="showlink" value="yes" checked />
 						<?php } else { ?>
@@ -411,7 +411,7 @@ if ( !class_exists('AsHeardOn') ) {
 						<?php } ?>
 						</td>
 					</tr>
-			
+
 					<tr valign="top">
 						<td>Text for sidebar aho-button (Read More, View All, etc)</td>
 						<td><input type="text" name="linktext" value="<?php echo get_option('linktext'); ?>" /></td>
@@ -421,9 +421,9 @@ if ( !class_exists('AsHeardOn') ) {
 						<td>Page link for sidebar aho-button<br/> (use shortcode [aho])</td>
 						<td> <select name="linkurl">
 			 			<option value="">
-						<?php echo esc_attr(__('Select page')); ?></option> 
-						<?php 
-						  $pages = get_pages(); 
+						<?php echo esc_attr(__('Select page')); ?></option>
+						<?php
+						  $pages = get_pages();
 						  foreach ($pages as $pagg) {
 						  $pagurl = get_page_link($pagg->ID);
 						  $sfturl = get_option('linkurl');
@@ -436,7 +436,7 @@ if ( !class_exists('AsHeardOn') ) {
 								$option = '<option value="'.get_page_link($pagg->ID).'">';
 								$option .= $pagg->post_title;
 								$option .= '</option>';
-								echo $option;	
+								echo $option;
 							}
 						  }
 						 ?>	</select></td>
@@ -464,12 +464,12 @@ if ( !class_exists('AsHeardOn') ) {
 			</table>
 			<input type="hidden" name="action" value="update" />
 			<input type="hidden" name="page_options" value="admng,showlink,linktext,image_width,image_height,opacity,setlimit, linkurl,sfs_sorder,sfs_imgalign,imgmax,deldata" />
-			
+
 			<p class="submit">
 			<input type="submit" class="button button-primary" value="<?php _e('Save Widget Options') ?>" />
 			</p>
 
-			  
+
 		<?php }
 
 		function page_options(){ ?>
@@ -490,7 +490,7 @@ if ( !class_exists('AsHeardOn') ) {
 								<input type="radio" name="sorder" value="testid ASC" checked /> Order entered, oldest first
 								<?php } else { ?>
 								<input type="radio" name="sorder" value="testid ASC" /> Order entered, oldest first
-								<?php } ?><br/>	
+								<?php } ?><br/>
 								<?php if (get_option('sorder') == 'testid DESC') { ?>
 								<input type="radio" name="sorder" value="testid DESC" checked /> Order entered, newest first
 								<?php } else { ?>
@@ -507,9 +507,9 @@ if ( !class_exists('AsHeardOn') ) {
 			<tr valign="top">
 			<td>Align Artwork on Left or Right of Description</td>
 			<td>
-			<?php $sfs_imgalign = get_option('aho_imgalign'); 
+			<?php $sfs_imgalign = get_option('aho_imgalign');
 			if ($sfs_imgalign == 'alignleft') { ?>
-			<input type="radio" name="aho_imgalign" value="alignleft" checked /> Left 
+			<input type="radio" name="aho_imgalign" value="alignleft" checked /> Left
 			<input type="radio" name="aho_imgalign" value="alignright" /> Right
 			<?php } elseif ($sfs_imgalign == 'alignright') { ?>
 			<input type="radio" name="aho_imgalign" value="alignleft" /> Left
@@ -524,7 +524,7 @@ if ( !class_exists('AsHeardOn') ) {
 			<tr valign="top">
 			<td>Display Images or Images and Summary</td>
 			<td>
-			<?php $aho_display = get_option('imgdisplay'); 
+			<?php $aho_display = get_option('imgdisplay');
 			if ($aho_display == 'displayimg') { ?>
 			<input type="radio" name="imgdisplay" value="displayimg" checked /> Images
 			<input type="radio" name="imgdisplay" value="displaysummary" /> Images & Summary
@@ -542,11 +542,11 @@ if ( !class_exists('AsHeardOn') ) {
 			<td>Maximum height (in pixels) for image</td>
 			<td><input type="text" name="imgmax" value="<?php echo get_option('imgmax'); ?>" /> (if left blank images will show full size)</td>
 			</tr>
-			
+
 			<tr valign="top">
 			<td>Remove table when deactivating plugin</td>
 			<td>
-			<?php $deldata = get_option('deldata'); 
+			<?php $deldata = get_option('deldata');
 			if ($deldata == 'yes') { ?>
 			<input type="checkbox" name="deldata" value="yes" checked /> (this will result in all data being deleted!)
 			<?php } else { ?>
@@ -554,26 +554,26 @@ if ( !class_exists('AsHeardOn') ) {
 			<?php } ?>
 			</td>
 			</tr>
-			
+
 			</table>
 			<input type="hidden" name="action" value="update" />
 			<input type="hidden" name="page_options" value="sorder,aho_imgalign,imgmax,deldata" />
-			
+
 			<p class="submit">
 			<input type="submit" class="button button-primary" value="<?php _e('Save Page Changes') ?>" />
 			</p>
-			
+
 			</form>
-			
+
 			</div>
-		<?php 
+		<?php
 		}
 
 // +---------------------------------------------------------------------------+
 // | Manage Page - list all and show edit/delete options                       |
 // +---------------------------------------------------------------------------+
 /* show podcast on settings page */
-		function showlist() { 
+		function showlist() {
 			global $wpdb;
 			$table_name = $wpdb->prefix . "aho";
 			$aholists = $wpdb->get_results("SELECT testid,show_name,host_name,show_url,imgurl,episode FROM $table_name");
@@ -592,11 +592,11 @@ if ( !class_exists('AsHeardOn') ) {
 						if ($aholist->show_url != '') {
 							echo '<br><strong>Show URL: </strong> <a href="'.$aholist->show_url.'" rel="wordbreak">'.stripslashes($aholist->show_url).'</a> ';
 							if ($aholist->episode !=''){
-							echo '<br><strong>Episode: </strong>'.stripslashes($aholist->episode).'';	
-							}	
+							echo '<br><strong>Episode: </strong>'.stripslashes($aholist->episode).'';
+							}
 						}
 					}
-				echo '</div>'; 
+				echo '</div>';
 			}
 			echo '<div class="aho-clear"></div>';
 		}
@@ -605,14 +605,14 @@ if ( !class_exists('AsHeardOn') ) {
 		function aho_edit($testid){
 			global $wpdb;
 			$table_name = $wpdb->prefix . "aho";
-			
+
 			$getaho = $wpdb->get_row("SELECT testid, show_name, host_name, show_url, imgurl, episode, excerpt, storder FROM $table_name WHERE testid = $testid"); ?>
-			
+
 			<h3>Edit Podcast</h3
 			<div id="ppg-form">
 				<?php echo '<form name="edittst" method="post" action="admin.php?page=setting_page">';?>
 					<table cellpadding="2" cellspacing="2">
-						<tr valign="top">	
+						<tr valign="top">
 							<td><label for="show_name">Show Name:</label></td>
 				  			<?php echo '<td><input name="show_name" type="text" size="45" value="'. stripslashes($getaho->show_name).'"></td>';
 				  		?></tr>
@@ -625,7 +625,7 @@ if ( !class_exists('AsHeardOn') ) {
 							<td><label for="show_url">Show URL:</label></td>
 				 			<td><input name="show_url" type="text" size="45" value="<?php echo $getaho->show_url ?>"></td>
 				 		</tr>
-				
+
 						<tr valign="top">
 							<td><label for="imgurl">Image URL:</label></td>
 							<td><input name="imgurl" type="text" size="45" value="<?php echo $getaho->imgurl ?>"><input class="upload_image_button button" type="button" value="Upload Image" /></td>
@@ -634,7 +634,7 @@ if ( !class_exists('AsHeardOn') ) {
 								<td><label for="imgurl">&nbsp;</label></td>
 								<td><strong>For grayscale transition to work, album art must be uploaded to media library</strong></td>
 							</tr>
-						
+
 						<tr valign="top">
 							<td><label for="episode">Episode:</label></td>
 				 			<td><input name="episode" type="text" size="2" value="<?php echo $getaho->episode ?>"></td>
@@ -666,14 +666,14 @@ if ( !class_exists('AsHeardOn') ) {
 						if ($getaho->show_url != '') {
 							echo '<br><strong>Show URL: </strong> <a href="'.$getaho->show_url.'">'.stripslashes($getaho->show_url).'</a> ';
 							if ($getaho->episode !=''){
-							echo '<br><strong>Episode: </strong>'.stripslashes($getaho->episode).'';	
-							}	
+							echo '<br><strong>Episode: </strong>'.stripslashes($getaho->episode).'';
+							}
 							if ($getaho->excerpt !=''){
-							echo '<br><strong>Show Recap: </strong>'.stripslashes($getaho->excerpt).'';	
+							echo '<br><strong>Show Recap: </strong>'.stripslashes($getaho->excerpt).'';
 							}
 						}
 					}
-				echo '</div>'; 
+				echo '</div>';
 			echo '</form>';
 			echo '</div>';
 		}
@@ -690,7 +690,7 @@ if ( !class_exists('AsHeardOn') ) {
 			$sorder = (get_option('sorder'));
 			if ($sorder != 'testid ASC' AND $sorder != 'testid DESC' AND $sorder != 'storder ASC')
 			{ $sorder2 = 'testid ASC'; } else { $sorder2 = $sorder; }
-			
+
 			$table_name = $wpdb->prefix . "aho";
 			$tstpage = $wpdb->get_results("SELECT testid, show_name, host_name, show_url, imgurl, episode, excerpt, storder FROM $table_name WHERE imgurl !='' ORDER BY $sorder2");
 			$retvalo = '';
@@ -702,13 +702,13 @@ if ( !class_exists('AsHeardOn') ) {
 				if ($imgdisplay == 'displaysummary'){
 					if ($tstpage2->imgurl != '') { // don't show podcasts without album art.
 
-						
+
 						if ($tstpage2->imgurl != '') { // check for image
 							$imgmax = get_option('imgmax');
 							if ($imgmax == '') { $sfiheight = ''; } else { $sfiheight = ' width="'.get_option('imgmax').'"'; }
 							$retvalo .= '<a href="'.$tstpage2->show_url.'" target="_blank"><img src="'.$tstpage2->imgurl.'"'.$sfiheight.' class="'.$imgalign.'" alt="'.stripslashes($tstpage2->show_name).'"></a>';
 						}
-						
+
 							if ($tstpage2->show_name != '') {
 								if ($tstpage2->show_url != '') {
 										$retvalo .= '<strong>Show Name: </strong><a href="'.$tstpage2->show_url.'" class="cite-link">'.stripslashes($tstpage2->show_name).'</a><br>';
@@ -738,15 +738,15 @@ if ( !class_exists('AsHeardOn') ) {
 				else {
 					if ($tstpage2->imgurl != '') { // don't show podcasts without album art.
 
-						
+
 						if ($tstpage2->imgurl != '') { // check for image
 							$imgmax = get_option('imgmax');
 							if ($imgmax == '') { $sfiheight = ''; } else { $sfiheight = ' width="'.get_option('imgmax').'"'; }
-							
+
 							$retvalo .= '<a href="'.$tstpage2->show_url.'" target="_blank"><img src="'.$tstpage2->imgurl.'"'.$sfiheight.' class="grid" alt="'.stripslashes($tstpage2->show_name).'"></a>';
 							// $retvalo .= '</div>';
 						}
-						
+
 							//$retvalo .= '<div class="clear"></div>';
 					}
 
@@ -766,7 +766,7 @@ if ( !class_exists('AsHeardOn') ) {
 
 			$table_name = $wpdb->prefix . "aho";
 
-			$aho_deldata = get_option('aho_deldata');
+			$aho_deldata = get_option('deldata');
 			if ($aho_deldata == 'yes') {
 				$wpdb->query("DROP TABLE {$table_name}");
 				delete_option("aho_showlink");
@@ -784,13 +784,13 @@ if ( !class_exists('AsHeardOn') ) {
 	}
 }
 
-if(class_exists('AsHeardOn')) { 
-	// Installation and uninstallation hooks 
-	register_activation_hook(__FILE__, array('AsHeardOn', 'activate')); 
-	register_deactivation_hook(__FILE__, array('AsHeardOn', 'deactivate')); 
+if(class_exists('AsHeardOn')) {
+	// Installation and uninstallation hooks
+	register_activation_hook(__FILE__, array('AsHeardOn', 'activate'));
+	register_deactivation_hook(__FILE__, array('AsHeardOn', 'deactivate'));
 
-	// instantiate the plugin class 
-	$wp_plugin_template = new AsHeardOn(); 
+	// instantiate the plugin class
+	$wp_plugin_template = new AsHeardOn();
 }
 
 // +---------------------------------------------------------------------------+
@@ -803,19 +803,19 @@ if(class_exists('AsHeardOn')) {
 			$widget_ops = array('description' => __('Displays random podcast in your sidebar', 'wp-podcast'));
 			$this->WP_Widget('podcasts', __('As Heard On'), $widget_ops);
 		}
-	 
+
 		// Display Widget
 		function widget($args, $instance) {
 			extract($args);
 			$title = esc_attr($instance['title']);
-	
+
 			echo $before_widget.$before_title.$title.$after_title;
-	
+
 				$this->onerandom();
-	
+
 			echo $after_widget;
 		}
-	 
+
 		// When Widget Control Form Is Posted
 		function update($new_instance, $old_instance) {
 			if (!isset($new_instance['submit'])) {
@@ -825,7 +825,7 @@ if(class_exists('AsHeardOn')) {
 			$instance['title'] = strip_tags($new_instance['title']);
 			return $instance;
 		}
-	 
+
 		// Display Widget Control Form
 		function form($instance) {
 			global $wpdb;
@@ -854,7 +854,7 @@ if(class_exists('AsHeardOn')) {
 			$randone = $wpdb->get_results("SELECT show_name, show_url, episode, imgurl FROM $table_name WHERE show_url !='' order by RAND() LIMIT $setlimit");
 
 			echo '<div id="sfstest-sidebar">';
-			
+
 			foreach ($randone as $randone2) {
 				echo '<div class="item-gray">';
 				echo '<a href="'.nl2br(stripslashes($randone2->show_url)).'" target="_blank"><img title="'.$randone2->show_name.'"src="'.$randone2->imgurl.'" width="'.get_option('image_width').'" height="'.get_option('image_height').'" style="margin-right:10px;"></a>';
@@ -863,7 +863,7 @@ if(class_exists('AsHeardOn')) {
 			$showlink = get_option('showlink');
 			$linktext = get_option('linktext');
 			$linkurl = get_option('linkurl');
-			
+
 			if (($showlink == 'yes') && ($linkurl !='')) {
 				if ($linktext == '') { $linkdisplay = 'Read More'; } else { $linkdisplay = $linktext; }
 				echo '<div class="ppgreadmore" ><a class="aho-button" href="'.$linkurl.'">'.$linkdisplay.'</a></div>';
