@@ -255,15 +255,15 @@ if ( !class_exists('AsHeardOn') ) {
    			global $wpdb;
 
    			$table_name = $wpdb->prefix . "aho";
-   			if($wpdb->get_var("show tables like '$table_name'") != $table_name) {
-				if ( $wpdb->supports_collation() ) {
-						if ( ! empty($wpdb->charset) )
-							$charset_collate = "DEFAULT CHARACTER SET $wpdb->charset";
-						if ( ! empty($wpdb->collate) )
-							$charset_collate .= " COLLATE $wpdb->collate";
-				}
+        if($wpdb->get_var("show tables like '$table_name'") != $table_name) {
+          if ( $wpdb->supports_collation() ) {
+  						if ( ! empty($wpdb->charset) )
+  							$charset_collate = "DEFAULT CHARACTER SET $wpdb->charset";
+  						if ( ! empty($wpdb->collate) )
+  							$charset_collate .= " COLLATE $wpdb->collate";
+  				}
 
-			   $sql = "CREATE TABLE IF NOT EXISTS " . $table_name . "(
+          $sql = "CREATE TABLE IF NOT EXISTS " . $table_name . "(
 				testid int( 15 ) NOT NULL AUTO_INCREMENT ,
 				show_name text,
 				host_name text,
@@ -296,6 +296,15 @@ if ( !class_exists('AsHeardOn') ) {
 				// update version in options table
 				  delete_option("ppg_version");
 				  add_option("ppg_version", "0.5");
+
+          $aho_old = get_option('ppg_version');
+    			if ($aho_old == '0.5') {
+              add_option('aho_version',  "2.0" );
+              //delete_option("ppg_version");
+
+
+
+            }
 		}
 
 		/* update item in DB */
