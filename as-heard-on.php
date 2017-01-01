@@ -293,18 +293,8 @@ if ( !class_exists('AsHeardOn') ) {
 				$dodef = $wpdb->query( $defset );
 
 			}
-				// update version in options table
-				  delete_option("ppg_version");
-				  add_option("ppg_version", "0.5");
+      if(is_admin()){require_once('legacy.php');};
 
-          $aho_old = get_option('ppg_version');
-    			if ($aho_old == '0.5') {
-              add_option('aho_version',  "2.0" );
-              //delete_option("ppg_version");
-
-
-
-            }
 		}
 
 		/* update item in DB */
