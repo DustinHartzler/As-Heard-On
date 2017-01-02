@@ -117,6 +117,7 @@ if ( !class_exists('AsHeardOn') ) {
 					<a href="admin.php?page=setting_page&tab=add_new_podcast" class="nav-tab <?php echo $active_tab == 'add_new_podcast' ? 'nav-tab-active' : ''; ?>">Podcasts</a>
 					<a href="admin.php?page=setting_page&tab=widget_options" class="nav-tab <?php echo $active_tab == 'widget_options' ? 'nav-tab-active' : ''; ?>">Widget Options</a>
 					<a href="admin.php?page=setting_page&tab=full_page_options" class="nav-tab <?php echo $active_tab == 'full_page_options' ? 'nav-tab-active' : ''; ?>">Full Page Options</a>
+          <div align="right" class="dustinhelp" >Need help? <a href="http://wordpress.org/plugins/as-heard-on/" target="_blank">documentation</a> &nbsp;|&nbsp; <a href="http://wordpress.org/support/plugin/as-heard-on" target="_blank">support page</a></div>
 				</h2>
 
 				<?php
@@ -364,7 +365,6 @@ if ( !class_exists('AsHeardOn') ) {
     </div><?php
   }
 
-
 // +---------------------------------------------------------------------------+
 // | Configuration options                                                     |
 // +---------------------------------------------------------------------------+
@@ -373,9 +373,9 @@ if ( !class_exists('AsHeardOn') ) {
 			<div class="wrap">
 				<?php if ($_REQUEST['settings-updated']=='true') { ?>
 				<div id="message" class="updated fade"><p><strong>Widget Settings Updated</strong></p></div>
-				<?php  } ?>
+				<?php
+          } ?>
 
-				<?php echo '<p align="right">Need help? <a href="http://wordpress.org/plugins/as-heard-on/" target="_blank">documentation</a> &nbsp;|&nbsp; <a href="http://wordpress.org/support/plugin/as-heard-on" target="_blank">support page</a></p>'; ?>
 				<form method="post" action="options.php">
 				<?php wp_nonce_field('update-options'); ?>
 				<?php settings_fields( 'option-widget' ); ?>
@@ -459,9 +459,9 @@ if ( !class_exists('AsHeardOn') ) {
 			<div class="wrap">
 				<?php if ($_REQUEST['settings-updated']=='true') { ?>
 				<div id="message" class="updated fade"><p><strong>Page Settings Updated</strong></p></div>
-				<?php  } ?>
+				<?php  }
+        ?>
 
-				<?php echo '<p align="right">Need help? <a href="http://wordpress.org/plugins/as-heard-on/" target="_blank">documentation</a> &nbsp;|&nbsp; <a href="http://wordpress.org/support/plugin/as-heard-on" target="_blank">support page</a></p>'; ?>
 				<form method="post" action="options.php">
 					<?php wp_nonce_field('update-options'); ?>
 					<?php settings_fields( 'option-page' ); ?>

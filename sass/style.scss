@@ -10,6 +10,12 @@ div.aho-clear {
     min-height: 15px;
 }
 
+.dustinhelp {
+  font-size: 13px;
+  margin: 10px 15px 0 0;
+  font-weight: normal;
+}
+
 a[rel="wordbreak"]{
 	word-break:break-all;
 }
@@ -22,7 +28,7 @@ div.clear {
 .podcast-display{
 	float: left;
 	width: 450px;
-	padding:10px 0 0; 
+	padding:10px 0 0;
 	margin-bottom:5px;
 }
 
@@ -61,7 +67,7 @@ div.clear {
     display: inline-block;
     padding:0 15px 15px 0;
 }
- 
+
 .img_wrapper img{
     border: 1px solid #ababab;
 }
@@ -88,7 +94,7 @@ div.clear {
 	background: #787878;
 	@include border-radius(5px);
 	@include background(linear-gradient(top, #787878, #a2a2a2));
-	@include box-shadow(inset 0 2px 5px 1px rgba(0,0,0,0.15), 0 1px 0px 0px rgba(230,230,230,0.9), inset 0 0 1px 1px rgba(0,0,0,0.2)); 
+	@include box-shadow(inset 0 2px 5px 1px rgba(0,0,0,0.15), 0 1px 0px 0px rgba(230,230,230,0.9), inset 0 0 1px 1px rgba(0,0,0,0.2));
 }
 
 .slider-volume > .highlight-track {
@@ -96,15 +102,15 @@ div.clear {
 	@include background(linear-gradient(top, #c5c5c5, #a2a2a2));
 }
 
-[class^=slider] { 
-	display: inline-block; 
-	padding-bottom: 10px; 
+[class^=slider] {
+	display: inline-block;
+	padding-bottom: 10px;
 }
-.output { 
-	color: #444; 
-	font-size: 14px; 
-	padding-top: 1px; 
-	margin-left: 5px; 
+.output {
+	color: #444;
+	font-size: 14px;
+	padding-top: 1px;
+	margin-left: 5px;
 	vertical-align: middle;
 }
 
@@ -114,4 +120,9 @@ span.output::after {
 
 label {
   vertical-align: middle;
+}
+
+.help {
+  text-align: right;
+  font-size: 12px;
 }
