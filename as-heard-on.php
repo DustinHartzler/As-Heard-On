@@ -352,11 +352,17 @@ if ( !class_exists('AsHeardOn') ) {
 				?>
 			</div>
 
-			<div class="wrap">
-			<p>As Heard On Plugin is &copy; Copyright <?php echo("2013 - ".date('Y').""); ?>, <a href="http://www.yourwebsiteengineer.com/" target="_blank">Dustin Hartzler</a> and distributed under the <a href="http://www.fsf.org/licensing/licenses/quick-guide-gplv3.html" target="_blank">GNU General Public License</a>.
-			If you find this plugin useful, please consider a <a href="http://#" target="_blank">donation</a>.</p>
-			</div>
-<?php }
+
+<?php $this->footerText();
+
+}
+
+  function footerText () { ?>
+    <div class="wrap">
+      <p>As Heard On Plugin is &copy; Copyright <?php echo("2013 - ".date('Y').""); ?>, <a href="http://www.yourwebsiteengineer.com/" target="_blank">Dustin Hartzler</a> and distributed under the <a href="http://www.fsf.org/licensing/licenses/quick-guide-gplv3.html" target="_blank">GNU General Public License</a>.
+      If you find this plugin useful, please consider a <a href="http://#" target="_blank">donation</a>.</p>
+    </div><?php
+  }
 
 
 // +---------------------------------------------------------------------------+
@@ -444,7 +450,10 @@ if ( !class_exists('AsHeardOn') ) {
 			</p>
 
 
-		<?php }
+		<?php
+      $this->footerText();
+
+  }
 
 		function page_options(){ ?>
 			<div class="wrap">
@@ -541,6 +550,7 @@ if ( !class_exists('AsHeardOn') ) {
 
 			</div>
 		<?php
+    $this->footerText();
 		}
 
 // +---------------------------------------------------------------------------+
