@@ -49,22 +49,6 @@ if ( !class_exists('AsHeardOn') ) {
 			register_setting( 'option-page', 'deldata' );
 		}
 
-		function unregister_options() { // unset options
-			unregister_setting( 'option-widget', 'admng' );
-			unregister_setting( 'option-widget', 'showlink' );
-			unregister_setting( 'option-widget', 'linktext' );
-			unregister_setting( 'option-widget', 'image_width');
-			unregister_setting( 'option-widget', 'image_height');
-			unregister_setting( 'option-widget', 'opacity');
-			unregister_setting( 'option-widget', 'setlimit' );
-			unregister_setting( 'option-widget', 'linkurl' );
-			unregister_setting( 'option-page', 'aho_imgalign' );
-			unregister_setting( 'option-page', 'imgmax' );
-			unregister_setting( 'option-page', 'sorder' );
-			unregister_setting( 'option-page', 'deldata' );
-		}
-
-
 		function addscripts() { // include style sheet
       wp_enqueue_style('style_css', plugins_url('/as-heard-on/css/style.css') );
 			wp_enqueue_script( 'jquery' );
@@ -369,19 +353,10 @@ if ( !class_exists('AsHeardOn') ) {
 			</div>
 
 			<div class="wrap">
-			<?php $yearnow = date('Y');
-			if($yearnow == "2013") {
-			    $yearcright = "";
-			} else {
-			    $yearcright = "2013-";
-			}
-			?>
-			<p>As Heard On Plugin is &copy; Copyright <?php echo("".$yearcright."".date('Y').""); ?>, <a href="http://www.yourwebsiteengineer.com/" target="_blank">Dustin Hartzler</a> and distributed under the <a href="http://www.fsf.org/licensing/licenses/quick-guide-gplv3.html" target="_blank">GNU General Public License</a>.
+			<p>As Heard On Plugin is &copy; Copyright <?php echo("2013 - ".date('Y').""); ?>, <a href="http://www.yourwebsiteengineer.com/" target="_blank">Dustin Hartzler</a> and distributed under the <a href="http://www.fsf.org/licensing/licenses/quick-guide-gplv3.html" target="_blank">GNU General Public License</a>.
 			If you find this plugin useful, please consider a <a href="http://#" target="_blank">donation</a>.</p>
 			</div>
 <?php }
-
-
 
 
 // +---------------------------------------------------------------------------+
