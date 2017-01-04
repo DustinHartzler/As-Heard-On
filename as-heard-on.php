@@ -47,6 +47,7 @@ if ( !class_exists('AsHeardOn') ) {
 			register_setting( 'option-page', 'imgmax' );
 			register_setting( 'option-page', 'sorder' );
 			register_setting( 'option-page', 'deldata' );
+      register_setting( 'aho_settings_group', 'aho_options' );
 		}
 
 		function addscripts() { // include style sheet
@@ -369,6 +370,7 @@ if ( !class_exists('AsHeardOn') ) {
 // | Configuration options                                                     |
 // +---------------------------------------------------------------------------+
 		function widget_options() {
+      $options =   get_option('aho_options');
 		?>
 			<div class="wrap">
 				<?php if ($_REQUEST['settings-updated']=='true') { ?>
@@ -378,7 +380,7 @@ if ( !class_exists('AsHeardOn') ) {
 
 				<form method="post" action="options.php">
 				<?php wp_nonce_field('update-options'); ?>
-				<?php settings_fields( 'option-widget' ); ?>
+				<?php settings_fields( 'aho_settings_group' ); ?>
 
 				<table cellpadding="5" cellspacing="5">
 					<tr valign="top">
@@ -394,7 +396,7 @@ if ( !class_exists('AsHeardOn') ) {
 
 					<tr valign="top">
 						<td>Text for sidebar aho-button (Read More, View All, etc)</td>
-						<td><input type="text" name="linktext" value="<?php echo get_option('linktext'); ?>" /></td>
+						<td><input type="text" id="aho_options[linktext]" name="aho_options[linktext]" value="<?php if( isset( $options['linktext'] ) ) { echo esc_attr( $options['linktext'] ); } ?>" /></td>
 					</tr>
 
 					<tr valign="top">
