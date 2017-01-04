@@ -379,19 +379,13 @@ if ( !class_exists('AsHeardOn') ) {
           } ?>
 
 				<form method="post" action="options.php">
-				<?php wp_nonce_field('update-options'); ?>
+				<!-- <?php wp_nonce_field('update-options'); ?> -->
 				<?php settings_fields( 'aho_settings_group' ); ?>
 
 				<table cellpadding="5" cellspacing="5">
 					<tr valign="top">
-						<td>Show link in sidebar to full page of previous interviews</td>
-						<td><?php $sfs_showlink = get_option('showlink');
-						if ($sfs_showlink == 'yes') { ?>
-							<input type="checkbox" name="showlink" value="yes" checked />
-						<?php } else { ?>
-							<input type="checkbox" name="showlink" value="yes" />
-						<?php } ?>
-						</td>
+            <td><label for="aho_options[showlink]"><?php _e( 'Show link in sidebar to full page of previous interviews' ); ?></label></td>
+						<td><input class="checkbox" type="checkbox" id="aho_options[showlink]" name="aho_options[showlink]" value="1" <?php checked( 1, isset( $options['showlink'] ) ); ?>/></td>
 					</tr>
 
 					<tr valign="top">
@@ -425,14 +419,14 @@ if ( !class_exists('AsHeardOn') ) {
 					</tr>
 
 					<tr valign="top">
-						<td>Image Width</td>
-						<td><input type="text" name="image_width" size="2" value="<?php echo get_option('image_width'); ?>" /><label>(pixels)</label></td>
+            <td><label for="aho_options[image_width]"><?php _e( 'Image Width' ); ?></label></td>
+            <td><input type="text" id="aho_options[image_width]" name="aho_options[image_width]" size="3" value="<?php if( isset( $options['image_width'] ) ) { echo esc_attr( $options['image_width'] ); } ?>" /><label> (pixels)</label></td>
 					</tr>
 
 					<tr valign="top">
-						<td>Image Height</td>
-						<td><input type="text" name="image_height" size="2" value="<?php echo get_option('image_height'); ?>" /><label>(pixels)</label></td>
-					</tr>
+            <td><label for="aho_options[image_height]"><?php _e( 'Image Height' ); ?></label></td>
+            <td><input type="text" id="aho_options[image_height]" name="aho_options[image_height]" size="3" value="<?php if( isset( $options['image_height'] ) ) { echo esc_attr( $options['image_height'] ); } ?>" /><label> (pixels)</label></td>
+          </tr>
 
 					<tr valign="top">
 						<td>How fast to transition from B&W to Color</td>
@@ -832,6 +826,8 @@ if(class_exists('AsHeardOn')) {
 		function onerandom() {
 			global $wpdb;
 			$table_name = $wpdb->prefix . "aho";
+      $options =   get_option('aho_options');
+      //settings_fields( 'aho_settings_group' );
 			if (get_option('setlimit') == '') {
 				$setlimit = 1;
 			} else {
@@ -843,19 +839,21 @@ if(class_exists('AsHeardOn')) {
 
 			foreach ($randone as $randone2) {
 				echo '<div class="item-gray">';
-				echo '<a href="'.nl2br(stripslashes($randone2->show_url)).'" target="_blank"><img title="'.$randone2->show_name.'"src="'.$randone2->imgurl.'" width="'.get_option('image_width').'" height="'.get_option('image_height').'" style="margin-right:10px;"></a>';
+				echo '<a href="'.nl2br(stripslashes($randone2->show_url)).'" target="_blank"><img title="'.$randone2->show_name.'"src="'.$randone2->imgurl.'" width="'.$options['image_width'].'" height="'.$options['image_height'].'" style="margin-right:10px;"></a>';
 				echo '</div>';
 			} // end loop
-			$showlink = get_option('showlink');
-			$linktext = get_option('linktext');
-			$linkurl = get_option('linkurl');
 
-			if (($showlink == 'yes') && ($linkurl !='')) {
-				if ($linktext == '') { $linkdisplay = 'Read More'; } else { $linkdisplay = $linktext; }
-				echo '<div class="ppgreadmore" ><a class="aho-button" href="'.$linkurl.'">'.$linkdisplay.'</a></div>';
+      $aho_showlink = $options['showlink'];
+			$aho_linktext = $options['linktext'];
+			$linkurl = "http://#";
+
+			if (($aho_showlink == '1') && ($linkurl !='')) {
+				if ($aho_linktext == '') { $linkdisplay = 'Read More'; } else { $linkdisplay = $aho_linktext; }
+        echo '<div class="aho-clear"></div>';
+        echo '<a class="aho-button" href="'.$linkurl.'">'.$linkdisplay.'</a>';
 			}
 			echo '<div class="aho-clear"></div>';
-			echo '</div>';
+      echo '</div>';
 		}
 }
 
