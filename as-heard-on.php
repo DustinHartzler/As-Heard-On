@@ -389,31 +389,31 @@ if ( !class_exists('AsHeardOn') ) {
 					</tr>
 
 					<tr valign="top">
-						<td>Text for sidebar aho-button (Read More, View All, etc)</td>
+            <td><label for="aho_options[linktext]"><?php _e( 'Text for sidebar aho-button (Read More, View All, etc)' ); ?></label></td>
 						<td><input type="text" id="aho_options[linktext]" name="aho_options[linktext]" value="<?php if( isset( $options['linktext'] ) ) { echo esc_attr( $options['linktext'] ); } ?>" /></td>
 					</tr>
 
 					<tr valign="top">
-						<td>Page link for sidebar aho-button<br/> (use shortcode [aho])</td>
-						<td> <select name="linkurl">
+            <td><label for="aho_options[image_width]"><?php _e( 'Page link for sidebar aho-button<br/> (use shortcode [aho])' ); ?></label></td>
+						<td> <select name="aho_options[linkurl]">
 			 			<option value="">
 						<?php echo esc_attr(__('Select page')); ?></option>
 						<?php
 						  $pages = get_pages();
 						  foreach ($pages as $pagg) {
-						  $pagurl = get_page_link($pagg->ID);
-						  $sfturl = get_option('linkurl');
-						  	if ($pagurl == $sfturl) {
-								$option = '<option value="'.get_page_link($pagg->ID).'" selected>';
-								$option .= $pagg->post_title;
-								$option .= '</option>';
-								echo $option;
-							} else {
-								$option = '<option value="'.get_page_link($pagg->ID).'">';
-								$option .= $pagg->post_title;
-								$option .= '</option>';
-								echo $option;
-							}
+  						  $pagurl = get_page_link($pagg->ID);
+  						  $sfturl = $options['linkurl'];
+  						  	if ($pagurl == $sfturl) {
+  								$option = '<option value="'.get_page_link($pagg->ID).'" selected>';
+  								$option .= $pagg->post_title;
+  								$option .= '</option>';
+  								echo $option;
+  							} else {
+  								$option = '<option value="'.get_page_link($pagg->ID).'">';
+  								$option .= $pagg->post_title;
+  								$option .= '</option>';
+  								echo $option;
+  							}
 						  }
 						 ?>	</select></td>
 					</tr>
@@ -429,12 +429,12 @@ if ( !class_exists('AsHeardOn') ) {
           </tr>
 
 					<tr valign="top">
-						<td>How fast to transition from B&W to Color</td>
-						<td><input type="text" data-slider="true" data-slider-range="0,5" data-slider-step=".25" data-slider-highlight="true" data-slider-theme="volume" name="opacity" value="<?php echo get_option('opacity'); ?>" ></td>
+            <td><label for="aho_options[opacity]"><?php _e( 'How fast to transition from B&W to Color' ); ?></label></td>
+						<td><input type="text" data-slider="true" data-slider-range="0,5" data-slider-step=".25" data-slider-highlight="true" data-slider-theme="volume" name="aho_options[opacity]" value="<?php if( isset( $options['opacity'] ) ) { echo esc_attr( $options['opacity'] ); } ?>" ></td>
 					</tr>
 					<tr valign="top">
-						<td>Number of podcasts to show in sidebar</td>
-						<td><input type="text" name="setlimit" size="2" value="<?php echo get_option('setlimit'); ?>" /></td>
+            <td><label for="aho_options[setlimit]"><?php _e( 'Number of podcasts to show in sidebar' ); ?></label></td>
+            <td><input type="text" id="aho_options[setlimit]" name="aho_options[setlimit]" size="2" value="<?php if( isset( $options['setlimit'] ) ) { echo esc_attr( $options['setlimit'] ); } ?>" /></td>
 					</tr>
 
 			</table>
@@ -843,9 +843,9 @@ if(class_exists('AsHeardOn')) {
 				echo '</div>';
 			} // end loop
 
-      $aho_showlink = $options['showlink'];
-			$aho_linktext = $options['linktext'];
-			$linkurl = "http://#";
+      $aho_showlink  = $options['showlink'];
+			$aho_linktext  = $options['linktext'];
+			$linkurl       = $options['linkurl'];
 
 			if (($aho_showlink == '1') && ($linkurl !='')) {
 				if ($aho_linktext == '') { $linkdisplay = 'Read More'; } else { $linkdisplay = $aho_linktext; }
