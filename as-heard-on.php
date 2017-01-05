@@ -47,7 +47,8 @@ if ( !class_exists('AsHeardOn') ) {
 			register_setting( 'option-page', 'imgmax' );
 			register_setting( 'option-page', 'sorder' );
 			register_setting( 'option-page', 'deldata' );
-      register_setting( 'aho_settings_group', 'aho_options' );
+      register_setting( 'aho_settings_widget', 'aho_widget' );
+      register_setting( 'aho_settings_page', 'aho_page' );
 		}
 
 		function addscripts() { // include style sheet
@@ -370,7 +371,7 @@ if ( !class_exists('AsHeardOn') ) {
 // | Configuration options                                                     |
 // +---------------------------------------------------------------------------+
 		function widget_options() {
-      $options =   get_option('aho_options');
+      $options =   get_option('aho_widget');
 		?>
 			<div class="wrap">
 				<?php if ($_REQUEST['settings-updated']=='true') { ?>
@@ -379,23 +380,22 @@ if ( !class_exists('AsHeardOn') ) {
           } ?>
 
 				<form method="post" action="options.php">
-				<!-- <?php wp_nonce_field('update-options'); ?> -->
-				<?php settings_fields( 'aho_settings_group' ); ?>
+				<?php settings_fields( 'aho_settings_widget' ); ?>
 
 				<table cellpadding="5" cellspacing="5">
 					<tr valign="top">
-            <td><label for="aho_options[showlink]"><?php _e( 'Show link in sidebar to full page of previous interviews' ); ?></label></td>
-						<td><input class="checkbox" type="checkbox" id="aho_options[showlink]" name="aho_options[showlink]" value="1" <?php checked( 1, isset( $options['showlink'] ) ); ?>/></td>
+            <td><label for="aho_widget[showlink]"><?php _e( 'Show link in sidebar to full page of previous interviews' ); ?></label></td>
+						<td><input class="checkbox" type="checkbox" id="aho_widget[showlink]" name="aho_widget[showlink]" value="1" <?php checked( 1, isset( $options['showlink'] ) ); ?>/></td>
 					</tr>
 
 					<tr valign="top">
-            <td><label for="aho_options[linktext]"><?php _e( 'Text for sidebar aho-button (Read More, View All, etc)' ); ?></label></td>
-						<td><input type="text" id="aho_options[linktext]" name="aho_options[linktext]" value="<?php if( isset( $options['linktext'] ) ) { echo esc_attr( $options['linktext'] ); } ?>" /></td>
+            <td><label for="aho_widget[linktext]"><?php _e( 'Text for sidebar aho-button (Read More, View All, etc)' ); ?></label></td>
+						<td><input type="text" id="aho_widget[linktext]" name="aho_widget[linktext]" value="<?php if( isset( $options['linktext'] ) ) { echo esc_attr( $options['linktext'] ); } ?>" /></td>
 					</tr>
 
 					<tr valign="top">
-            <td><label for="aho_options[image_width]"><?php _e( 'Page link for sidebar aho-button<br/> (use shortcode [aho])' ); ?></label></td>
-						<td> <select name="aho_options[linkurl]">
+            <td><label for="aho_widget[image_width]"><?php _e( 'Page link for sidebar aho-button<br/> (use shortcode [aho])' ); ?></label></td>
+						<td> <select name="aho_widget[linkurl]">
 			 			<option value="">
 						<?php echo esc_attr(__('Select page')); ?></option>
 						<?php
@@ -419,39 +419,35 @@ if ( !class_exists('AsHeardOn') ) {
 					</tr>
 
 					<tr valign="top">
-            <td><label for="aho_options[image_width]"><?php _e( 'Image Width' ); ?></label></td>
-            <td><input type="text" id="aho_options[image_width]" name="aho_options[image_width]" size="3" value="<?php if( isset( $options['image_width'] ) ) { echo esc_attr( $options['image_width'] ); } ?>" /><label> (pixels)</label></td>
+            <td><label for="aho_widget[image_width]"><?php _e( 'Image Width' ); ?></label></td>
+            <td><input type="text" id="aho_widget[image_width]" name="aho_widget[image_width]" size="3" value="<?php if( isset( $options['image_width'] ) ) { echo esc_attr( $options['image_width'] ); } ?>" /><label> (pixels)</label></td>
 					</tr>
 
 					<tr valign="top">
-            <td><label for="aho_options[image_height]"><?php _e( 'Image Height' ); ?></label></td>
-            <td><input type="text" id="aho_options[image_height]" name="aho_options[image_height]" size="3" value="<?php if( isset( $options['image_height'] ) ) { echo esc_attr( $options['image_height'] ); } ?>" /><label> (pixels)</label></td>
+            <td><label for="aho_widget[image_height]"><?php _e( 'Image Height' ); ?></label></td>
+            <td><input type="text" id="aho_widget[image_height]" name="aho_widget[image_height]" size="3" value="<?php if( isset( $options['image_height'] ) ) { echo esc_attr( $options['image_height'] ); } ?>" /><label> (pixels)</label></td>
           </tr>
 
 					<tr valign="top">
-            <td><label for="aho_options[opacity]"><?php _e( 'How fast to transition from B&W to Color' ); ?></label></td>
-						<td><input type="text" data-slider="true" data-slider-range="0,5" data-slider-step=".25" data-slider-highlight="true" data-slider-theme="volume" name="aho_options[opacity]" value="<?php if( isset( $options['opacity'] ) ) { echo esc_attr( $options['opacity'] ); } ?>" ></td>
+            <td><label for="aho_widget[opacity]"><?php _e( 'How fast to transition from B&W to Color' ); ?></label></td>
+						<td><input type="text" data-slider="true" data-slider-range="0,5" data-slider-step=".25" data-slider-highlight="true" data-slider-theme="volume" name="aho_widget[opacity]" value="<?php if( isset( $options['opacity'] ) ) { echo esc_attr( $options['opacity'] ); } ?>" ></td>
 					</tr>
 					<tr valign="top">
-            <td><label for="aho_options[setlimit]"><?php _e( 'Number of podcasts to show in sidebar' ); ?></label></td>
-            <td><input type="text" id="aho_options[setlimit]" name="aho_options[setlimit]" size="2" value="<?php if( isset( $options['setlimit'] ) ) { echo esc_attr( $options['setlimit'] ); } ?>" /></td>
+            <td><label for="aho_widget[setlimit]"><?php _e( 'Number of podcasts to show in sidebar' ); ?></label></td>
+            <td><input type="text" id="aho_widget[setlimit]" name="aho_widget[setlimit]" size="2" value="<?php if( isset( $options['setlimit'] ) ) { echo esc_attr( $options['setlimit'] ); } ?>" /></td>
 					</tr>
 
 			</table>
-			<input type="hidden" name="action" value="update" />
-			<input type="hidden" name="page_options" value="admng,showlink,linktext,image_width,image_height,opacity,setlimit, linkurl,sfs_sorder,sfs_imgalign,imgmax,deldata" />
-
 			<p class="submit">
 			<input type="submit" class="button button-primary" value="<?php _e('Save Widget Options') ?>" />
 			</p>
 
-
 		<?php
       $this->footerText();
-
   }
 
-		function page_options(){ ?>
+		function page_options(){
+      $options =   get_option('aho_page'); ?>
 			<div class="wrap">
 				<?php if ($_REQUEST['settings-updated']=='true') { ?>
 				<div id="message" class="updated fade"><p><strong>Page Settings Updated</strong></p></div>
@@ -459,8 +455,7 @@ if ( !class_exists('AsHeardOn') ) {
         ?>
 
 				<form method="post" action="options.php">
-					<?php wp_nonce_field('update-options'); ?>
-					<?php settings_fields( 'option-page' ); ?>
+					<?php settings_fields( 'aho_settings_page' ); ?>
 					<table cellpadding="5" cellspacing="5">
 						<tr valign="top">
 							<td>Sort podcasts on page by</td>
@@ -518,26 +513,17 @@ if ( !class_exists('AsHeardOn') ) {
 			</tr>
 
 			<tr valign="top">
-			<td>Maximum height (in pixels) for image</td>
-			<td><input type="text" name="imgmax" value="<?php echo get_option('imgmax'); ?>" /> (if left blank images will show full size)</td>
+        <td><label for="aho_page[imgmax]"><?php _e( 'Maximum height (in pixels) for image' ); ?></label></td>
+        <td><input type="text" id="aho_page[imgmax]" name="aho_page[imgmax]" size="3" value="<?php if( isset( $options['imgmax'] ) ) { echo esc_attr( $options['imgmax'] ); } ?>" /><label><?php _e( ' (if left blank images will show full size)' ); ?></label></td>
 			</tr>
 
 			<tr valign="top">
-			<td>Remove table when deactivating plugin</td>
+        <td><label for="aho_page[deldata]"><?php _e( 'Remove table when deactivating plugin' ); ?></label></td>
+        <td><input class="checkbox" type="checkbox" id="aho_page[deldata]" name="aho_page[deldata]" value="1" <?php checked( 1, isset( $options['deldata'] ) ); ?>/><label> (this will result in all data being deleted!)</label></td>
 			<td>
-			<?php $deldata = get_option('deldata');
-			if ($deldata == 'yes') { ?>
-			<input type="checkbox" name="deldata" value="yes" checked /> (this will result in all data being deleted!)
-			<?php } else { ?>
-			<input type="checkbox" name="deldata" value="yes" /> (this will result in all data being deleted!)
-			<?php } ?>
-			</td>
-			</tr>
+
 
 			</table>
-			<input type="hidden" name="action" value="update" />
-			<input type="hidden" name="page_options" value="sorder,aho_imgalign,imgmax,deldata" />
-
 			<p class="submit">
 			<input type="submit" class="button button-primary" value="<?php _e('Save Page Changes') ?>" />
 			</p>
@@ -743,11 +729,12 @@ if ( !class_exists('AsHeardOn') ) {
 
 		function deactivate () {
 			global $wpdb;
+      $options =   get_option('aho_options');
 
 			$table_name = $wpdb->prefix . "aho";
 
-			$aho_deldata = get_option('deldata');
-			if ($aho_deldata == 'yes') {
+			$aho_deldata =  $options['deldata'];
+			if ($aho_deldata == '1') {
 				$wpdb->query("DROP TABLE {$table_name}");
 				delete_option("aho_showlink");
 				delete_option("aho_linktext");
@@ -826,7 +813,7 @@ if(class_exists('AsHeardOn')) {
 		function onerandom() {
 			global $wpdb;
 			$table_name = $wpdb->prefix . "aho";
-      $options =   get_option('aho_options');
+      $options =   get_option('aho_widget');
       //settings_fields( 'aho_settings_group' );
 			if (get_option('setlimit') == '') {
 				$setlimit = 1;
