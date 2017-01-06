@@ -458,58 +458,55 @@ if ( !class_exists('AsHeardOn') ) {
 					<?php settings_fields( 'aho_settings_page' ); ?>
 					<table cellpadding="5" cellspacing="5">
 						<tr valign="top">
-							<td>Sort podcasts on page by</td>
+							<td><label for="aho_page[sorder]"><?php _e( 'Sort podcasts on page by' ); ?></label></td>
 							<td>
-								<?php if (get_option('sorder') == 'testid ASC') { ?>
-								<input type="radio" name="sorder" value="testid ASC" checked /> Order entered, oldest first
-								<?php } else { ?>
-								<input type="radio" name="sorder" value="testid ASC" /> Order entered, oldest first
-								<?php } ?><br/>
-								<?php if (get_option('sorder') == 'testid DESC') { ?>
-								<input type="radio" name="sorder" value="testid DESC" checked /> Order entered, newest first
-								<?php } else { ?>
-								<input type="radio" name="sorder" value="testid DESC" /> Order entered, newest first
-								<?php } ?><br/>
-								<?php if (get_option('sorder') == 'storder ASC') { ?>
-								<input type="radio" name="sorder" value="storder ASC" checked /> User defined sort order
-								<?php } else { ?>
-								<input type="radio" name="sorder" value="storder ASC" /> User defined sort order
-								<?php } ?>
+								<?php $aho_sorder = $options['sorder'];
+								if ($aho_sorder == 'asc') { ?>
+									<input type="radio" name="aho_page[sorder]" value="asc" checked /><label for="aho_page[sorder]"><?php _e( 'Order entered, oldest first' ); ?></label><br>
+									<input type="radio" name="aho_page[sorder]" value="desc"  /><label for="aho_page[sorder]"><?php _e( 'Order entered, newest first' ); ?></label><br>
+									<input type="radio" name="aho_page[sorder]" value="user" /><label for="aho_page[sorder]"><?php _e( 'User defined sort order' ); ?></label>
+								<?php } elseif ($aho_sorder == 'desc') { ?>
+									<input type="radio" name="aho_page[sorder]" value="asc" /><label for="aho_page[sorder]"><?php _e( 'Order entered, oldest first' ); ?></label><br>
+									<input type="radio" name="aho_page[sorder]" value="desc" checked  /><label for="aho_page[sorder]"><?php _e( 'Order entered, newest first' ); ?></label><br>
+									<input type="radio" name="aho_page[sorder]" value="user" /><label for="aho_page[sorder]"><?php _e( 'User defined sort order' ); ?></label>
+								<?php } elseif ($aho_sorder == 'user') { ?>
+									<input type="radio" name="aho_page[sorder]" value="asc" /><label for="aho_page[sorder]"><?php _e( 'Order entered, oldest first' ); ?></label><br>
+									<input type="radio" name="aho_page[sorder]" value="desc"  /><label for="aho_page[sorder]"><?php _e( 'Order entered, newest first' ); ?></label><br>
+									<input type="radio" name="aho_page[sorder]" value="user" checked /><label for="aho_page[sorder]"><?php _e( 'User defined sort order' ); ?></label>
+								<?php } else { echo "Dustin";}?>
 							</td>
 					</tr>
 
 			<tr valign="top">
-			<td>Align Artwork on Left or Right of Description</td>
-			<td>
-			<?php $sfs_imgalign = get_option('aho_imgalign');
-			if ($sfs_imgalign == 'alignleft') { ?>
-			<input type="radio" name="aho_imgalign" value="alignleft" checked /> Left
-			<input type="radio" name="aho_imgalign" value="alignright" /> Right
-			<?php } elseif ($sfs_imgalign == 'alignright') { ?>
-			<input type="radio" name="aho_imgalign" value="alignleft" /> Left
-			<input type="radio" name="aho_imgalign" value="alignright" checked/> Right
-			<?php } else { ?>
-			<input type="radio" name="aho_imgalign" value="alignleft" /> Left
-			<input type="radio" name="aho_imgalign" value="alignright" /> Right
-			<?php } ?>
-			</td>
+        		<td><label for="aho_page[imgalign]"><?php _e( 'Align Artwork on Left or Right of Description' ); ?></label></td>
+			  	<td><?php $aho_imgalign = $options['imgalign'];
+			    	if ($aho_imgalign == 'alignleft') { ?>
+			        	<input type="radio" name="aho_page[imgalign]" value="alignleft" checked /> Left
+			        	<input type="radio" name="aho_page[imgalign]" value="alignright" /> Right
+			     	<?php } elseif ($aho_imgalign == 'alignright') { ?>
+			        	<input type="radio" name="aho_page[imgalign]" value="alignleft" /> Left
+			        	<input type="radio" name="aho_page[imgalign]" value="alignright" checked/> Right
+					<?php } else { ?>
+						<input type="radio" name="aho_page[imgalign]" value="alignleft" /> Left
+						<input type="radio" name="aho_page[imgalign]" value="alignright" /> Right
+					<?php } ?>
+			    </td>
 			</tr>
 
 			<tr valign="top">
-			<td>Display Images or Images and Summary</td>
-			<td>
-			<?php $aho_display = get_option('imgdisplay');
-			if ($aho_display == 'displayimg') { ?>
-			<input type="radio" name="imgdisplay" value="displayimg" checked /> Images
-			<input type="radio" name="imgdisplay" value="displaysummary" /> Images & Summary
-			<?php } elseif ($aho_display == 'displaysummary') { ?>
-			<input type="radio" name="imgdisplay" value="displayimg" /> Images
-			<input type="radio" name="imgdisplay" value="displaysummary" checked/> Images & Summary
-			<?php } else { ?>
-			<input type="radio" name="imgdisplay" value="displayimg" /> Images
-			<input type="radio" name="imgdisplay" value="displaysummary" /> Images & Summary
-			<?php } ?>
-			</td>
+        		<td><label for="aho_page[displayimg]"><?php _e( 'Display Images or Images and Summary' ); ?></label></td>
+			  	<td><?php $aho_display = $options['displayimg'];
+			    	if ($aho_display == 'displayimg') { ?>
+              			<input type="radio" name="aho_page[displayimg]" value="displayimg" checked /> Images
+			        	<input type="radio" name="aho_page[displayimg]" value="displaysummary" /> Images & Summary
+			     	<?php } elseif ($aho_display == 'displaysummary') { ?>
+			        	<input type="radio" name="aho_page[displayimg]" value="displayimg" /> Images
+			        	<input type="radio" name="aho_page[displayimg]" value="displaysummary" checked/> Images & Summary
+			     	<?php } else { ?>
+			        	<input type="radio" name="aho_page[displayimg]" value="displayimg" /> Images
+			        	<input type="radio" name="aho_page[displayimg]" value="displaysummary" /> Images & Summary
+			    	<?php } ?>
+			  	</td>
 			</tr>
 
 			<tr valign="top">
