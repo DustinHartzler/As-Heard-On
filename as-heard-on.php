@@ -3,7 +3,7 @@
 Plugin Name: As Heard On
 Plugin URI: http://YourWebsiteEngineer.com
 Description: Lets you display album artwork of podcasts you've been a guest on.  Widget included.  Optional link in sidebar block to "view all" podcast images on a page.
-Version: 1.14
+Version: 1.15
 Author: Dustin Hartzler
 Author URI: http://YourWebsiteEngineer.com
 */
@@ -394,7 +394,7 @@ if ( !class_exists('AsHeardOn') ) {
 					</tr>
 
 					<tr valign="top">
-            <td><label for="aho_widget[image_width]"><?php _e( 'Page link for sidebar aho-button<br/> (use shortcode [aho])' ); ?></label></td>
+            <td><label for="aho_widget[linkurl]"><?php _e( 'Page link for sidebar aho-button<br/> (use shortcode [aho])' ); ?></label></td>
 						<td> <select name="aho_widget[linkurl]">
 			 			<option value="">
 						<?php echo esc_attr(__('Select page')); ?></option>
@@ -473,7 +473,7 @@ if ( !class_exists('AsHeardOn') ) {
 									<input type="radio" name="aho_page[sorder]" value="asc" /><label for="aho_page[sorder]"><?php _e( 'Order entered, oldest first' ); ?></label><br>
 									<input type="radio" name="aho_page[sorder]" value="desc"  /><label for="aho_page[sorder]"><?php _e( 'Order entered, newest first' ); ?></label><br>
 									<input type="radio" name="aho_page[sorder]" value="user" checked /><label for="aho_page[sorder]"><?php _e( 'User defined sort order' ); ?></label>
-								<?php } else { echo "Dustin";}?>
+								<?php } ?>
 							</td>
 					</tr>
 
@@ -494,17 +494,17 @@ if ( !class_exists('AsHeardOn') ) {
 			</tr>
 
 			<tr valign="top">
-        		<td><label for="aho_page[displayimg]"><?php _e( 'Display Images or Images and Summary' ); ?></label></td>
-			  	<td><?php $aho_display = $options['displayimg'];
-			    	if ($aho_display == 'displayimg') { ?>
-              			<input type="radio" name="aho_page[displayimg]" value="displayimg" checked /> Images
-			        	<input type="radio" name="aho_page[displayimg]" value="displaysummary" /> Images & Summary
+        		<td><label for="aho_page[imgdisplay]"><?php _e( 'Display Images or Images and Summary' ); ?></label></td>
+			  	<td><?php $aho_display = $options['imgdisplay'];
+			    	if ($aho_display == 'imgdisplay') { ?>
+              			<input type="radio" name="aho_page[imgdisplay]" value="displayimg" checked /> Images
+			        	<input type="radio" name="aho_page[imgdisplay]" value="displaysummary" /> Images & Summary
 			     	<?php } elseif ($aho_display == 'displaysummary') { ?>
-			        	<input type="radio" name="aho_page[displayimg]" value="displayimg" /> Images
-			        	<input type="radio" name="aho_page[displayimg]" value="displaysummary" checked/> Images & Summary
+			        	<input type="radio" name="aho_page[imgdisplay]" value="displayimg" /> Images
+			        	<input type="radio" name="aho_page[imgdisplay]" value="displaysummary" checked/> Images & Summary
 			     	<?php } else { ?>
-			        	<input type="radio" name="aho_page[displayimg]" value="displayimg" /> Images
-			        	<input type="radio" name="aho_page[displayimg]" value="displaysummary" /> Images & Summary
+			        	<input type="radio" name="aho_page[imgdisplay]" value="displayimg" /> Images
+			        	<input type="radio" name="aho_page[imgdisplay]" value="displaysummary" /> Images & Summary
 			    	<?php } ?>
 			  	</td>
 			</tr>
