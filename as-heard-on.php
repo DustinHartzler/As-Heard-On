@@ -47,21 +47,21 @@ if ( !class_exists('AsHeardOn') ) {
 			register_setting( 'option-page', 'imgmax' );
 			register_setting( 'option-page', 'sorder' );
 			register_setting( 'option-page', 'deldata' );
-      register_setting( 'aho_settings_widget', 'aho_widget' );
-      register_setting( 'aho_settings_page', 'aho_page' );
+      		register_setting( 'aho_settings_widget', 'aho_widget' );
+      		register_setting( 'aho_settings_page', 'aho_page' );
 		}
 
 		function addscripts() { // include style sheet
-      wp_enqueue_style('style_css', plugins_url('/as-heard-on/css/style.css') );
+      		wp_enqueue_style('style_css', plugins_url('/as-heard-on/css/style.css') );
 			wp_enqueue_script( 'jquery' );
-		  wp_enqueue_script( 'grayscale', plugins_url('/as-heard-on/js/grayscale.js') ,array('jquery') );
-		  $params = array('opacity_js' => get_option('opacity') );
-		  wp_localize_script( 'grayscale', 'grayscale_vars', $params );
+		  	wp_enqueue_script( 'grayscale', plugins_url('/as-heard-on/js/grayscale.js') ,array('jquery') );
+		  	$params = array('opacity_js' => get_option('opacity') );
+		  	wp_localize_script( 'grayscale', 'grayscale_vars', $params );
 			if ( is_admin() )  {
-        wp_enqueue_script( 'display', plugins_url('/as-heard-on/js/display.js') ,array('jquery') );
-			  wp_enqueue_script( 'slider', plugins_url('/as-heard-on/js/simple-slider.js') ,array('jquery') );
+        		wp_enqueue_script( 'display', plugins_url('/as-heard-on/js/display.js') ,array('jquery') );
+			  	wp_enqueue_script( 'slider', plugins_url('/as-heard-on/js/simple-slider.js') ,array('jquery') );
 
-			  // Upload Button to Work
+			  	// Upload Button to Work
 	 			wp_enqueue_script('thickbox');
 	 			wp_enqueue_style ('thickbox');
 	 			wp_enqueue_script('script', plugins_url('/js/upload-media.js', __FILE__), array('jquery'), '', true);
@@ -119,7 +119,7 @@ if ( !class_exists('AsHeardOn') ) {
 					<a href="admin.php?page=setting_page&tab=add_new_podcast" class="nav-tab <?php echo $active_tab == 'add_new_podcast' ? 'nav-tab-active' : ''; ?>">Podcasts</a>
 					<a href="admin.php?page=setting_page&tab=widget_options" class="nav-tab <?php echo $active_tab == 'widget_options' ? 'nav-tab-active' : ''; ?>">Widget Options</a>
 					<a href="admin.php?page=setting_page&tab=full_page_options" class="nav-tab <?php echo $active_tab == 'full_page_options' ? 'nav-tab-active' : ''; ?>">Full Page Options</a>
-          <div align="right" class="dustinhelp" >Need help? <a href="http://wordpress.org/plugins/as-heard-on/" target="_blank">documentation</a> &nbsp;|&nbsp; <a href="http://wordpress.org/support/plugin/as-heard-on" target="_blank">support page</a></div>
+          			<div align="right" class="dustinhelp" >Need help? <a href="http://wordpress.org/plugins/as-heard-on/" target="_blank">documentation</a> &nbsp;|&nbsp; <a href="http://wordpress.org/support/plugin/as-heard-on" target="_blank">support page</a></div>
 				</h2>
 
 				<?php
@@ -143,8 +143,8 @@ if ( !class_exists('AsHeardOn') ) {
 			<div class="wrap">
 				<h2>Add New Podcast</h2>
 				<ul>
-				<li>If you want to include this podcast image in the sidebar, you must have content in the &quot;Show URL&quot; field.</li>
-				<li>The text in the &quot;Podcast Excerpt&quot; field will only appear on the summary page.</li>
+					<li>If you want to include this podcast image in the sidebar, you must have content in the &quot;Show URL&quot; field.</li>
+					<li>The text in the &quot;Podcast Excerpt&quot; field will only appear on the summary page.</li>
 				</ul>
 				<br />
 				<?php $this->displayForm();?>
@@ -199,7 +199,6 @@ if ( !class_exists('AsHeardOn') ) {
 								<td></td>
 								<td><input type="submit" name="addnew" class="button button-primary" value="<?php _e('Add Podcast', 'addnew' ) ?>" /></td>
 							</tr>
-
 					</table>
 					</form>
 				</div>
@@ -371,30 +370,29 @@ if ( !class_exists('AsHeardOn') ) {
 // | Configuration options                                                     |
 // +---------------------------------------------------------------------------+
 		function widget_options() {
-      $options =   get_option('aho_widget');
+      		$options =   get_option('aho_widget');
 		?>
 			<div class="wrap">
 				<?php if ($_REQUEST['settings-updated']=='true') { ?>
-				<div id="message" class="updated fade"><p><strong>Widget Settings Updated</strong></p></div>
-				<?php
-          } ?>
+					<div id="message" class="updated fade"><p><strong>Widget Settings Updated</strong></p></div>
+				<?php } ?>
 
 				<form method="post" action="options.php">
 				<?php settings_fields( 'aho_settings_widget' ); ?>
 
 				<table cellpadding="5" cellspacing="5">
 					<tr valign="top">
-            <td><label for="aho_widget[showlink]"><?php _e( 'Show link in sidebar to full page of previous interviews' ); ?></label></td>
+            			<td><label for="aho_widget[showlink]"><?php _e( 'Show link in sidebar to full page of previous interviews' ); ?></label></td>
 						<td><input class="checkbox" type="checkbox" id="aho_widget[showlink]" name="aho_widget[showlink]" value="1" <?php checked( 1, isset( $options['showlink'] ) ); ?>/></td>
 					</tr>
 
 					<tr valign="top">
-            <td><label for="aho_widget[linktext]"><?php _e( 'Text for sidebar aho-button (Read More, View All, etc)' ); ?></label></td>
+            			<td><label for="aho_widget[linktext]"><?php _e( 'Text for sidebar aho-button (Read More, View All, etc)' ); ?></label></td>
 						<td><input type="text" id="aho_widget[linktext]" name="aho_widget[linktext]" value="<?php if( isset( $options['linktext'] ) ) { echo esc_attr( $options['linktext'] ); } ?>" /></td>
 					</tr>
 
 					<tr valign="top">
-            <td><label for="aho_widget[linkurl]"><?php _e( 'Page link for sidebar aho-button<br/> (use shortcode [aho])' ); ?></label></td>
+            			<td><label for="aho_widget[linkurl]"><?php _e( 'Page link for sidebar aho-button<br/> (use shortcode [aho])' ); ?></label></td>
 						<td> <select name="aho_widget[linkurl]">
 			 			<option value="">
 						<?php echo esc_attr(__('Select page')); ?></option>
@@ -419,22 +417,23 @@ if ( !class_exists('AsHeardOn') ) {
 					</tr>
 
 					<tr valign="top">
-            <td><label for="aho_widget[image_width]"><?php _e( 'Image Width' ); ?></label></td>
-            <td><input type="text" id="aho_widget[image_width]" name="aho_widget[image_width]" size="3" value="<?php if( isset( $options['image_width'] ) ) { echo esc_attr( $options['image_width'] ); } ?>" /><label> (pixels)</label></td>
+            			<td><label for="aho_widget[image_width]"><?php _e( 'Image Width' ); ?></label></td>
+            			<td><input type="text" id="aho_widget[image_width]" name="aho_widget[image_width]" size="3" value="<?php if( isset( $options['image_width'] ) ) { echo esc_attr( $options['image_width'] ); } ?>" /><label> (pixels)</label></td>
 					</tr>
 
 					<tr valign="top">
-            <td><label for="aho_widget[image_height]"><?php _e( 'Image Height' ); ?></label></td>
-            <td><input type="text" id="aho_widget[image_height]" name="aho_widget[image_height]" size="3" value="<?php if( isset( $options['image_height'] ) ) { echo esc_attr( $options['image_height'] ); } ?>" /><label> (pixels)</label></td>
-          </tr>
+            			<td><label for="aho_widget[image_height]"><?php _e( 'Image Height' ); ?></label></td>
+            			<td><input type="text" id="aho_widget[image_height]" name="aho_widget[image_height]" size="3" value="<?php if( isset( $options['image_height'] ) ) { echo esc_attr( $options['image_height'] ); } ?>" /><label> (pixels)</label></td>
+          			</tr>
 
 					<tr valign="top">
-            <td><label for="aho_widget[opacity]"><?php _e( 'How fast to transition from B&W to Color' ); ?></label></td>
+            			<td><label for="aho_widget[opacity]"><?php _e( 'How fast to transition from B&W to Color' ); ?></label></td>
 						<td><input type="text" data-slider="true" data-slider-range="0,5" data-slider-step=".25" data-slider-highlight="true" data-slider-theme="volume" name="aho_widget[opacity]" value="<?php if( isset( $options['opacity'] ) ) { echo esc_attr( $options['opacity'] ); } ?>" ></td>
 					</tr>
+
 					<tr valign="top">
-            <td><label for="aho_widget[setlimit]"><?php _e( 'Number of podcasts to show in sidebar' ); ?></label></td>
-            <td><input type="text" id="aho_widget[setlimit]" name="aho_widget[setlimit]" size="2" value="<?php if( isset( $options['setlimit'] ) ) { echo esc_attr( $options['setlimit'] ); } ?>" /></td>
+            			<td><label for="aho_widget[setlimit]"><?php _e( 'Number of podcasts to show in sidebar' ); ?></label></td>
+            			<td><input type="text" id="aho_widget[setlimit]" name="aho_widget[setlimit]" size="2" value="<?php if( isset( $options['setlimit'] ) ) { echo esc_attr( $options['setlimit'] ); } ?>" /></td>
 					</tr>
 
 			</table>
@@ -450,7 +449,7 @@ if ( !class_exists('AsHeardOn') ) {
       $options =   get_option('aho_page'); ?>
 			<div class="wrap">
 				<?php if ($_REQUEST['settings-updated']=='true') { ?>
-				<div id="message" class="updated fade"><p><strong>Page Settings Updated</strong></p></div>
+					<div id="message" class="updated fade"><p><strong>Page Settings Updated</strong></p></div>
 				<?php  }
         ?>
 
@@ -496,7 +495,7 @@ if ( !class_exists('AsHeardOn') ) {
 			<tr valign="top">
         		<td><label for="aho_page[imgdisplay]"><?php _e( 'Display Images or Images and Summary' ); ?></label></td>
 			  	<td><?php $aho_display = $options['imgdisplay'];
-			    	if ($aho_display == 'imgdisplay') { ?>
+			    	if ($aho_display == 'displayimg') { ?>
               			<input type="radio" name="aho_page[imgdisplay]" value="displayimg" checked /> Images
 			        	<input type="radio" name="aho_page[imgdisplay]" value="displaysummary" /> Images & Summary
 			     	<?php } elseif ($aho_display == 'displaysummary') { ?>
@@ -510,20 +509,21 @@ if ( !class_exists('AsHeardOn') ) {
 			</tr>
 
 			<tr valign="top">
-        <td><label for="aho_page[imgmax]"><?php _e( 'Maximum height (in pixels) for image' ); ?></label></td>
-        <td><input type="text" id="aho_page[imgmax]" name="aho_page[imgmax]" size="3" value="<?php if( isset( $options['imgmax'] ) ) { echo esc_attr( $options['imgmax'] ); } ?>" /><label><?php _e( ' (if left blank images will show full size)' ); ?></label></td>
+        		<td><label for="aho_page[imgmax]"><?php _e( 'Maximum height (in pixels) for image' ); ?></label></td>
+        		<td><input type="text" id="aho_page[imgmax]" name="aho_page[imgmax]" size="3" value="<?php if( isset( $options['imgmax'] ) ) { echo esc_attr( $options['imgmax'] ); } ?>" /><label><?php _e( ' (if left blank images will show full size)' ); ?></label></td>
 			</tr>
 
 			<tr valign="top">
-        <td><label for="aho_page[deldata]"><?php _e( 'Remove table when deactivating plugin' ); ?></label></td>
-        <td><input class="checkbox" type="checkbox" id="aho_page[deldata]" name="aho_page[deldata]" value="1" <?php checked( 1, isset( $options['deldata'] ) ); ?>/><label> (this will result in all data being deleted!)</label></td>
+				<?php echo esc_attr( $options['deldata'] ); ?>
+        		<td><label for="aho_page[deldata]"><?php _e( 'Remove table when deactivating plugin' ); ?></label></td>
+        		<td><input class="checkbox" type="checkbox" id="aho_page[deldata]" name="aho_page[deldata]" value="1" <?php checked( 1, isset( $options['deldata'] ) ); ?>/><label> (this will result in all data being deleted!)</label></td>
 			<td>
 
 
 			</table>
-			<p class="submit">
-			<input type="submit" class="button button-primary" value="<?php _e('Save Page Changes') ?>" />
-			</p>
+				<p class="submit">
+					<input type="submit" class="button button-primary" value="<?php _e('Save Page Changes') ?>" />
+				</p>
 
 			</form>
 
@@ -726,7 +726,7 @@ if ( !class_exists('AsHeardOn') ) {
 
 		function deactivate () {
 			global $wpdb;
-      $options =   get_option('aho_options');
+      		$options =   get_option('aho_options');
 
 			$table_name = $wpdb->prefix . "aho";
 
@@ -827,18 +827,18 @@ if(class_exists('AsHeardOn')) {
 				echo '</div>';
 			} // end loop
 
-      $aho_showlink  = $options['showlink'];
+      		$aho_showlink  = $options['showlink'];
 			$aho_linktext  = $options['linktext'];
 			$linkurl       = $options['linkurl'];
 
 			if (($aho_showlink == '1') && ($linkurl !='')) {
 				if ($aho_linktext == '') { $linkdisplay = 'Read More'; } else { $linkdisplay = $aho_linktext; }
-        echo '<div class="aho-clear"></div>';
-        echo '<a class="aho-button" href="'.$linkurl.'">'.$linkdisplay.'</a>';
+        			echo '<div class="aho-clear"></div>';
+        			echo '<a class="aho-button" href="'.$linkurl.'">'.$linkdisplay.'</a>';
+				}
+				echo '<div class="aho-clear"></div>';
+      			echo '</div>';
 			}
-			echo '<div class="aho-clear"></div>';
-      echo '</div>';
-		}
 }
 
 // +---------------------------------------------------------------------------+

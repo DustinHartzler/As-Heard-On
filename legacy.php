@@ -18,7 +18,6 @@
       $aho_imgalign     = get_option('aho_imgalign');
       $aho_imgdisplay   = get_option('imgdisplay');
       $aho_imgmaxheight = get_option('imgmax');
-      $aho_deldata      = get_option('deldata');
 
 	  //Changed variable names in 2.0
 	  $aho_sorder       = get_option('sorder');
@@ -27,6 +26,11 @@
 	  } elseif ($aho_sorder == 'testid DESC') {
 		  $aho_sorder = 'desc';
 	  } else { $aho_sorder = 'user';}
+
+	  $aho_deldata      = get_option('deldata');
+	  if ($aho_deldata == 'Y'){
+		  $aho_deldata = 1;
+	  }
 
       $aho_widget = array('showlink'       => $aho_showlink,
                           'linktext'       => $aho_linktext,
@@ -70,4 +74,5 @@
       delete_option('opacity');
       delete_option('setlimit');
       delete_option('linkurl');
+	  delete_option('ppg_version');
     }
