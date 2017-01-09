@@ -733,15 +733,8 @@ if ( !class_exists('AsHeardOn') ) {
 			$aho_deldata =  $options['deldata'];
 			if ($aho_deldata == '1') {
 				$wpdb->query("DROP TABLE {$table_name}");
-				delete_option("aho_showlink");
-				delete_option("aho_linktext");
-				delete_option("aho_linkurl");
-				delete_option("aho_deldata");
-				delete_option("aho_setlimit");
-				delete_option("aho_admng");
-				delete_option("aho_sorder");
-				delete_option("aho_imgalign");
-				delete_option("aho_imgmax");
+				delete_option("aho_widget");
+				delete_option("aho_page");
 		 	}
 		    delete_option("aho_version");
 		}

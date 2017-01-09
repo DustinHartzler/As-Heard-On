@@ -28,7 +28,7 @@
 	  } else { $aho_sorder = 'user';}
 
 	  $aho_deldata      = get_option('deldata');
-	  if ($aho_deldata == 'Y'){
+	  if ($aho_deldata == 'yes'){
 		  $aho_deldata = 1;
 	  }
 
@@ -44,7 +44,7 @@
 						  'imgalign'       => $aho_imgalign,
 						  'imgdisplay'     => $aho_imgdisplay,
 						  'imgmax'         => $aho_imgmaxheight,
-					  	  'deldata'        => $ah_deldata
+					  	  'deldata'        => $aho_deldata
 					  );
 
 	  add_option('aho_widget',  $aho_widget );
