@@ -726,7 +726,7 @@ if ( !class_exists('AsHeardOn') ) {
 
 		function deactivate () {
 			global $wpdb;
-      		$options =   get_option('aho_options');
+      		$options =   get_option('aho_page');
 
 			$table_name = $wpdb->prefix . "aho";
 
@@ -735,8 +735,8 @@ if ( !class_exists('AsHeardOn') ) {
 				$wpdb->query("DROP TABLE {$table_name}");
 				delete_option("aho_widget");
 				delete_option("aho_page");
+				delete_option("aho_version");
 		 	}
-		    delete_option("aho_version");
 		}
 	}
 }
@@ -744,7 +744,7 @@ if ( !class_exists('AsHeardOn') ) {
 if(class_exists('AsHeardOn')) {
 	// Installation and uninstallation hooks
 	register_activation_hook(__FILE__, array('AsHeardOn', 'activate'));
-	register_deactivation_hook(__FILE__, array('AsHeardOn', 'deactivate'));
+	register_uninstall_hook(__FILE__, array('AsHeardOn', 'deactivate'));
 
 	// instantiate the plugin class
 	$wp_plugin_template = new AsHeardOn();
