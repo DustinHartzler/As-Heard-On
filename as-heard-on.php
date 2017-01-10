@@ -26,29 +26,30 @@ if ( !class_exists('AsHeardOn') ) {
 // +---------------------------------------------------------------------------+
 		function __construct() {
 		/* WP actions */
-      add_action( 'init', array(&$this, 'addscripts'));
-      add_action( 'admin_init', array(&$this, 'register_options'));
-      add_action( 'admin_menu', array(&$this, 'addpages'));
+      		add_action( 'init', array(&$this, 'addscripts'));
+      		add_action( 'admin_init', array(&$this, 'register_options'));
+      		add_action( 'admin_menu', array(&$this, 'addpages'));
 			add_action( 'plugins_loaded', array(&$this, 'set'));
 			add_shortcode( 'aho', array(&$this, 'showall'));
 		}
 
 		function register_options() { // whitelist options
-			register_setting( 'option-widget', 'admng' );
-			register_setting( 'option-widget', 'showlink' );
-			register_setting( 'option-widget', 'linktext' );
-			register_setting( 'option-widget', 'image_width');
-			register_setting( 'option-widget', 'image_height');
-			register_setting( 'option-widget', 'opacity');
-			register_setting( 'option-widget', 'setlimit' );
-			register_setting( 'option-widget', 'linkurl' );
-			register_setting( 'option-page', 'aho_imgalign' );
-			register_setting( 'option-page', 'imgdisplay' );
-			register_setting( 'option-page', 'imgmax' );
-			register_setting( 'option-page', 'sorder' );
-			register_setting( 'option-page', 'deldata' );
+			// register_setting( 'option-widget', 'admng' );
+			// register_setting( 'option-widget', 'showlink' );
+			// register_setting( 'option-widget', 'linktext' );
+			// register_setting( 'option-widget', 'image_width');
+			// register_setting( 'option-widget', 'image_height');
+			// register_setting( 'option-widget', 'opacity');
+			// register_setting( 'option-widget', 'setlimit' );
+			// register_setting( 'option-widget', 'linkurl' );
+			// register_setting( 'option-page', 'aho_imgalign' );
+			// register_setting( 'option-page', 'imgdisplay' );
+			// register_setting( 'option-page', 'imgmax' );
+			// register_setting( 'option-page', 'sorder' );
+			// register_setting( 'option-page', 'deldata' );
       		register_setting( 'aho_settings_widget', 'aho_widget' );
       		register_setting( 'aho_settings_page', 'aho_page' );
+			register_setting( 'dustin_test_settings', 'dustin_widget');
 		}
 
 		function addscripts() { // include style sheet
@@ -241,25 +242,25 @@ if ( !class_exists('AsHeardOn') ) {
    			global $wpdb;
 
    			$table_name = $wpdb->prefix . "aho";
-        if($wpdb->get_var("show tables like '$table_name'") != $table_name) {
-          if ( $wpdb->supports_collation() ) {
-  						if ( ! empty($wpdb->charset) )
-  							$charset_collate = "DEFAULT CHARACTER SET $wpdb->charset";
-  						if ( ! empty($wpdb->collate) )
-  							$charset_collate .= " COLLATE $wpdb->collate";
+        	if($wpdb->get_var("show tables like '$table_name'") != $table_name) {
+          		if ( $wpdb->supports_collation() ) {
+  					if ( ! empty($wpdb->charset) )
+  						$charset_collate = "DEFAULT CHARACTER SET $wpdb->charset";
+  					if ( ! empty($wpdb->collate) )
+  						$charset_collate .= " COLLATE $wpdb->collate";
   				}
 
-          $sql = "CREATE TABLE IF NOT EXISTS " . $table_name . "(
-				testid int( 15 ) NOT NULL AUTO_INCREMENT ,
-				show_name text,
-				host_name text,
-				show_url text,
-				episode text,
-				imgurl text,
-				excerpt text,
-				storder INT( 5 ) NOT NULL,
-				PRIMARY KEY ( `testid` )
-				) ".$charset_collate.";";
+          		$sql = "CREATE TABLE IF NOT EXISTS " . $table_name . "(
+					testid int( 15 ) NOT NULL AUTO_INCREMENT ,
+					show_name text,
+					host_name text,
+					show_url text,
+					episode text,
+					imgurl text,
+					excerpt text,
+					storder INT( 5 ) NOT NULL,
+					PRIMARY KEY ( `testid` )
+					) ".$charset_collate.";";
 
 				require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 				dbDelta($sql);
@@ -270,16 +271,33 @@ if ( !class_exists('AsHeardOn') ) {
 		      	$results = $wpdb->query( $insert );
 
 				// insert default settings into wp_options
-				$toptions = $wpdb->prefix ."options";
-				$defset = "INSERT INTO ".$toptions.
-					"(option_name, option_value) " .
-					"VALUES ('sfs_admng', 'update_plugins'),('sfs_deldata', ''),".
-					"('sfs_linktext', 'Read More'),('sfs_linkurl', ''),('sfs_setlimit', '1'),".
-					"('sfs_showlink', ''),('sfs_imgalign','right'),('sfs_sorder', 'testid DESC')";
-				$dodef = $wpdb->query( $defset );
+				// $toptions = $wpdb->prefix ."options";
+				// $defset = "INSERT INTO ".$toptions.
+				// 	"(option_name, option_value) " .
+				// 	"VALUES ('sfs_admng', 'update_plugins'),('sfs_deldata', ''),".
+				// 	"('sfs_linktext', 'Read More'),('sfs_linkurl', ''),('sfs_setlimit', '1'),".
+				// 	"('sfs_showlink', ''),('sfs_imgalign','right'),('sfs_sorder', 'testid DESC')";
+				// $dodef = $wpdb->query( $defset );
+				if(is_admin()){require_once('legacy.php');};
+
+				$defaults = array(
+				  'image_width'  => '50',
+				  'image_height' => '50',
+				  'opacity'		 => '1.5',
+				  'setlimit'	 => '3'
+				);
+				$options = wp_parse_args(get_option('aho_widget'), $defaults);
+
+				$aho_widget = array(
+					'image_width'  => '50',
+					'image_height' => '50',
+					'opacity'	   => '1.5',
+					'setlimit'	   => '3'
+		        );
+
+		  	  	add_option('dustin_widget',  $aho_widget );
 
 			}
-      if(is_admin()){require_once('legacy.php');};
 
 		}
 
@@ -446,7 +464,7 @@ if ( !class_exists('AsHeardOn') ) {
   }
 
 		function page_options(){
-      $options =   get_option('aho_page'); ?>
+      		$options =   get_option('aho_page'); ?>
 			<div class="wrap">
 				<?php if ($_REQUEST['settings-updated']=='true') { ?>
 					<div id="message" class="updated fade"><p><strong>Page Settings Updated</strong></p></div>
@@ -472,6 +490,10 @@ if ( !class_exists('AsHeardOn') ) {
 									<input type="radio" name="aho_page[sorder]" value="asc" /><label for="aho_page[sorder]"><?php _e( 'Order entered, oldest first' ); ?></label><br>
 									<input type="radio" name="aho_page[sorder]" value="desc"  /><label for="aho_page[sorder]"><?php _e( 'Order entered, newest first' ); ?></label><br>
 									<input type="radio" name="aho_page[sorder]" value="user" checked /><label for="aho_page[sorder]"><?php _e( 'User defined sort order' ); ?></label>
+								<?php } else { ?>
+									<input type="radio" name="aho_page[sorder]" value="asc" /><label for="aho_page[sorder]"><?php _e( 'Order entered, oldest first' ); ?></label><br>
+									<input type="radio" name="aho_page[sorder]" value="desc"  /><label for="aho_page[sorder]"><?php _e( 'Order entered, newest first' ); ?></label><br>
+									<input type="radio" name="aho_page[sorder]" value="user" /><label for="aho_page[sorder]"><?php _e( 'User defined sort order' ); ?></label>
 								<?php } ?>
 							</td>
 					</tr>
@@ -514,11 +536,9 @@ if ( !class_exists('AsHeardOn') ) {
 			</tr>
 
 			<tr valign="top">
-				<?php echo esc_attr( $options['deldata'] ); ?>
         		<td><label for="aho_page[deldata]"><?php _e( 'Remove table when deactivating plugin' ); ?></label></td>
         		<td><input class="checkbox" type="checkbox" id="aho_page[deldata]" name="aho_page[deldata]" value="1" <?php checked( 1, isset( $options['deldata'] ) ); ?>/><label> (this will result in all data being deleted!)</label></td>
 			<td>
-
 
 			</table>
 				<p class="submit">
@@ -646,7 +666,7 @@ if ( !class_exists('AsHeardOn') ) {
 // +---------------------------------------------------------------------------+
 		/* show page of all podcast artwork */
 		function showall() {
-		global $wpdb;
+			global $wpdb;
 			$imgalign = get_option('aho_imgalign');
 			if ($imgalign == '') { $imgalign = 'alignright'; } else { $imgalign = get_option('aho_imgalign'); }
 

@@ -1,7 +1,8 @@
 <?php
 // update version in options table
-  delete_option("ppg_version");
-  add_option("ppg_version", "0.5");
+
+  //delete_option("ppg_version");
+  //add_option("ppg_version", "0.5");
 
   $aho_old = get_option('ppg_version');
   if ($aho_old == '0.5') {
