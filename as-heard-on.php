@@ -389,7 +389,7 @@ if ( !class_exists('AsHeardOn') ) {
 // +---------------------------------------------------------------------------+
 		function widget_options() {
       		$options =   get_option('aho_widget');
-		?>
+			?>
 			<div class="wrap">
 				<?php if ($_REQUEST['settings-updated']=='true') { ?>
 					<div id="message" class="updated fade"><p><strong>Widget Settings Updated</strong></p></div>
@@ -468,8 +468,7 @@ if ( !class_exists('AsHeardOn') ) {
 			<div class="wrap">
 				<?php if ($_REQUEST['settings-updated']=='true') { ?>
 					<div id="message" class="updated fade"><p><strong>Page Settings Updated</strong></p></div>
-				<?php  }
-        ?>
+				<?php  } ?>
 
 				<form method="post" action="options.php">
 					<?php settings_fields( 'aho_settings_page' ); ?>
@@ -548,8 +547,7 @@ if ( !class_exists('AsHeardOn') ) {
 			</form>
 
 			</div>
-		<?php
-    $this->footerText();
+		<?php $this->footerText();
 		}
 
 // +---------------------------------------------------------------------------+
@@ -572,12 +570,12 @@ if ( !class_exists('AsHeardOn') ) {
 				echo stripslashes($aholist->show_name);
 					if ($aholist->host_name != '') {
 						echo '<br><strong>Host Name: </strong>'.stripslashes($aholist->host_name).'';
-						if ($aholist->show_url != '') {
-							echo '<br><strong>Show URL: </strong> <a href="'.$aholist->show_url.'" rel="wordbreak">'.stripslashes($aholist->show_url).'</a> ';
-							if ($aholist->episode !=''){
-							echo '<br><strong>Episode: </strong>'.stripslashes($aholist->episode).'';
-							}
-						}
+					}
+					if ($aholist->show_url != '') {
+						echo '<br><strong>Show URL: </strong> <a href="'.$aholist->show_url.'" rel="wordbreak">'.stripslashes($aholist->show_url).'</a> ';
+					}
+					if ($aholist->episode !=''){
+						echo '<br><strong>Episode: </strong>'.stripslashes($aholist->episode).'';
 					}
 				echo '</div>';
 			}
