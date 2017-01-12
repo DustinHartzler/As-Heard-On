@@ -240,6 +240,7 @@ if ( !class_exists('AsHeardOn') ) {
 
 		function activate () {
    			global $wpdb;
+			if(is_admin()){require_once('legacy.php');};
 
    			$table_name = $wpdb->prefix . "aho";
         	if($wpdb->get_var("show tables like '$table_name'") != $table_name) {
@@ -251,7 +252,7 @@ if ( !class_exists('AsHeardOn') ) {
   				}
 
           		$sql = "CREATE TABLE IF NOT EXISTS " . $table_name . "(
-					testid int( 15 ) NOT NULL AUTO_INCREMENT ,
+					aho_id int( 15 ) NOT NULL AUTO_INCREMENT ,
 					show_name text,
 					host_name text,
 					show_url text,
@@ -259,7 +260,7 @@ if ( !class_exists('AsHeardOn') ) {
 					imgurl text,
 					excerpt text,
 					storder INT( 5 ) NOT NULL,
-					PRIMARY KEY ( `testid` )
+					PRIMARY KEY ( `aho_id` )
 					) ".$charset_collate.";";
 
 				require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
@@ -270,44 +271,33 @@ if ( !class_exists('AsHeardOn') ) {
 		            "VALUES ('Your Website Engineer','Dustin Hartzler','http://YourWebsiteEngineer.com','001','http://YourWebsiteEngineer.com/wp-content/podcasts/YWE.png')";
 		      	$results = $wpdb->query( $insert );
 
-				// insert default settings into wp_options
-				// $toptions = $wpdb->prefix ."options";
-				// $defset = "INSERT INTO ".$toptions.
-				// 	"(option_name, option_value) " .
-				// 	"VALUES ('sfs_admng', 'update_plugins'),('sfs_deldata', ''),".
-				// 	"('sfs_linktext', 'Read More'),('sfs_linkurl', ''),('sfs_setlimit', '1'),".
-				// 	"('sfs_showlink', ''),('sfs_imgalign','right'),('sfs_sorder', 'testid DESC')";
-				// $dodef = $wpdb->query( $defset );
-				if(is_admin()){require_once('legacy.php');};
 
-				$defaults = array(
-				  'image_width'  => '50',
-				  'image_height' => '50',
-				  'opacity'		 => '1.5',
-				  'setlimit'	 => '3'
-				);
-				$options = wp_parse_args(get_option('aho_widget'), $defaults);
-
-				$aho_widget = array(
-					'image_width'  => '50',
-					'image_height' => '50',
-					'opacity'	   => '1.5',
-					'setlimit'	   => '3'
-		        );
-
-		  	  	add_option('dustin_widget',  $aho_widget );
-
+				// $defaults = array(
+				//   'image_width'  => '50',
+				//   'image_height' => '50',
+				//   'opacity'		 => '1.5',
+				//   'setlimit'	 => '3'
+				// );
+				// $options = wp_parse_args(get_option('aho_widget'), $defaults);
+				//
+				// $aho_widget = array(
+				// 	'image_width'  => '50',
+				// 	'image_height' => '50',
+				// 	'opacity'	   => '1.5',
+				// 	'setlimit'	   => '3'
+		        // );
+				//
+				// 	  	add_option('dustin_widget',  $aho_widget );
 			}
-
 		}
 
 		/* update item in DB */
-		function aho_editdo($testid){
+		function aho_editdo($aho_id){
 			global $wpdb;
 
 			$table_name = $wpdb->prefix . "aho";
 
-			$testid = $testid;
+			$aho_id = $aho_id;
 			$show_name 	= sanitize_text_field( $_POST['show_name'] );
 			$host_name 	= sanitize_text_field( $_POST['host_name'] );
 			$show_url 	= sanitize_text_field( $_POST['show_url'] );
@@ -324,16 +314,16 @@ if ( !class_exists('AsHeardOn') ) {
 			" episode = '$episode', ".
 			" excerpt = '$excerpt', ".
 			" storder = '$storder' ".
-			" WHERE testid = '$testid'");
+			" WHERE aho_id = '$aho_id'");
 		}
 
 		/* delete testimonials from DB */
-		function removetst($testid) {
+		function removetst($aho_id) {
 			global $wpdb;
 			$table_name = $wpdb->prefix . "aho";
 
 			$insert = $wpdb->prepare( "DELETE FROM " . $table_name .
-			" WHERE testid = '%d'", absint( $testid ) );
+			" WHERE aho_id = '%d'", absint( $aho_id ) );
 
 			$results = $wpdb->query( $insert );
 
@@ -350,15 +340,15 @@ if ( !class_exists('AsHeardOn') ) {
 					$this->newform();
 				}
 				elseif ($_REQUEST['mode']=='ahorem') {
-					$this->removetst($_REQUEST['testid']);
+					$this->removetst($_REQUEST['aho_id']);
 					?><div id="message" class="updated fade"><p><strong><?php _e('Podcast Deleted'); ?>.</strong></p></div><?php
 				}
 				elseif ($_REQUEST['mode']=='ahoedit') {
-					$this->aho_edit($_REQUEST['testid']);
+					$this->aho_edit($_REQUEST['aho_id']);
 					//exit;
 				}
 				elseif (isset($_REQUEST['editdo'])) {
-					$this->aho_editdo($_REQUEST['testid']);
+					$this->aho_editdo($_REQUEST['aho_id']);
 					?><div id="message" class="updated fade"><p><strong><?php _e('Podcast Updated'); ?>.</strong></p></div><?php
 					$this->showlist(); // show podcasts
 					$this->newform(); // show form to add new podcast
@@ -557,14 +547,14 @@ if ( !class_exists('AsHeardOn') ) {
 		function showlist() {
 			global $wpdb;
 			$table_name = $wpdb->prefix . "aho";
-			$aholists = $wpdb->get_results("SELECT testid,show_name,host_name,show_url,imgurl,episode FROM $table_name");
+			$aholists = $wpdb->get_results("SELECT aho_id,show_name,host_name,show_url,imgurl,episode FROM $table_name");
 
 			foreach ($aholists as $aholist) {
 				echo '<div class="podcast-display">';
 				echo '<img src="'.$aholist->imgurl.'" width="100px" class="alignleft" style="margin:0 10px 10px 0;">';
-				echo '<a href="admin.php?page=setting_page&amp;mode=ahoedit&amp;testid='.$aholist->testid.'">Edit</a>';
+				echo '<a href="admin.php?page=setting_page&amp;mode=ahoedit&amp;aho_id='.$aholist->aho_id.'">Edit</a>';
 				echo '&nbsp;|&nbsp;';
-				echo '<a href="admin.php?page=setting_page&amp;mode=ahorem&amp;testid='.$aholist->testid.'" onClick="return confirm(\'Delete this podcast?\')">Delete</a>';
+				echo '<a href="admin.php?page=setting_page&amp;mode=ahorem&amp;aho_id='.$aholist->aho_id.'" onClick="return confirm(\'Delete this podcast?\')">Delete</a>';
 				echo '<br>';
 				echo '<strong>Show Name: </strong>';
 				echo stripslashes($aholist->show_name);
@@ -583,11 +573,11 @@ if ( !class_exists('AsHeardOn') ) {
 		}
 
 		/* edit podcast form */
-		function aho_edit($testid){
+		function aho_edit($aho_id){
 			global $wpdb;
 			$table_name = $wpdb->prefix . "aho";
 
-			$getaho = $wpdb->get_row("SELECT testid, show_name, host_name, show_url, imgurl, episode, excerpt, storder FROM $table_name WHERE testid = $testid"); ?>
+			$getaho = $wpdb->get_row("SELECT aho_id, show_name, host_name, show_url, imgurl, episode, excerpt, storder FROM $table_name WHERE aho_id = $aho_id"); ?>
 
 			<h3>Edit Podcast</h3
 			<div id="ppg-form">
@@ -632,12 +622,13 @@ if ( !class_exists('AsHeardOn') ) {
 				 		</tr>
 
 				 		<tr valign="top">
-				  			<?php echo'<td><input type="hidden" name="testid" value="'.$getaho->testid.'"></td>'; ?>
+				  			<?php echo'<td><input type="hidden" name="aho_id" value="'.$getaho->aho_id.'"></td>'; ?>
 				  			<td><input name="editdo" type="submit" class="button button-primary" value="Update"></td>
 				  		</tr>
 				  	</table>
 
 			<?php echo '<h3>Preview</h3>';
+			$this->showlist();
 			echo '<div class="podcast-display" >';
 			echo '<img src="'.$getaho->imgurl.'" width="90px" class="alignleft" style="margin:0 10px 10px 0;">';
 				echo '<strong>Show Name: </strong>';
@@ -669,11 +660,11 @@ if ( !class_exists('AsHeardOn') ) {
 			if ($imgalign == '') { $imgalign = 'alignright'; } else { $imgalign = get_option('aho_imgalign'); }
 
 			$sorder = (get_option('sorder'));
-			if ($sorder != 'testid ASC' AND $sorder != 'testid DESC' AND $sorder != 'storder ASC')
-			{ $sorder2 = 'testid ASC'; } else { $sorder2 = $sorder; }
+			if ($sorder != 'aho_id ASC' AND $sorder != 'aho_id DESC' AND $sorder != 'storder ASC')
+			{ $sorder2 = 'aho_id ASC'; } else { $sorder2 = $sorder; }
 
 			$table_name = $wpdb->prefix . "aho";
-			$tstpage = $wpdb->get_results("SELECT testid, show_name, host_name, show_url, imgurl, episode, excerpt, storder FROM $table_name WHERE imgurl !='' ORDER BY $sorder2");
+			$tstpage = $wpdb->get_results("SELECT aho_id, show_name, host_name, show_url, imgurl, episode, excerpt, storder FROM $table_name WHERE imgurl !='' ORDER BY $sorder2");
 			$retvalo = '';
 			$retvalo .= '';
 			$retvalo .= '<div id="aho-page">';

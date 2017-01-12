@@ -76,4 +76,11 @@
       delete_option('setlimit');
       delete_option('linkurl');
 	  delete_option('ppg_version');
+
+	  // Change first column from testid to aho_id 
+	  global $wpdb;
+	  $table_name = $wpdb->prefix . "aho";
+
+	  $wpdb->query("ALTER TABLE " . $table_name . " CHANGE COLUMN testid aho_id INT(15);");
+	  add_option('aho_test',  $sql );
     }
