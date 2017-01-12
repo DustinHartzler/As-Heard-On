@@ -369,8 +369,9 @@ if ( !class_exists('AsHeardOn') ) {
 
   function footerText () { ?>
     <div class="wrap">
-      <p>As Heard On Plugin is &copy; Copyright <?php echo("2013 - ".date('Y').""); ?>, <a href="http://www.yourwebsiteengineer.com/" target="_blank">Dustin Hartzler</a> and distributed under the <a href="http://www.fsf.org/licensing/licenses/quick-guide-gplv3.html" target="_blank">GNU General Public License</a>.
-      If you find this plugin useful, please consider a <a href="http://#" target="_blank">donation</a>.</p>
+		<div class="aho-clear"></div>
+      	<p>As Heard On Plugin is &copy; Copyright <?php echo("2013 - ".date('Y').""); ?>, <a href="http://www.yourwebsiteengineer.com/" target="_blank">Dustin Hartzler</a> and distributed under the <a href="http://www.fsf.org/licensing/licenses/quick-guide-gplv3.html" target="_blank">GNU General Public License</a>.
+      	If you find this plugin useful, please consider a <a href="http://#" target="_blank">donation</a>.</p>
     </div><?php
   }
 
@@ -608,7 +609,7 @@ if ( !class_exists('AsHeardOn') ) {
 
 						<tr valign="top">
 							<td><label for="episode">Episode:</label></td>
-				 			<td><input name="episode" type="text" size="2" value="<?php echo $getaho->episode ?>"></td>
+				 			<td><input name="episode" type="text" size="4" value="<?php echo $getaho->episode ?>"></td>
 				 		</tr>
 
 				 		<tr valign="top">
@@ -628,7 +629,7 @@ if ( !class_exists('AsHeardOn') ) {
 				  	</table>
 
 			<?php echo '<h3>Preview</h3>';
-			$this->showlist();
+			//$this->showlist();
 			echo '<div class="podcast-display" >';
 			echo '<img src="'.$getaho->imgurl.'" width="90px" class="alignleft" style="margin:0 10px 10px 0;">';
 				echo '<strong>Show Name: </strong>';
@@ -645,7 +646,6 @@ if ( !class_exists('AsHeardOn') ) {
 							}
 						}
 					}
-				echo '</div>';
 			echo '</form>';
 			echo '</div>';
 		}
