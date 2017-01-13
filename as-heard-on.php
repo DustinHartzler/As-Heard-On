@@ -53,7 +53,7 @@ if ( !class_exists('AsHeardOn') ) {
 		}
 
 		function addscripts() { // include style sheet
-      		wp_enqueue_style('style_css', plugins_url('/as-heard-on/css/style.css') );
+      		wp_enqueue_style('style_css', plugins_url('/as-heard-on/css/style.css'), '0.1' );
 			wp_enqueue_script( 'jquery' );
 		  	wp_enqueue_script( 'grayscale', plugins_url('/as-heard-on/js/grayscale.js') ,array('jquery') );
 		  	$params = array('opacity_js' => get_option('opacity') );
@@ -120,7 +120,7 @@ if ( !class_exists('AsHeardOn') ) {
 					<a href="admin.php?page=setting_page&tab=add_new_podcast" class="nav-tab <?php echo $active_tab == 'add_new_podcast' ? 'nav-tab-active' : ''; ?>">Podcasts</a>
 					<a href="admin.php?page=setting_page&tab=widget_options" class="nav-tab <?php echo $active_tab == 'widget_options' ? 'nav-tab-active' : ''; ?>">Widget Options</a>
 					<a href="admin.php?page=setting_page&tab=full_page_options" class="nav-tab <?php echo $active_tab == 'full_page_options' ? 'nav-tab-active' : ''; ?>">Full Page Options</a>
-          			<div align="right" class="dustinhelp" >Need help? <a href="http://wordpress.org/plugins/as-heard-on/" target="_blank">documentation</a> &nbsp;|&nbsp; <a href="http://wordpress.org/support/plugin/as-heard-on" target="_blank">support page</a></div>
+          			<div align="right" class="help" >Need help? <a href="http://wordpress.org/plugins/as-heard-on/" target="_blank">documentation</a> &nbsp;|&nbsp; <a href="http://wordpress.org/support/plugin/as-heard-on" target="_blank">support page</a></div>
 				</h2>
 
 				<?php
@@ -532,7 +532,7 @@ if ( !class_exists('AsHeardOn') ) {
 
 			</table>
 				<p class="submit">
-					<input type="submit" class="button button-primary" value="<?php _e('Save Page Changes') ?>" />
+					<input type="submit" class="button button-primary" value="<?php _e('Save Page Options') ?>" />
 				</p>
 
 			</form>
@@ -552,7 +552,7 @@ if ( !class_exists('AsHeardOn') ) {
 
 			foreach ($aholists as $aholist) {
 				echo '<div class="podcast-display">';
-				echo '<img src="'.$aholist->imgurl.'" width="100px" class="alignleft" style="margin:0 10px 10px 0;">';
+				echo '<img src="'.$aholist->imgurl.'" width="100px" class="alignleft">';
 				echo '<a href="admin.php?page=setting_page&amp;mode=ahoedit&amp;aho_id='.$aholist->aho_id.'">Edit</a>';
 				echo '&nbsp;|&nbsp;';
 				echo '<a href="admin.php?page=setting_page&amp;mode=ahorem&amp;aho_id='.$aholist->aho_id.'" onClick="return confirm(\'Delete this podcast?\')">Delete</a>';
@@ -624,14 +624,14 @@ if ( !class_exists('AsHeardOn') ) {
 
 				 		<tr valign="top">
 				  			<?php echo'<td><input type="hidden" name="aho_id" value="'.$getaho->aho_id.'"></td>'; ?>
-				  			<td><input name="editdo" type="submit" class="button button-primary" value="Update"></td>
+				  			<td><input name="editdo" type="submit" class="button button-primary" value="Update Podcast"></td>
 				  		</tr>
 				  	</table>
 
 			<?php echo '<h3>Preview</h3>';
 			//$this->showlist();
 			echo '<div class="podcast-display" >';
-			echo '<img src="'.$getaho->imgurl.'" width="90px" class="alignleft" style="margin:0 10px 10px 0;">';
+			echo '<img src="'.$getaho->imgurl.'" width="90px" class="alignleft">';
 				echo '<strong>Show Name: </strong>';
 				echo stripslashes($getaho->show_name);
 					if ($getaho->host_name != '') {
