@@ -61,6 +61,8 @@ if ( !class_exists('AsHeardOn') ) {
 			if ( is_admin() )  {
         		wp_enqueue_script( 'display', plugins_url('/as-heard-on/js/display.js') ,array('jquery') );
 			  	wp_enqueue_script( 'slider', plugins_url('/as-heard-on/js/simple-slider.js') ,array('jquery') );
+				wp_enqueue_script( 'jquery-ui-core' );
+				wp_enqueue_script( 'jquery-ui-sortable');
 
 			  	// Upload Button to Work
 	 			wp_enqueue_script('thickbox');

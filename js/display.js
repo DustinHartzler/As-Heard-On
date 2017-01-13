@@ -11,7 +11,10 @@ jQuery(document).ready(function($) {
         .nextAll(".output:first")
           .html(data.value.toFixed(2));
     });
-    
+
+
+	  jQuery( ".wrap" ).sortable();
+	  jQuery( ".wrap" ).disableSelection();
+
 
     });
-
