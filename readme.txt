@@ -3,7 +3,7 @@ Contributors: DustinHartzler
 Donate Link: http://YourWebsiteEngineer.com/donate
 Tags: podcast, testimonial, widget
 Requires at least: 3.6
-Tested up to: 4.7
+Tested up to: 5.8
 Stable tag: 1.14
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
