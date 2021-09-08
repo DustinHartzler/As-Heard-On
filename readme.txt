@@ -50,8 +50,13 @@ Here you can select how many images are display and how fast to transition from 
 3. Display random album artwork in the sidebar
 
 == ChangeLog ==
+
+= 1.15 =
+*   Updated compatibility to work with WordPress 5.8
+*   Automatically deploy new releases directly from GitHub
+
 = 1.14 =
-*	Updated compatibilty to work with WordPress 4.5 (it always worked, but now it offically does)
+*	Updated compatibility to work with WordPress 4.5 (it always worked, but now it officially does)
 *	A few tweaks to description text and some CSS to line all of the elements up right
 *	Fixed an issue that wouldn't allow you to upload an image from the Edit screen, which is probably something you need to do on that screen
 

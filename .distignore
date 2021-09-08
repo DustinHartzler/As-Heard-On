@@ -1,0 +1,11 @@
+/.git
+/.github
+/build
+/sass
+/.wordpress-org
+
+.distignore
+
+.gitignore
+config.rb
+readme.md
